@@ -1,5 +1,5 @@
 # Loja_E-Book
-Projeto da disciplina de desenvolvimento web de BSI.
+Projeto da disciplina de desenvolvimento web de BSI, onde será criado uma loja de E-Books, ou seja, livros digitais.
 
 ## Começando
 Para executar o projeto, será necessário instalar os seguintes programas:
