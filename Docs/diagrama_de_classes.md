@@ -13,5 +13,5 @@
 
 
 ##### *versão 0.1*
-[![diagrama_de_classes](./img/diagrama_de_classes.jpg)](./img/diagrama_de_classes.jpg)
+[![diagrama_de_classes](./Imgs/Loja_E-Book.png)](./Imgs/Loja_E-Book.png)
 
