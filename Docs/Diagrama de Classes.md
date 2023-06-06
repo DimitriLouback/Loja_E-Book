@@ -16,7 +16,7 @@
 [![diagrama_de_classes](./Imgs/Diagrama_de_classe.png)]
 
 ##### *Versão 0.2*
-[![diagrama_de_classes](./Imgs/Diagrama_de_classe_1,2.png)]
+[![diagrama_de_classes](./Imgs/Diagrama_de_classe_0,2.png)]
 
 ## Referências
 
