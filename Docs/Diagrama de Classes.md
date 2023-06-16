@@ -3,6 +3,7 @@
 | Data | Versão | Descrição | Autor(es) |
 |:----:|:------:|:---------:|:---------:|
 | 02/06/2023 | 0.1 | Criação do Documento | [José Augusto](https://github.com/JoseAugustoFS) |
+| 05/06/2023 | 0.2 | Adição das tabelas carteira e produto | [José Augusto](https://github.com/JoseAugustoFS) |
 
 
 ## Definição
