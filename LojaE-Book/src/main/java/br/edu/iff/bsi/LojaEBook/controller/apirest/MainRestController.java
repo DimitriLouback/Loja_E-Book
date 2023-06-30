@@ -36,7 +36,7 @@ public class MainRestController {
 	public String page (@PathVariable("id") int id, @RequestParam("nome") String nome) {
 		return "Olá mundo -> "+id+" --> "+nome;
 	}
-	 */
+	
 	@PostMapping("/new")
 	@ResponseBody
 	public String addItem(@RequestParam Map<String, String> allParam) {
@@ -52,7 +52,6 @@ public class MainRestController {
 		}
 	}
 
-	/*
 	@PostMapping("/new/users")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Map<String, String> registerUser(@RequestParam Map<String, String> userMap) {
@@ -80,8 +79,6 @@ public class MainRestController {
 			return erro;
 		}
 	}
-	*/
-
 	
 	@PostMapping("/new/users")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -92,5 +89,6 @@ public class MainRestController {
 		System.out.println("CPF pessoa: "+pessoa.getCpf());
 		return"Sucesso";
 	}
+	*/
 	
 }

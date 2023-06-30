@@ -1,4 +1,35 @@
+<!DOCTYPE html>
 <html>
-	<title>Primeira página.</title>
+<head>
+<meta charset="UTF-8">
+<title>Primeira página.</title>
+</head>
+<body>
 	<h1>Primeira página.</h1>
+	<form action = "/home/new/pessoa" method = "post">
+  <fieldset>
+    <legend>Registrar Pessoa</legend>
+    <p>
+      <label for="id">ID</label>
+      <input type="text" name="id" id="id" required />
+    </p>
+    <p>
+      <label for="nome">Nome</label>
+      <input type="text" name="nome" id="nome" required />
+    </p>
+    <p>
+      <label for="email">Email</label>
+      <input type="text" name=email id="email" required />
+    </p>
+    <p>
+      <label for="cpf">CPF</label>
+      <input type="text" name="cpf" id="cpf" required />
+    </p>
+    <p>
+     <button type="submit">Registrar</button> 
+     </p>
+    
+  </fieldset>
+</form>
+</body>
 </html>
