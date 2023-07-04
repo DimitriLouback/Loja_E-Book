@@ -8,40 +8,27 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public abstract class Pessoa implements Serializable {
+public abstract class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	private String nome;
-	private String email;
-	private String cpf;
 	
-	
-	
-	public Pessoa(String nome, String email, String cpf) {
-		this.nome = nome;
-		this.email = email;
-		this.cpf = cpf;
+	private double preco;
+
+	public Produto(double preco) {
+		super();
+		this.preco = preco;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public String getNome() {
-		return nome;
+	public double getPreco() {
+		return preco;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-	
 	
 	
 }

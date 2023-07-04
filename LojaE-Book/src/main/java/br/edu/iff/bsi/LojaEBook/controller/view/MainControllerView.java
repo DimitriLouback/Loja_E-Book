@@ -19,6 +19,36 @@ public class MainControllerView {
 		return "index";
 	}
 	
+	@GetMapping("/new/cliente")
+	public String formCliente() {
+		return "formCliente";
+	}
+	
+	@GetMapping("/new/funcionario")
+	public String formFuncionario() {
+		return "formFuncionario";
+	}
+		
+	@GetMapping("/new/cargo")
+	public String formCargo() {
+		return "formCargo";
+	}
+	
+	@GetMapping("/new/e-book")
+	public String formE_Book() {
+		return "formE_Book";
+	}
+	
+	@GetMapping("/new/colecao-e-book")
+	public String formColecao_E_Book() {
+		return "formColecao_E_Book";
+	}
+	
+	@GetMapping("/new/compra")
+	public String formCompra() {
+		return "formCompra";
+	}
+	
 	@PostMapping("/new/pessoa")
 	@ResponseStatus(HttpStatus.CREATED)
 	public String registerPessoa(@ModelAttribute Pessoa pessoa){
