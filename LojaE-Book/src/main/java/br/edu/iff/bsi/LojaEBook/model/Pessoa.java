@@ -1,11 +1,14 @@
 package br.edu.iff.bsi.LojaEBook.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public abstract class Pessoa implements Serializable {
@@ -18,7 +21,8 @@ public abstract class Pessoa implements Serializable {
 	private String email;
 	private String cpf;
 	
-	
+	@ElementCollection
+	private List<String> telefone;
 	
 	public Pessoa(String nome, String email, String cpf) {
 		this.nome = nome;
