@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Carteira implements Serializable {
@@ -16,6 +17,9 @@ public class Carteira implements Serializable {
 	private Long id;
 	
 	private double saldoDisponivel;
+	
+	@OneToOne(mappedBy="carteira")
+	private Cliente cliente;
 	
 	public Carteira (double saldoDisponivel) {
 		this.saldoDisponivel = saldoDisponivel;
