@@ -11,6 +11,7 @@ public class E_Book extends Produto {
 	private String editora;
 	private int qtdPaginas;
 	
+	
 	public E_Book(double preco, String titulo, String genero, String autor, String editora, int qtdPaginas) {
 		super(preco);
 		this.titulo = titulo;

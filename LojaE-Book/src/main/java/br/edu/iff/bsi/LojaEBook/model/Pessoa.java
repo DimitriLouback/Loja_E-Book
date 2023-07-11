@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MappedSuperclass;
 
-@Entity
+@MappedSuperclass
 public abstract class Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 1L;

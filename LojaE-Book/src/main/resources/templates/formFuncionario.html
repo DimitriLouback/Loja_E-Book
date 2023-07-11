@@ -22,8 +22,11 @@
       <input type="text" name="cpf" id="cpf" required />
     </p>
     <p>
-      <label for="Cargo">Cargo</label>
-      <input type="text" name="cargo" id="cargo" required />
+      <label for="Cargo">Cargo:</label>
+  	<select name="Cargo" id="Cargo">
+   		<!--<option value="Desenvolvedor">Desenvolvedor</option>-->
+   		
+ 	 </select>
     </p>
     <p>
      <button type="submit">Registrar</button> 
@@ -31,5 +34,15 @@
     
   </fieldset>
 </form>
+
+<h2>Buscar Funcionário.</h2>
+	<form action = "/funcionario/buscaCPF" method = "post">
+	<p>
+      <label for="cpf">CPF</label>
+      <input type="text" name="cpf" id="cpf" required />
+ 
+    <button type="submit">Buscar</button>
+    </p>
+	</form>
 </body>
 </html>

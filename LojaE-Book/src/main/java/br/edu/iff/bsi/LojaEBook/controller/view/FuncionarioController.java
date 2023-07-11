@@ -20,4 +20,10 @@ public class FuncionarioController {
 		Funcionario f = res.save(funcionario);
 		return "Funcionario added -->"+f.getId()+"-->";
 	}
+	
+	@PostMapping("/buscaCPF")
+	public String buscarFuncionarioCPF(String CPF) throws Exception {
+		Funcionario f = res.buscarPeloCPF(CPF);
+		return "Funcionario achado -->"+f.getId()+"-->";
+	}
 }
