@@ -5,28 +5,43 @@
 
 - Atributos em geral:
   - Aceita valor nulo ou não? 
-    - _Sim_
+    - _Apenas telefone (Pessoa) pode ser nulo_
   - Será permitido alteração futura?
-    - _Sim_
+    - _Apenas CPF (Pessoa) não pode alterar_
   - Deverá ser único?
-    - _Não_
+    - _Apenas CPF (Pessoa), função (Cargo), titulo (E-Book) e serie (Coleção de E-Book)_
   - Padrão (regex)-> um formato específico com CPF, CEP, CNPJ.
-    - _Sim_ 
+    - _Apenas CPF (Pessoa)_ 
 - Atributos do tipo texto:
   - Quantidade mínima e máxima de caracteres
-    - _Mínima: 1; Máxima: Depende da situação_ 
+    - _nome (Pessoa)= Mínima: 15; Máxima: 60_
+    - _email (Pessoa)= Mínima: 10; Máxima: 60_
+    - _cpf (Pessoa)= Mínima: 11; Máxima: 14_
+    - _senha (Pessoa)= Mínima: 8; Máxima: 20_
+    - _telefone (Pessoa)= Mínima: 9; Máxima: 16_
+    - _função (Cargo)= Mínima: 10; Máxima: 30_
+    - _titulo (E-Book)= Mínima: 1; Máxima: 60_
+    - _genero (E-Book)= Mínima: 1; Máxima: 20_
+    - _autor (E-Book)= Mínima: 15; Máxima: 60_
+    - _editora (E-Book)= Mínima: 1; Máxima: 20_
+    - _serie (Coleção de E-Book)= Mínima: 1; Máxima: 60_
   - Aceita valores espaço em branco ou não?
-    - _Sim_ 
+    - _Todos aceitam_ 
 - Atributos numéricos:
   - Aceita valores negativos, positivos ou indiferente?
-    - _Somente positivos_ 
+    - _Somente saldoDisponivel (Carteira) pode ser indiferente o resto é positivo_ 
   - Faixa de valores permitidos
-    - _0 a Depende da situação_ 
-  - Valores multipols de X. Ex: 10,20,30...
+    - _saldoDisponivel (Carteira)= 0 até 4000_
+    - _salario (Cargo)= 900 até 5000_
+    - _precoFinal (Compra)= 5 até 1500_
+    - _preco (Produto)= 5 até 80_
+    - _qtdPaginas (E-Book)= 10 até 3000_
+    - _qtdVolumes (Coleção de E-Books)= 2 até 30_
+  - Valores multiplos de X. Ex: 10,20,30...
     - _Sim_
 - Atributos de coleção:
   - Mínimo ou máximo de elementos.
-    - _Mínimo: 2; Máximo: Depende da situação_
+    - _telefone (Pessoa)= Mínimo: 0; Máximo: 6_
   - Atributos de relacionamento entre classes
     - _ _
   - Objeto A deve estar relacionamento com o objeto B.
