@@ -12,7 +12,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToMany;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,6 +30,8 @@ public abstract class Produto implements Serializable {
 		this.preco = preco;
 	}
 
+	public Produto() {}
+	
 	public Long getId() {
 		return id;
 	}

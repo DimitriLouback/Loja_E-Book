@@ -6,30 +6,83 @@
 </head>
 <body>
 	<h1>Registrar Cliente.</h1>
-	<form action = "/cliente/" method = "post">
-  <fieldset>
-    <legend>Insira os valores</legend>
-    <p>
-      <label for="nome">Nome</label>
-      <input type="text" name="nome" id="nome" required />
-    </p>
-    <p>
-      <label for="email">Email</label>
-      <input type="text" name="email" id="email" required />
-    </p>
-    <p>
-      <label for="cpf">CPF</label>
-      <input type="text" name="cpf" id="cpf" required />
-    </p>
-    <p>
-      <label for="Saldo">Saldo</label>
-      <input type="text" name="saldo" id="saldo" required />
-    </p>
-    <p>
-     <button type="submit">Registrar</button> 
-     </p>
-    
-  </fieldset>
-</form>
+	<form action="/cliente/" method="post">
+		<fieldset>
+			<legend>Insira os valores</legend>
+			<p>
+				<label for="nome">Nome</label> <input type="text" name="nome"
+					id="nome" required />
+			</p>
+			<p>
+				<label for="email">Email</label> <input type="text" name="email"
+					id="email" required />
+			</p>
+			<p>
+				<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+					required />
+			</p>
+			<p>
+				<label for="senha">Senha</label> <input type="text" name="senha"
+					id="senha" required />
+			</p>
+			<p>
+				<label for="telefone">Telefone:</label> <input type="text"
+					name="telefone" id="telefone" required />
+			</p>
+			<p>
+				<button type="submit">Registrar</button>
+			</p>
+
+		</fieldset>
+	</form>
+
+	<h2>Listar Clientes.</h2>
+	<form action="/cliente/listarClientes" method="post">
+		<p>
+			<button type="submit">Listar</button>
+		</p>
+	</form>
+
+	<h2>Buscar Cliente.</h2>
+	<form action="/cliente/buscaCPF" method="post">
+		<p>
+			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+				required />
+
+			<button type="submit">Buscar</button>
+		</p>
+	</form>
+
+	<h2>Listar Telefone de Cliente.</h2>
+	<form action="/cliente/listarTelefones" method="post">
+		<p>
+			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+				required />
+
+			<button type="submit">Listar</button>
+		</p>
+	</form>
+
+	<h2>Adicionar Telefone.</h2>
+	<form action="/cliente/addTelefone" method="post">
+		<p>
+			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+				required /> <label for="telefone">Telefone:</label> <input
+				type="text" name="telefone" id="telefone" required />
+
+			<button type="submit">Adicionar</button>
+		</p>
+	</form>
+
+	<h2>Remover Telefone.</h2>
+	<form action="/cliente/removeTelefone" method="post">
+		<p>
+			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+				required /> <label for="telefone">Telefone:</label> <input
+				type="text" name="telefone" id="telefone" required />
+
+			<button type="submit">Remover</button>
+		</p>
+	</form>
 </body>
 </html>

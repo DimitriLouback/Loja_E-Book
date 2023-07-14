@@ -6,43 +6,87 @@
 </head>
 <body>
 	<h1>Registrar Funcionário.</h1>
-	<form action = "/funcionario/" method = "post">
-  <fieldset>
-    <legend>Insira os valores</legend>
-    <p>
-      <label for="nome">Nome</label>
-      <input type="text" name="nome" id="nome" required />
-    </p>
-    <p>
-      <label for="email">Email</label>
-      <input type="text" name="email" id="email" required />
-    </p>
-    <p>
-      <label for="cpf">CPF</label>
-      <input type="text" name="cpf" id="cpf" required />
-    </p>
-    <p>
-      <label for="Cargo">Cargo:</label>
-  	<select name="Cargo" id="Cargo">
-   		<!--<option value="Desenvolvedor">Desenvolvedor</option>-->
-   		
- 	 </select>
-    </p>
-    <p>
-     <button type="submit">Registrar</button> 
-     </p>
-    
-  </fieldset>
-</form>
+	<form action="/funcionario/" method="post">
+		<fieldset>
+			<legend>Insira os valores</legend>
+			<p>
+				<label for="nome">Nome</label> <input type="text" name="nome"
+					id="nome" required />
+			</p>
+			<p>
+				<label for="email">Email</label> <input type="text" name="email"
+					id="email" required />
+			</p>
+			<p>
+				<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+					required />
+			</p>
+			<p>
+				<label for="senha">Senha</label> <input type="text" name="senha"
+					id="senha" required />
+			</p>
+			<p>
+				<label for="telefone">Telefone:</label> <input type="text"
+					name="telefone" id="telefone" required />
+			</p>
+			<p>
+				<label for="funcao">Cargo:</label> <input type="text" name="funcao"
+					id="funcao" required />
+			</p>
+			<p>
+				<button type="submit">Registrar</button>
+			</p>
 
-<h2>Buscar Funcionário.</h2>
-	<form action = "/funcionario/buscaCPF" method = "post">
-	<p>
-      <label for="cpf">CPF</label>
-      <input type="text" name="cpf" id="cpf" required />
- 
-    <button type="submit">Buscar</button>
-    </p>
+		</fieldset>
+	</form>
+
+	<h2>Listar Funcionários.</h2>
+	<form action="/funcionario/listarFuncionarios" method="post">
+		<p>
+			<button type="submit">Listar</button>
+		</p>
+	</form>
+
+	<h2>Buscar Funcionário.</h2>
+	<form action="/funcionario/buscaCPF" method="post">
+		<p>
+			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+				required />
+
+			<button type="submit">Buscar</button>
+		</p>
+	</form>
+
+	<h2>Listar Telefone de Funcionário.</h2>
+	<form action="/funcionario/listarTelefones" method="post">
+		<p>
+			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+				required />
+
+			<button type="submit">Listar</button>
+		</p>
+	</form>
+
+	<h2>Adicionar Telefone.</h2>
+	<form action="/funcionario/addTelefone" method="post">
+		<p>
+			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+				required /> <label for="telefone">Telefone:</label> <input
+				type="text" name="telefone" id="telefone" required />
+
+			<button type="submit">Adicionar</button>
+		</p>
+	</form>
+
+	<h2>Remover Telefone.</h2>
+	<form action="/funcionario/removeTelefone" method="post">
+		<p>
+			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+				required /> <label for="telefone">Telefone:</label> <input
+				type="text" name="telefone" id="telefone" required />
+
+			<button type="submit">Remover</button>
+		</p>
 	</form>
 </body>
 </html>

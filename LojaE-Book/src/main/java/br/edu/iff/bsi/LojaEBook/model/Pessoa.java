@@ -1,8 +1,11 @@
 package br.edu.iff.bsi.LojaEBook.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import io.micrometer.common.lang.Nullable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,19 +19,31 @@ public abstract class Pessoa implements Serializable {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	
+	@Column(length = 60)
 	private String nome;
+	@Column(length = 60)
 	private String email;
+	@Column(unique=true, length = 14)
 	private String cpf;
+	@Column(length = 20)
+	private String senha;
 	
+	@Nullable
 	@ElementCollection
-	private List<String> telefone;
+	@Column(length = 16)
+	private List<String> telefone = new ArrayList<String>();
 	
-	public Pessoa(String nome, String email, String cpf) {
+	public Pessoa(String nome, String email, String cpf, String senha, String telefone) {
 		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;
+		this.senha = senha;
+		this.telefone.add(telefone);
 	}
 
+	public Pessoa() {}
+	
 	public Long getId() {
 		return id;
 	}
@@ -44,7 +59,17 @@ public abstract class Pessoa implements Serializable {
 	public String getCpf() {
 		return cpf;
 	}
+
+	public String getSenha() {
+		return senha;
+	}
 	
+	public void adicionarTelefone(String telefone) {
+		this.telefone.add(telefone);
+	}
 	
+	public void removerTelefone(String telefone) {
+		this.telefone.remove(telefone);
+	}
 	
 }
