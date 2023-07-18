@@ -33,4 +33,20 @@ public class CompraService {
 	public void deletarCompra(Compra compra) {
 		CompraRep.delete(compra);
 	}
+	
+	public Long buscarPeloIDCliente(Long id) {
+		return CompraRep.BuscarPeloIdCliente(id);
+	}
+	
+	public int verificarProdutoCompra(Long id) {
+		return CompraRep.verificarProdutoCompra(id);
+	}
+
+	public List<Object> ListarEBookPeloIdCompra(Long id){
+		return CompraRep.ListarEBookPeloIdCompra(id);
+	}
+	
+	public List<Object> ListarColecaoEBookPeloIdCompra(Long id){
+		return CompraRep.ListarColecaoEBookPeloIdCompra(id);
+	}
 }

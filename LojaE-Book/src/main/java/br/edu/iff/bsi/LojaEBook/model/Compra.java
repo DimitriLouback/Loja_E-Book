@@ -1,6 +1,7 @@
 package br.edu.iff.bsi.LojaEBook.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -35,6 +36,8 @@ private static final long serialVersionUID = 1L;
 	
 	public Compra() {
 		this.dataHora = Calendar.getInstance();
+		this.qtdProdutos = 0;
+		this.produto = new ArrayList();
 	}
 
 	public Long getId() {
@@ -52,16 +55,14 @@ private static final long serialVersionUID = 1L;
 	public double getPrecoFinal() {
 		return precoFinal;
 	}
-
-	public void setQtdProdutos(int qtdProdutos) {
-		this.qtdProdutos = qtdProdutos;
-	}
-
-	public void setPrecoFinal(double precoFinal) {
-		this.precoFinal = precoFinal;
+	
+	public void adicionarProduto(Produto produto) {
+		this.produto.add(produto);
+		this.qtdProdutos++;
 	}
 	
-	
-	
-	
+	public void removerProduto(Produto produto) {
+		this.produto.remove(produto);
+		this.qtdProdutos--;
+	}
 }
