@@ -33,11 +33,8 @@ private static final long serialVersionUID = 1L;
 				inverseJoinColumns = @JoinColumn(name = "fk_produto"))
 	private List<Produto> produto;
 	
-	public Compra(Calendar dataHora, int qtdProdutos, double precoFinal) {
-		super();
-		this.dataHora = dataHora;
-		this.qtdProdutos = qtdProdutos;
-		this.precoFinal = precoFinal;
+	public Compra() {
+		this.dataHora = Calendar.getInstance();
 	}
 
 	public Long getId() {
@@ -54,6 +51,14 @@ private static final long serialVersionUID = 1L;
 
 	public double getPrecoFinal() {
 		return precoFinal;
+	}
+
+	public void setQtdProdutos(int qtdProdutos) {
+		this.qtdProdutos = qtdProdutos;
+	}
+
+	public void setPrecoFinal(double precoFinal) {
+		this.precoFinal = precoFinal;
 	}
 	
 	

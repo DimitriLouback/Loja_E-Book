@@ -39,6 +39,10 @@ public abstract class Produto implements Serializable {
 	public double getPreco() {
 		return preco;
 	}
+
+	public void setPreco(double preco) {
+		this.preco = preco;
+	}
 	
 	
 }

@@ -30,8 +30,8 @@
 					name="telefone" id="telefone" required />
 			</p>
 			<p>
-				<label for="funcao">Cargo:</label> <input type="text" name="funcao"
-					id="funcao" required />
+				<label for="funcao">Função do cargo:</label> <input type="text"
+					name="funcao" id="funcao" required />
 			</p>
 			<p>
 				<button type="submit">Registrar</button>
@@ -39,6 +39,48 @@
 
 		</fieldset>
 	</form>
+
+	<h1>Atualizar Funcionario.</h1>
+	<form action="/funcionario/atualizar" method="post">
+		<fieldset>
+			<legend>Insira os valores</legend>
+			<p>
+				<label for="cpf">CPF do Cliente</label> <input type="text"
+					name="cpf" id="cpf" required />
+			</p>
+			<p>
+				<label for="nome">Novo Nome</label> <input type="text" name="nome"
+					id="nome" />
+			</p>
+			<p>
+				<label for="email">Novo Email</label> <input type="text"
+					name="email" id="email" />
+			</p>
+			<p>
+				<label for="senha">Nova Senha</label> <input type="text"
+					name="senha" id="senha" />
+			</p>
+			<p>
+				<label for="funcao">Nova função do cargo:</label> <input type="text"
+					name="funcao" id="funcao" />
+			</p>
+			<p>
+				<button type="submit">Atualizar</button>
+			</p>
+
+		</fieldset>
+	</form>
+
+	<h2>Deletar Funcionario.</h2>
+	<form action="/funcionario/deletePorCPF" method="post">
+		<p>
+			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+				required />
+
+			<button type="submit">Deletar</button>
+		</p>
+	</form>
+
 
 	<h2>Listar Funcionários.</h2>
 	<form action="/funcionario/listarFuncionarios" method="post">

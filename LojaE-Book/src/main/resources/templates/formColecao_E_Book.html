@@ -23,6 +23,35 @@
 
 		</fieldset>
 	</form>
+	
+	<h1>Atualizar Coleção de E-Book.</h1>
+	<form action="/colecao-e-book/atualizar" method="post">
+		<fieldset>
+			<legend>Insira os valores</legend>
+			<p>
+				<label for="Serie">Série</label> <input type="text" name="serie"
+					id="serie" required />
+			</p>
+			<p>
+				<label for="Preco">Preço</label> <input type="text" name="preco"
+					id="preco" />
+			</p>
+			<p>
+				<button type="submit">Atualizar</button>
+			</p>
+
+		</fieldset>
+	</form>
+
+	<h2>Deletar Coleção de E-Book.</h2>
+	<form action="/colecao-e-book/deletarPorSerie" method="post">
+		<p>
+			<label for="serie">Serie</label> <input type="text" name="serie"
+				id="serie" required />
+
+			<button type="submit">Deletar</button>
+		</p>
+	</form>
 
 	<h2>Listar Coleção de E-Books.</h2>
 	<form action="/colecao-e-book/listarColecao_E_Books" method="post">

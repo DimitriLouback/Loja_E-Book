@@ -47,6 +47,22 @@ public class E_Book extends Produto {
 	public int getQtdPaginas() {
 		return qtdPaginas;
 	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public void setAutor(String autor) {
+		this.autor = autor;
+	}
+
+	public void setEditora(String editora) {
+		this.editora = editora;
+	}
+
+	public void setQtdPaginas(int qtdPaginas) {
+		this.qtdPaginas = qtdPaginas;
+	}
 	
 	
 	
