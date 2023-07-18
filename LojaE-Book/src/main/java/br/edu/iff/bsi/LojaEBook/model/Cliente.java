@@ -19,13 +19,18 @@ public class Cliente extends Pessoa {
 	@JoinColumn(name="id_cliente")
 	private List<Compra> compra;
 	
-	public Cliente(String nome, String email, String cpf, double saldo) {
-		super(nome, email, cpf);
-		carteira = new Carteira(saldo);
+	public Cliente(String nome, String email, String cpf, String senha, String telefone) {
+		super(nome, email, cpf, senha, telefone);
 	}
+
+	private Cliente() {}
 
 	public Carteira getCarteira() {
 		return carteira;
+	}
+
+	public void setCarteira(Carteira carteira) {
+		this.carteira = carteira;
 	}
 
 	public double verSaldo(Carteira carteira) {

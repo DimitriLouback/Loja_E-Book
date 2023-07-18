@@ -21,11 +21,10 @@ public class Carteira implements Serializable {
 	@OneToOne(mappedBy="carteira")
 	private Cliente cliente;
 	
-	public Carteira (double saldoDisponivel) {
-		this.saldoDisponivel = saldoDisponivel;
+	public Carteira () {
+		this.saldoDisponivel = 0;
 	}
 
-	
 	public long getId() {
 		return id;
 	}
@@ -34,7 +33,10 @@ public class Carteira implements Serializable {
 	public double getSaldoDisponivel() {
 		return saldoDisponivel;
 	}
-	
+
+	public void setSaldoDisponivel(double saldoDisponivel) {
+		this.saldoDisponivel = saldoDisponivel;
+	}
 	
 
 }
