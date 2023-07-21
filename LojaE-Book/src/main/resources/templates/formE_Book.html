@@ -39,6 +39,51 @@
 
 		</fieldset>
 	</form>
+	
+	<h1>Atualizar E-Book.</h1>
+	<form action="/e-book/atualizar" method="post">
+		<fieldset>
+			<legend>Insira os valores</legend>
+			<p>
+				<label for="Titulo">Título do E-Book</label> <input type="text" name="titulo"
+					id="titulo" required />
+			</p>
+			<p>
+				<label for="Preco">Novo preço</label> <input type="text" name="preco"
+					id="preco" />
+			</p>
+			<p>
+				<label for="Genero">Novo gênero</label> <input type="text" name="genero"
+					id="genero" />
+			</p>
+			<p>
+				<label for="Autor">Nova autor</label> <input type="text" name="autor"
+					id="autor" />
+			</p>
+			<p>
+				<label for="Editora">Nova editora</label> <input type="text"
+					name="editora" id="editora" />
+			</p>
+			<p>
+				<label for="qtdPaginas">Nova quantidade de páginas</label> <input
+					type="text" name="qtdPaginas" id="qtdPaginas" />
+			</p>
+			<p>
+				<button type="submit">Atulizar</button>
+			</p>
+
+		</fieldset>
+	</form>
+
+	<h2>Deletar E-Book.</h2>
+	<form action="/e-book/deletaPorTitulo" method="post">
+		<p>
+			<label for="titulo">Titulo</label> <input type="text" name="titulo"
+				id="titulo" required />
+
+			<button type="submit">Deletar</button>
+		</p>
+	</form>
 
 	<h2>Listar E-Books.</h2>
 	<form action="/e-book/listarE_Books" method="post">

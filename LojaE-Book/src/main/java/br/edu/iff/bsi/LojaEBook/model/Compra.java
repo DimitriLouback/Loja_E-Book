@@ -1,6 +1,7 @@
 package br.edu.iff.bsi.LojaEBook.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -33,11 +34,10 @@ private static final long serialVersionUID = 1L;
 				inverseJoinColumns = @JoinColumn(name = "fk_produto"))
 	private List<Produto> produto;
 	
-	public Compra(Calendar dataHora, int qtdProdutos, double precoFinal) {
-		super();
-		this.dataHora = dataHora;
-		this.qtdProdutos = qtdProdutos;
-		this.precoFinal = precoFinal;
+	public Compra() {
+		this.dataHora = Calendar.getInstance();
+		this.qtdProdutos = 0;
+		this.produto = new ArrayList();
 	}
 
 	public Long getId() {
@@ -56,7 +56,13 @@ private static final long serialVersionUID = 1L;
 		return precoFinal;
 	}
 	
+	public void adicionarProduto(Produto produto) {
+		this.produto.add(produto);
+		this.qtdProdutos++;
+	}
 	
-	
-	
+	public void removerProduto(Produto produto) {
+		this.produto.remove(produto);
+		this.qtdProdutos--;
+	}
 }

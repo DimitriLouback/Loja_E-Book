@@ -1,6 +1,7 @@
 package br.edu.iff.bsi.LojaEBook.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -21,6 +22,7 @@ public class Cliente extends Pessoa {
 	
 	public Cliente(String nome, String email, String cpf, String senha, String telefone) {
 		super(nome, email, cpf, senha, telefone);
+		this.compra = new ArrayList();
 	}
 
 	private Cliente() {}
@@ -37,5 +39,12 @@ public class Cliente extends Pessoa {
 		return carteira.getSaldoDisponivel();
 	}
 	
+	public void adicionarCompra(Compra compra) {
+		this.compra.add(compra);
+	}
+	
+	public void removerCompra(Compra compra) {
+		this.compra.remove(compra);
+	}
 
 }

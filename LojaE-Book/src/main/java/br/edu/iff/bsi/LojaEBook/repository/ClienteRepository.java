@@ -19,4 +19,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	
 	@Query(value="SELECT TELEFONE FROM CLIENTE_TELEFONE JOIN CLIENTE WHERE CPF = ?1", nativeQuery = true)
 	List<String> ListarTelefonePeloCPF(String CPF);
+	
+	@Query(value="SELECT * FROM CLIENTE WHERE ID = ?1", nativeQuery = true)
+	Cliente BuscarPeloId(Long id);
 }

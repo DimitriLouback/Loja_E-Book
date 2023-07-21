@@ -9,38 +9,81 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.iff.bsi.LojaEBook.model.Cargo;
 import br.edu.iff.bsi.LojaEBook.model.Funcionario;
-import br.edu.iff.bsi.LojaEBook.repository.CargoRepository;
-import br.edu.iff.bsi.LojaEBook.repository.FuncionarioRepository;
+import br.edu.iff.bsi.LojaEBook.service.CargoService;
+import br.edu.iff.bsi.LojaEBook.service.FuncionarioService;
 
 @RestController
 @RequestMapping("funcionario")
 public class FuncionarioController {
 
 	@Autowired
-	private FuncionarioRepository res;
+	public FuncionarioService FuncionarioServ;
 	@Autowired
-	private CargoRepository CargRep;
+	public CargoService CargoServ;
 	
 	@PostMapping("/")
 	public String addFuncionario(Funcionario funcionario, String funcao) throws Exception {
-		Cargo cargoBusca = CargRep.buscarPelaFuncao(funcao);
-		if(cargoBusca == null) {
-			return "Cargo não existe";
+		if(FuncionarioServ.buscarPeloCPF(funcionario.getCpf())!=null) {
+			return "Funcionario já cadastrado";
+		}else{			
+			Cargo cargoBusca = CargoServ.buscarPelaFuncao(funcao);
+			if(cargoBusca == null) {
+				return "Cargo não existe";
+			}else {
+				funcionario.setCargo(cargoBusca);
+				Funcionario f = FuncionarioServ.salvarFuncionario(funcionario);
+				return "Registrado no id "+f.getId();
+			}		
+		}
+	}
+	
+	@PostMapping("/atualizar")
+	public String atualizarFuncionario(String cpf, String nome, String email, String senha, String funcao) throws Exception {
+		Funcionario f = FuncionarioServ.buscarPeloCPF(cpf);
+		if(f==null) {
+			return "Funcionario não achado";
+		}else {		
+			if(nome!=null) {
+				f.setNome(nome);
+			}
+			if(email!=null) {				
+				f.setEmail(email);
+			}
+			if(senha!=null) {				
+				f.setSenha(senha);
+			}
+			if(funcao!=null) {
+				Cargo cargoBusca = CargoServ.buscarPelaFuncao(funcao);
+				if(cargoBusca == null) {
+					return "Cargo não existe";
+				}else {
+					f.setCargo(cargoBusca);
+				}
+			}
+			FuncionarioServ.flush();
+			return "Atualizado no id "+f.getId();
+		}
+	}
+	
+	@PostMapping("/deletePorCPF")
+	public String deletarFuncionarioCPF(String cpf) throws Exception {
+		Funcionario f = FuncionarioServ.buscarPeloCPF(cpf);
+		if(f!=null) {	
+			FuncionarioServ.deletarFuncionario(f);
+			return "Funcionario deletado no id "+f.getId();
 		}else {
-			funcionario.setCargo(cargoBusca);
-			Funcionario f = res.save(funcionario);
-			return "Funcionario adicionado -->"+f.getId()+"-->";
-		}		
+			return "Funcionario não encontrado";
+		}
 	}
 	
 	@PostMapping("/listarFuncionarios")
 	public List<Funcionario> listarFuncionarios() throws Exception {
-		return res.findAll();
+		return FuncionarioServ.listarFuncionarios();
 	}
 	
 	@PostMapping("/buscaCPF")
 	public String buscarFuncionarioCPF(String cpf) throws Exception {
-		Funcionario f = res.buscarPeloCPF(cpf);
+		Funcionario f = FuncionarioServ.buscarPeloCPF(cpf);
 		if(f!=null) {			
 			return "Id do funcionário: "+f.getId();
 		}else {
@@ -50,21 +93,21 @@ public class FuncionarioController {
 	
 	@PostMapping("/listarTelefones")
 	public List<String> listarTelefones(String cpf) throws Exception {
-		return res.ListarTelefonePeloCPF(cpf);
+		return FuncionarioServ.ListarTelefonePeloCPF(cpf);
 	}
 	
 	@PostMapping("/addTelefone")
 	public String addTelefone(String cpf, String telefone) throws Exception {
-		Funcionario f = res.buscarPeloCPF(cpf);
+		Funcionario f = FuncionarioServ.buscarPeloCPF(cpf);
 		if(f==null) {
 			return "Funcionário não encontrado";
 		}else {			
-			String t = res.buscarTelefonePeloCPF(cpf, telefone);
+			String t = FuncionarioServ.buscarTelefonePeloCPF(cpf, telefone);
 			if(t!=null) {
 				return "Telefone já cadastrado";
 			}else {
 				f.adicionarTelefone(telefone);
-				res.flush();
+				FuncionarioServ.flush();
 				return "Telefone adicionado";
 			}
 		}
@@ -72,16 +115,16 @@ public class FuncionarioController {
 	
 	@PostMapping("/removeTelefone")
 	public String removeTelefone(String cpf, String telefone) throws Exception {
-		Funcionario f = res.buscarPeloCPF(cpf);
+		Funcionario f = FuncionarioServ.buscarPeloCPF(cpf);
 		if(f==null) {
 			return "Funcionário não encontrado";
 		}else {				
-			String t = res.buscarTelefonePeloCPF(cpf, telefone);
+			String t = FuncionarioServ.buscarTelefonePeloCPF(cpf, telefone);
 			if(t==null) {
 				return "Telefone não cadastrado";
 			}else {
 				f.removerTelefone(telefone);
-				res.flush();
+				FuncionarioServ.flush();
 				return "Telefone removido";
 			}
 		}

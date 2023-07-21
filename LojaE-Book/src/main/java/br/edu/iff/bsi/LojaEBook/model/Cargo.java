@@ -39,6 +39,14 @@ private static final long serialVersionUID = 1L;
 	public double getSalario() {
 		return salario;
 	}
+
+	public void setFuncao(String funcao) {
+		this.funcao = funcao;
+	}
+
+	public void setSalario(double salario) {
+		this.salario = salario;
+	}
 	
 	
 	

@@ -6,26 +6,121 @@
 </head>
 <body>
 	<h1>Registrar Compra.</h1>
-	<form action = "/compra/" method = "post">
-  <fieldset>
-    <legend>Insira os valores</legend>
-    <p>
-      <label for="dataHora">Data de Hora</label>
-      <input type="text" name="dataHora" id="dataHora" required />
-    </p>
-    <p>
-      <label for="qtdProdutos">Quantidade de Produtos</label>
-      <input type="text" name="qtdProdutos" id="qtdProdutos" required />
-    </p>
-    <p>
-      <label for="precoFinal">Preço Final</label>
-      <input type="text" name="precoFinal" id="precoFinal" required />
-    </p>
-    <p>
-     <button type="submit">Registrar</button> 
-     </p>
-    
-  </fieldset>
-</form>
+	<form action="/compra/" method="post">
+		<fieldset>
+			<legend>Insira os valores</legend>
+			<p>
+				<label for="cpf">CPF do Cliente</label> <input type="text"
+					name="cpf" id="cpf" required />
+			</p>
+			<p>
+				<button type="submit">Registrar</button>
+			</p>
+
+		</fieldset>
+	</form>
+
+	<h1>Atualizar Compra.</h1>
+	<form action="/compra/atualizar" method="post">
+		<fieldset>
+			<legend>Insira os valores</legend>
+			<p>
+				<label for="idCompra">Id Compra</label> <input type="text"
+					name="idCompra" id="idCompra" required />
+			</p>
+			<p>
+				<label for="cpf">CPF do novo Cliente</label> <input type="text"
+					name="cpf" id="cpf" required />
+			</p>
+			<p>
+				<button type="submit">Atualizar</button>
+			</p>
+
+		</fieldset>
+	</form>
+	
+	<h2>Deletar Compra.</h2>
+	<form action="/compra/deletar" method="post">
+		
+			<p>
+				<label for="idCompra">Id Compra</label> <input type="text"
+					name="idCompra" id="idCompra" required />
+					
+				<button type="submit">Deletar</button>
+			</p>
+
+	</form>
+
+	<h2>Listar Compras.</h2>
+	<form action="/compra/listarCompras" method="post">
+		<p>
+			<button type="submit">Listar</button>
+		</p>
+	</form>
+
+	<h2>Adicionar E-Book.</h2>
+	<form action="/compra/addE_Book" method="post">
+		<p>
+			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
+				id="idCompra" required /> <label for="titulo">Titulo:</label> <input
+				type="text" name="titulo" id="titulo" required />
+
+			<button type="submit">Adicionar</button>
+		</p>
+	</form>
+
+	<h2>Remover E-Book.</h2>
+	<form action="/compra/removeE_Book" method="post">
+		<p>
+			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
+				id="idCompra" required /> <label for="titulo">Titulo:</label> <input
+				type="text" name="titulo" id="titulo" required />
+
+			<button type="submit">Remover</button>
+		</p>
+	</form>
+	
+	<h2>Listar E-Books de uma Compra.</h2>
+	<form action="/compra/listarE_Books" method="post">
+		<p>
+			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
+				id="idCompra" required />
+
+			<button type="submit">Listar</button>
+		</p>
+	</form>
+	
+	<h2>Adicionar Coleção de E-Book.</h2>
+	<form action="/compra/addColecaoE_Book" method="post">
+		<p>
+			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
+				id="idCompra" required /> <label for="serie">Série:</label> <input
+				type="text" name="serie" id="serie" required />
+
+			<button type="submit">Adicionar</button>
+		</p>
+	</form>
+
+	<h2>Remover Coleção de E-Book.</h2>
+	<form action="/compra/removeColecaoE_Book" method="post">
+		<p>
+			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
+				id="idCompra" required /> <label for="serie">Série:</label> <input
+				type="text" name="serie" id="serie" required />
+
+			<button type="submit">Remover</button>
+		</p>
+	</form>
+	
+	<h2>Listar Coleçaões E-Book de uma Compra.</h2>
+	<form action="/compra/listarColecoesE_Book" method="post">
+		<p>
+			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
+				id="idCompra" required />
+
+			<button type="submit">Listar</button>
+		</p>
+	</form>
+
 </body>
 </html>
