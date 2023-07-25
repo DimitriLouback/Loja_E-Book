@@ -84,4 +84,8 @@ public abstract class Pessoa implements Serializable {
 		this.telefone.remove(telefone);
 	}
 	
+	public int getQtdTelefones() {
+		return this.telefone.size();
+	}
+	
 }

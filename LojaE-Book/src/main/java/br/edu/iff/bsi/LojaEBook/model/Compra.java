@@ -59,10 +59,12 @@ private static final long serialVersionUID = 1L;
 	public void adicionarProduto(Produto produto) {
 		this.produto.add(produto);
 		this.qtdProdutos++;
+		this.precoFinal+=produto.getPreco();
 	}
 	
 	public void removerProduto(Produto produto) {
 		this.produto.remove(produto);
 		this.qtdProdutos--;
+		this.precoFinal-=produto.getPreco();
 	}
 }

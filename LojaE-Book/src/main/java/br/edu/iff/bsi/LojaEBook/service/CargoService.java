@@ -18,16 +18,36 @@ public class CargoService {
 		return CargoRep.buscarPelaFuncao(funcao);
 	}
 	
-	public Cargo salvarCargo(Cargo cargo) {
-		return CargoRep.save(cargo);
+	public String addCargo(Cargo cargo) {
+		if(CargoRep.buscarPelaFuncao(cargo.getFuncao())!=null) {
+			return "Cargo já cadastrado";
+		}else{		
+			Cargo c = CargoRep.save(cargo);
+			return "Registrado no id "+c.getId();
+		}
 	}
 	
-	public void flush() {
-		CargoRep.flush();
+	public String atualizarCargo(String funcao, String salario) {
+		Cargo c = CargoRep.buscarPelaFuncao(funcao);
+		if(c==null) {
+			return "Cargo não achado";
+		}else {
+			if(salario!=null&&Double.parseDouble(salario)>0) {
+				c.setSalario(Double.parseDouble(salario));
+			}
+			CargoRep.flush();
+			return "Atualizado no id "+c.getId();
+		}
 	}
 	
-	public void deletarCargo(Cargo cargo) {
-		CargoRep.delete(cargo);
+	public String deletarCargoFuncao(String funcao) throws Exception {
+		Cargo c = CargoRep.buscarPelaFuncao(funcao);
+		if(c!=null) {	
+			CargoRep.delete(c);
+			return "Cargo deletado no id "+c.getId();
+		}else {
+			return "Cargo não encontrado";
+		}
 	}
 	
 	public List<Cargo> listarCargos() throws Exception {

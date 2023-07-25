@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<script th:src="@{js/bootstrap.min.js}"></script>
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
 <title>Primeira página.</title>
 </head>
 <body>
+
+	<div th:insert="~{layoutBase :: frag1}"></div>
+	
 	<h1>Primeira página.</h1>
 	
 	<h4>Registrar:</h4>

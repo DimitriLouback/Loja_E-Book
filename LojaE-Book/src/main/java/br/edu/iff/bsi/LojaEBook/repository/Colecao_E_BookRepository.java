@@ -18,5 +18,6 @@ public interface Colecao_E_BookRepository extends JpaRepository<Colecao_E_Book, 
 	@Query(value="SELECT TITULO FROM E_BOOK WHERE ID_COLECAO_E_BOOK = ?1 AND TITULO = ?2", nativeQuery = true)
 	String buscarTituloPeloIdColecao(Long id_colecao_e_book, String titulo);
 	
-	
+	@Query(value="SELECT * FROM COLECAO_E_BOOK WHERE ID IN(SELECT FK_PRODUTO FROM ASSOCIACAO_COMPRA_PRODUTO CP WHERE FK_COMPRA = ?1)", nativeQuery = true)
+	List<Colecao_E_Book> ListarColecaoEBookPeloIdCompra(Long id);
 }
