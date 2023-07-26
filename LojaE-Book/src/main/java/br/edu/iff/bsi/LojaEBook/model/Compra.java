@@ -27,6 +27,7 @@ private static final long serialVersionUID = 1L;
 	private Calendar dataHora;
 	private int qtdProdutos;
 	private double precoFinal;
+	private boolean finalizado;
 	
 	@ManyToMany
 	@JoinTable(name = "associacao_compra_produto",
@@ -35,7 +36,7 @@ private static final long serialVersionUID = 1L;
 	private List<Produto> produto;
 	
 	public Compra() {
-		this.dataHora = Calendar.getInstance();
+		this.finalizado = false;
 		this.qtdProdutos = 0;
 		this.produto = new ArrayList();
 	}
@@ -66,5 +67,14 @@ private static final long serialVersionUID = 1L;
 		this.produto.remove(produto);
 		this.qtdProdutos--;
 		this.precoFinal-=produto.getPreco();
+	}
+	
+	public void finalizar() {
+		this.finalizado = true;
+		this.dataHora = Calendar.getInstance();
+	}
+	
+	public boolean isFinalizado() {
+		return this.finalizado;
 	}
 }

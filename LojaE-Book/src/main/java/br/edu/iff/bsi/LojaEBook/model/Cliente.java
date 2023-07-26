@@ -27,16 +27,12 @@ public class Cliente extends Pessoa {
 
 	private Cliente() {}
 
-	public Carteira getCarteira() {
-		return carteira;
-	}
-
 	public void setCarteira(Carteira carteira) {
 		this.carteira = carteira;
 	}
 
-	public double verSaldo(Carteira carteira) {
-		return carteira.getSaldoDisponivel();
+	public double verSaldo() {
+		return this.carteira.getSaldoDisponivel();
 	}
 	
 	public void adicionarCompra(Compra compra) {
@@ -45,6 +41,17 @@ public class Cliente extends Pessoa {
 	
 	public void removerCompra(Compra compra) {
 		this.compra.remove(compra);
+	}
+	
+	public void adicionarSaldo(double saldo) {
+		this.carteira.setSaldoDisponivel(this.carteira.getSaldoDisponivel()+saldo);
+	}
+	
+	public void removerSaldo(double saldo) {
+		double retirada = this.carteira.getSaldoDisponivel()-saldo;
+		if(retirada>=0) {			
+			this.carteira.setSaldoDisponivel(retirada);
+		}
 	}
 
 }

@@ -123,4 +123,28 @@ public class ClienteService {
 		return ClienteRep.BuscarPeloId(id);
 	}
 	
+	public String adcionarSaldo(String cpf, String saldo) {
+		Cliente c = ClienteRep.buscarPeloCPF(cpf);
+		if(c==null) {
+			return "Cliente não encontrado";
+		}else {		
+			c.adicionarSaldo(Double.parseDouble(saldo));
+			ClienteRep.flush();
+			CarteiraRep.flush();
+			return "Saldo adicionado";
+		}
+	}
+	
+	public String removerSaldo(String cpf, String saldo) {
+		Cliente c = ClienteRep.buscarPeloCPF(cpf);
+		if(c==null) {
+			return "Cliente não encontrado";
+		}else {		
+			c.adicionarSaldo(Double.parseDouble(saldo));
+			ClienteRep.flush();
+			CarteiraRep.flush();
+			return "Saldo adicionado";
+		}
+	}
+	
 }

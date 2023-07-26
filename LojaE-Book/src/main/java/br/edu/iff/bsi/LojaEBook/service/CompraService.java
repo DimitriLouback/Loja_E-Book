@@ -44,17 +44,21 @@ public class CompraService {
 		if(c==null) {
 			return "Compra não achada";
 		}else {		
-			if(cpf!=null) {				
-				Cliente cl = ClienteRep.buscarPeloCPF(cpf);
-				if(cl==null) {
-					return "Cliente não achado";
-				}else {
-					cl.adicionarCompra(c);
-					ClienteRep.flush();
+			if(c.isFinalizado()) {
+				return "Compra já finalizada";
+			}else {				
+				if(cpf!=null) {				
+					Cliente cl = ClienteRep.buscarPeloCPF(cpf);
+					if(cl==null) {
+						return "Cliente não achado";
+					}else {
+						cl.adicionarCompra(c);
+						ClienteRep.flush();
+					}
 				}
+				CompraRep.flush();
+				return "Atualizado no id "+c.getId();
 			}
-			CompraRep.flush();
-			return "Atualizado no id "+c.getId();
 		}
 	}
 	
@@ -63,17 +67,21 @@ public class CompraService {
 		if(c==null) {
 			return "Compra não achada";
 		}else {		
-			Long idCliente = CompraRep.BuscarPeloIdCliente(Long.parseLong(idCompra));
-			Cliente cl = ClienteRep.BuscarPeloId(idCliente);
-			if(cl==null) {
-				return "Cliente não achado";
-			}else {
-				cl.removerCompra(c);
-				ClienteRep.flush();
-			}
+			if(c.isFinalizado()) {
+				return "Compra já finalizada";
+			}else {				
+				Long idCliente = CompraRep.BuscarPeloIdCliente(Long.parseLong(idCompra));
+				Cliente cl = ClienteRep.BuscarPeloId(idCliente);
+				if(cl==null) {
+					return "Cliente não achado";
+				}else {
+					cl.removerCompra(c);
+					ClienteRep.flush();
+				}
 
-			CompraRep.delete(c);
-			return "Deletado no id "+c.getId();
+				CompraRep.delete(c);
+				return "Deletado no id "+c.getId();
+			}
 		}
 	}
 	
@@ -86,16 +94,20 @@ public class CompraService {
 		if(c==null) {
 			return "Compra não encontrada";
 		}else {			
-			E_Book e = E_BookRep.buscarPeloTitulo(titulo);
-			if(e==null) {
-				return "E-Book não encontrado";
-			}else {
-				if(CompraRep.verificarProdutoCompra(e.getId())!=0) {
-					return "E-Book já cadastrado";
-				}else {					
-					c.adicionarProduto(e);
-					CompraRep.flush();
-					return "E-Book adicionado";
+			if(c.isFinalizado()) {
+				return "Compra já finalizada";
+			}else {				
+				E_Book e = E_BookRep.buscarPeloTitulo(titulo);
+				if(e==null) {
+					return "E-Book não encontrado";
+				}else {
+					if(CompraRep.verificarProdutoCompra(e.getId(),c.getId())!=0) {
+						return "E-Book já cadastrado";
+					}else {					
+						c.adicionarProduto(e);
+						CompraRep.flush();
+						return "E-Book adicionado";
+					}
 				}
 			}
 		}
@@ -105,12 +117,12 @@ public class CompraService {
 		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));
 		if(c==null) {
 			return "Compra não encontrada";
-		}else {			
+		}else {		
 			E_Book e = E_BookRep.buscarPeloTitulo(titulo);
 			if(e==null) {
 				return "E-Book não encontrado";
 			}else {
-				if(CompraRep.verificarProdutoCompra(e.getId())==0) {
+				if(CompraRep.verificarProdutoCompra(e.getId(),c.getId())==0) {
 					return "E-Book não consta na compra";
 				}else {
 					c.removerProduto(e);
@@ -126,16 +138,20 @@ public class CompraService {
 		if(c==null) {
 			return "Compra não encontrada";
 		}else {			
-			Colecao_E_Book ce = Colecao_E_BookRep.buscarPelaSerie(serie);
-			if(ce==null) {
-				return "Coleção de E-Book não encontado";
-			}else {
-				if(CompraRep.verificarProdutoCompra(ce.getId())!=0) {
-					return "Coleção de E-Book já cadastrado";
+			if(c.isFinalizado()) {
+				return "Compra já finalizada";
+			}else {				
+				Colecao_E_Book ce = Colecao_E_BookRep.buscarPelaSerie(serie);
+				if(ce==null) {
+					return "Coleção de E-Book não encontado";
 				}else {
-					c.adicionarProduto(ce);
-					CompraRep.flush();
-					return "Coleção de E-Book adicionada";
+					if(CompraRep.verificarProdutoCompra(ce.getId(),c.getId())!=0) {
+						return "Coleção de E-Book já cadastrado";
+					}else {
+						c.adicionarProduto(ce);
+						CompraRep.flush();
+						return "Coleção de E-Book adicionada";
+					}
 				}
 			}
 		}
@@ -145,18 +161,22 @@ public class CompraService {
 		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));
 		if(c==null) {
 			return "Compra não encontrada";
-		}else {			
-			Colecao_E_Book ce = Colecao_E_BookRep.buscarPelaSerie(serie);;
-			if(ce==null) {
-				return "Coleção de E-Book não encontrado";
-			}else {
-				if(CompraRep.verificarProdutoCompra(ce.getId())==0) {
-					return "Coleção de E-Book não consta na compra";
+		}else {		
+			if(c.isFinalizado()) {
+				return "Compra já finalizada";
+			}else {				
+				Colecao_E_Book ce = Colecao_E_BookRep.buscarPelaSerie(serie);;
+				if(ce==null) {
+					return "Coleção de E-Book não encontrado";
 				}else {
-					c.removerProduto(ce);
-					CompraRep.flush();
-					return "Coleção de E-Book removida";
-				}
+					if(CompraRep.verificarProdutoCompra(ce.getId(),c.getId())==0) {
+						return "Coleção de E-Book não consta na compra";
+					}else {
+						c.removerProduto(ce);
+						CompraRep.flush();
+						return "Coleção de E-Book removida";
+					}
+			}
 			}
 		}
 	}
@@ -167,5 +187,31 @@ public class CompraService {
 	
 	public List<Colecao_E_Book> ListarColecaoEBookPeloIdCompra(Long id){
 		return Colecao_E_BookRep.ListarColecaoEBookPeloIdCompra(id);
+	}
+	
+	public String finalizarCompraPeloId(String idCompra) {
+		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));
+		if(c==null) {
+			return "Compra não encontrada";
+		}else {	
+			if(c.isFinalizado()) {
+				return "Compra já finalizada";
+			}else {
+				if(c.getQtdProdutos()==0) {
+					return "A compra precisa ter no mínimo 1 produto.";
+				}else {
+					Cliente cl = ClienteRep.BuscarPeloIdCompra(c.getId());
+					if(cl.verSaldo()<c.getPrecoFinal()) {
+						return "Saldo do cliente não é o suficiente";
+					}else {						
+						cl.removerSaldo(c.getPrecoFinal());
+						c.finalizar();
+						CompraRep.flush();
+						ClienteRep.flush();
+						return "Compra finalizada com sucesso";
+					}
+				}
+			}
+		}
 	}
 }

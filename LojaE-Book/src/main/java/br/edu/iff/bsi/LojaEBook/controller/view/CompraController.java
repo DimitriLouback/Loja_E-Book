@@ -79,4 +79,10 @@ public class CompraController {
 	public List<Colecao_E_Book> listarColecoesE_Book(String idCompra) throws Exception {
 		return CompraServ.ListarColecaoEBookPeloIdCompra(Long.parseLong(idCompra));
 	}
+	
+	@PostMapping("/finalizar")
+	@ResponseBody
+	public String finalizarCompra(String idCompra) throws Exception {
+		return CompraServ.finalizarCompraPeloId(idCompra);
+	}
 }

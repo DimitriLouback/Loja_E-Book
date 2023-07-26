@@ -66,4 +66,10 @@ public class ClienteController {
 		return clienteServ.removeTelefone(cpf, telefone);
 	}
 	
+	@PostMapping("/addSaldo")
+	@ResponseBody
+	public String adicionarSaldo(String cpf, String saldo) throws Exception {
+		return clienteServ.adcionarSaldo(cpf, saldo);
+	}
+	
 }
