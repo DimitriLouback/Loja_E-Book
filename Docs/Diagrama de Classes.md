@@ -6,6 +6,7 @@
 | 05/06/2023 | 0.2 | Adição das classes carteira e produto | [José Augusto](https://github.com/JoseAugustoFS) |
 | 07/07/2023 | 0.3 | Substituição da classe telefone por uma lista | [José Augusto](https://github.com/JoseAugustoFS) |
 | 14/07/2023 | 0.4 | Adição do atributo senha à classe pessoa | [José Augusto](https://github.com/JoseAugustoFS) |
+| 26/07/2023 | 0.5 | Adição do atributo boolean finalizado à classe compra | [José Augusto](https://github.com/JoseAugustoFS) |
 
 
 ## Definição
@@ -26,6 +27,9 @@
 
 ##### *Versão 0.4*
 ![diagrama_de_classes](./Imgs/Diagrama_de_classe_0,4.png)
+
+##### *Versão 0.5*
+![diagrama_de_classes](./Imgs/Diagrama_de_classe_0,5.png)
 
 ## Referências
 
