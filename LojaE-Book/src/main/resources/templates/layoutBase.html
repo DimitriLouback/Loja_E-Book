@@ -12,11 +12,11 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
 
     
-
+<script th:src="@{js/color-modes.js}"></script>	
     
 
 <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
-
+<div  th:fragment="botaoTema">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -71,7 +71,7 @@
       }
 
       .btn-bd-primary {
-        --bd-violet-bg: #712cf9;
+        --bd-violet-bg: rgb(0, 64, 128);
         --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
 
         --bs-btn-font-weight: 600;
@@ -79,12 +79,12 @@
         --bs-btn-bg: var(--bd-violet-bg);
         --bs-btn-border-color: var(--bd-violet-bg);
         --bs-btn-hover-color: var(--bs-white);
-        --bs-btn-hover-bg: #6528e0;
-        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-hover-bg: rgb(0, 64, 128);;
+        --bs-btn-hover-border-color: rgb(0, 64, 128);
         --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
         --bs-btn-active-color: var(--bs-btn-hover-color);
-        --bs-btn-active-bg: #5a23c8;
-        --bs-btn-active-border-color: #5a23c8;
+        --bs-btn-active-bg: rgb(0, 64, 128);
+        --bs-btn-active-border-color: rgb(0, 64, 128);
       }
       .bd-mode-toggle {
         z-index: 1500;
@@ -144,31 +144,38 @@
         </li>
       </ul>
     </div>
+    </div>
 
-<div  th:fragment="frag1">   
-<header data-bs-theme="dark">
+<div  th:fragment="header">   
+<header data-bs-theme="secondary">
   <div class="collapse text-bg-dark" id="navbarHeader">
     <div class="container">
       <div class="row">
         <div class="col-sm-8 col-md-7 py-4">
-          <h4>About</h4>
-          <p class="text-body-secondary">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
+          <h4>Sobre</h4>
+          <p class="text-body-dark">Essa é uma loja de E-Books criada por José Augusto, com a intenção de facilitar a procura, pesquisa e compra de E-Books, juntamente com coleções de E-Books.</p>
         </div>
         <div class="col-sm-4 offset-md-1 py-4">
-          <h4>Contact</h4>
+          <h4>Contato</h4>
           <ul class="list-unstyled">
-            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-            <li><a href="#" class="text-white">Like on Facebook</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
+            <li><a href="#" class="text-white">Email: j.augusto@gsuite.iff.edu.br</a></li>
           </ul>
         </div>
       </div>
     </div>
   </div>
-  <div class="navbar navbar-dark bg-dark shadow-sm">
+  <div class="navbar navbar-secondary bg-secondary shadow-sm">
     <div class="container">
       <a href="#" class="navbar-brand d-flex align-items-center">
-        <svg xmlns:th="http://www.thymeleaf.org" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      <svg xmlns:th="http://www.thymeleaf.org" width="32" height="32" fill="currentColor" class="bi bi-file-earmark" viewBox="0 0 16 16">
+  <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+
+
+<svg xmlns:th="http://www.thymeleaf.org"  x="4" y="5" width="8" height="8" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
+  <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+</svg>
+</svg>
+        
         <strong>Loja E-Book</strong>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
