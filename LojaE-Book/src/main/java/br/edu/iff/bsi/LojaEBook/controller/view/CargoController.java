@@ -3,14 +3,15 @@ package br.edu.iff.bsi.LojaEBook.controller.view;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.iff.bsi.LojaEBook.model.Cargo;
 import br.edu.iff.bsi.LojaEBook.service.CargoService;
 
-@RestController
+@Controller
 @RequestMapping("cargo")
 public class CargoController {
 
@@ -18,41 +19,25 @@ public class CargoController {
 	public CargoService CargoServ;
 	
 	@PostMapping("/")
+	@ResponseBody
 	public String addCargo(Cargo cargo) throws Exception {
-		if(CargoServ.buscarPelaFuncao(cargo.getFuncao())!=null) {
-			return "Cargo já cadastrado";
-		}else{		
-			Cargo c = CargoServ.salvarCargo(cargo);
-			return "Registrado no id "+c.getId();
-		}
+		return CargoServ.addCargo(cargo);
 	}
 	
 	@PostMapping("/atualizar")
+	@ResponseBody
 	public String atualizarCargo(String funcao, String salario) throws Exception {
-		Cargo c = CargoServ.buscarPelaFuncao(funcao);
-		if(c==null) {
-			return "Cargo não achado";
-		}else {
-			if(salario!=null&&Double.parseDouble(salario)>0) {
-				c.setSalario(Double.parseDouble(salario));
-			}
-			CargoServ.flush();
-			return "Atualizado no id "+c.getId();
-		}
+		return CargoServ.atualizarCargo(funcao, salario);
 	}
 	
 	@PostMapping("/deletePorFuncao")
+	@ResponseBody
 	public String deletarCargoFuncao(String funcao) throws Exception {
-		Cargo c = CargoServ.buscarPelaFuncao(funcao);
-		if(c!=null) {	
-			CargoServ.deletarCargo(c);
-			return "Cargo deletado no id "+c.getId();
-		}else {
-			return "Cargo não encontrado";
-		}
+		return CargoServ.deletarCargoFuncao(funcao);
 	}
 	
 	@PostMapping("/listarCargos")
+	@ResponseBody
 	public List<Cargo> listarCargos() throws Exception {
 		return CargoServ.listarCargos();
 	}

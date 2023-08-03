@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Primeira página.</title>
+<script th:src="@{js/color-modes.js}"></script>	
+<script th:src="@{js/bootstrap.min.js}"></script>
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+<title>Loja E-Book.</title>
 </head>
 <body>
-	<h1>Primeira página.</h1>
+
+	<div th:insert="~{layoutBase :: header}"></div>
 	
-	<h4>Registrar:</h4>
+	<h1>Opções de ADM.</h1>
+	
+	<h4>CRUDs:</h4>
 	<ul><li><a href="./home/new/cliente">Cliente</a>
 	<li><a href="./home/new/cargo">Cargo</a>
 	<li><a href="./home/new/funcionario">Funcionário</a>
@@ -16,5 +22,8 @@
 	<li><a href="./home/new/compra">Compra</a></ul>
 	</br>
 	<h4><a href="./h2-console">Banco de dados</a></h4>
+	
+	<div th:insert="~{layoutBase :: botaoTema}"></div>
 </body>
+<script th:src="@{js/bootstrap.bundle.min.js}"></script>
 </html>
