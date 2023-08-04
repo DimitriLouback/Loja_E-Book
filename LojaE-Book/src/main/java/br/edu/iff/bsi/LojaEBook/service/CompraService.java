@@ -67,21 +67,17 @@ public class CompraService {
 		if(c==null) {
 			return "Compra não achada";
 		}else {		
-			if(c.isFinalizado()) {
-				return "Compra já finalizada";
-			}else {				
-				Long idCliente = CompraRep.BuscarPeloIdCliente(Long.parseLong(idCompra));
-				Cliente cl = ClienteRep.BuscarPeloId(idCliente);
-				if(cl==null) {
-					return "Cliente não achado";
-				}else {
-					cl.removerCompra(c);
-					ClienteRep.flush();
-				}
-
-				CompraRep.delete(c);
-				return "Deletado no id "+c.getId();
+			Long idCliente = CompraRep.BuscarPeloIdCliente(Long.parseLong(idCompra));
+			Cliente cl = ClienteRep.BuscarPeloId(idCliente);
+			if(cl==null) {
+				return "Cliente não achado";
+			}else {
+				cl.removerCompra(c);
+				ClienteRep.flush();
 			}
+
+			CompraRep.delete(c);
+			return "Deletado no id "+c.getId();
 		}
 	}
 	
@@ -213,5 +209,9 @@ public class CompraService {
 				}
 			}
 		}
+	}
+	
+	public Compra getCompraById(Long id) {
+		return CompraRep.BuscarPeloId(id);
 	}
 }

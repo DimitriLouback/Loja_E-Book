@@ -100,4 +100,8 @@ public class Colecao_E_BookService {
 		}
 	}
 	
+	public Colecao_E_Book getColecaoEBookById(Long id) {
+		return Colecao_E_BookRep.BuscarPeloId(id);
+	}
+	
 }

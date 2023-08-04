@@ -75,4 +75,8 @@ public class E_BookService {
 		return EBookRep.ListarEBookPeloIdColecao(id);
 	}
 	
+	public E_Book getEBookById(Long id) {
+		return EBookRep.BuscarPeloId(id);
+	}
+	
 }

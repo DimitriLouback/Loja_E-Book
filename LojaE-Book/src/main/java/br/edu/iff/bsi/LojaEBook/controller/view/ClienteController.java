@@ -72,4 +72,15 @@ public class ClienteController {
 		return clienteServ.adcionarSaldo(cpf, saldo);
 	}
 	
+	@PostMapping("/getSaldo")
+	@ResponseBody
+	public String verSaldo(String cpf) throws Exception {
+		double saldo = clienteServ.getSaldo(cpf);
+		if(saldo==-1) {
+			return "Cliente não encontrado";
+		}else {		
+			return "Saldo: R$ "+saldo;
+		}
+	}
+	
 }

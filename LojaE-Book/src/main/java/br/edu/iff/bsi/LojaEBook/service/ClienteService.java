@@ -147,4 +147,21 @@ public class ClienteService {
 		}
 	}
 	
+	public double getSaldo(String cpf) {
+		Cliente c = ClienteRep.buscarPeloCPF(cpf);
+		if(c==null) {
+			return -1;
+		}else {		
+			return c.verSaldo();
+		}
+	}
+	
+	public Carteira getCarteraById(Long id) {
+		return CarteiraRep.BuscarPeloId(id);
+	}
+	
+	public Cliente getClienteById(Long id) {
+		return ClienteRep.BuscarPeloId(id);
+	}
+	
 }

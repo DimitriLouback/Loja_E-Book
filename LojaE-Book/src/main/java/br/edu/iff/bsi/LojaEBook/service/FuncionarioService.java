@@ -126,4 +126,8 @@ public class FuncionarioService {
 		return FuncionarioRep.buscarTelefonePeloCPF(cpf, telefone);
 	}
 	
+	public Funcionario getFuncionarioById(Long id) {
+		return FuncionarioRep.BuscarPeloId(id);
+	}
+	
 }

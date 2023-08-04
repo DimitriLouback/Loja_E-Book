@@ -53,4 +53,8 @@ public class CargoService {
 	public List<Cargo> listarCargos() throws Exception {
 		return CargoRep.findAll();
 	}
+	
+	public Cargo getCargoById(Long id) {
+		return CargoRep.BuscarPeloId(id);
+	}
 }
