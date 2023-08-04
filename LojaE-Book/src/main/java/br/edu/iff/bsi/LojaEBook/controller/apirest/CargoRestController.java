@@ -61,4 +61,10 @@ public class CargoRestController {
 	public List<Cargo> listarCargos() throws Exception {
 		return CargoServ.listarCargos();
 	}
+	
+	@GetMapping("/{id}")
+	@ResponseBody
+	public Cargo buscarCargos(@PathVariable("id") Long id) throws Exception {
+		return CargoServ.getCargoById(id);
+	}
 }

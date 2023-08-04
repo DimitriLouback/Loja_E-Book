@@ -54,6 +54,12 @@ public class CompraRestController {
 		return CompraServ.listarCompras();
 	}
 	
+	@GetMapping("/{id}")
+	@ResponseBody
+	public Compra buscarCompras(@PathVariable("id") Long id) throws Exception {
+		return CompraServ.getCompraById(id);
+	}
+	
 	@PostMapping("/{id}/e_books")
 	@ResponseBody
 	public String addE_Book(@PathVariable("id") String id, String titulo) throws Exception {

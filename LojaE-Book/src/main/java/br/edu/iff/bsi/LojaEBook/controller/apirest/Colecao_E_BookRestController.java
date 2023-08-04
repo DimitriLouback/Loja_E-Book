@@ -68,8 +68,8 @@ public class Colecao_E_BookRestController {
 	
 	@GetMapping("/{id}")
 	@ResponseBody
-	public String buscarColecao_E_Books(@PathVariable("id") Long id) throws Exception {
-		return Colecao_E_BookServ.buscarColecao_E_Books(Colecao_E_BookServ.getColecaoEBookById(id).getSerie());
+	public Colecao_E_Book buscarColecao_E_Books(@PathVariable("id") Long id) throws Exception {
+		return Colecao_E_BookServ.getColecaoEBookById(id);
 	}
 	
 	@GetMapping("/{id}/e_books")
