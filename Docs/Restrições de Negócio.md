@@ -43,7 +43,7 @@
   - Mínimo ou máximo de elementos.
     - _telefone (Pessoa)= Mínimo: 0; Máximo: 6_
   - Atributos de relacionamento entre classes
-    - _ _
+    - _cpfCliente (Compra)_
   - Objeto A deve estar relacionamento com o objeto B.
     - _ _
   - Número mínimo ou máximo de relacionamentos.
