@@ -17,6 +17,7 @@ import br.edu.iff.bsi.LojaEBook.model.Colecao_E_Book;
 import br.edu.iff.bsi.LojaEBook.model.E_Book;
 import br.edu.iff.bsi.LojaEBook.service.Colecao_E_BookService;
 import br.edu.iff.bsi.LojaEBook.service.E_BookService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping(path= "/api/v1/colecao_e_book")
@@ -29,10 +30,11 @@ public class Colecao_E_BookRestController {
 	
 	@PostMapping("/{id}")
 	@ResponseBody
-	public String addColecao_E_Book(@PathVariable("id") Long id, @ModelAttribute Colecao_E_Book colecao_e_book) throws Exception {
+	@Operation(summary = "Adicionar uma coleção de E-Book em expecifíco")
+	public String addColecao_E_Book(@PathVariable("id") Long id, double preco, String serie) throws Exception {
 		Colecao_E_Book ceBusca = Colecao_E_BookServ.getColecaoEBookById(id);
 		if(ceBusca==null) {				
-			return Colecao_E_BookServ.addColecao_E_Book(colecao_e_book);
+			return Colecao_E_BookServ.addColecao_E_Book(new Colecao_E_Book(preco, serie));
 		}else {
 			return "Coleção de E-Book já adicionado";
 		}
@@ -40,6 +42,7 @@ public class Colecao_E_BookRestController {
 	
 	@PutMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Atualizar uma coleção de E-Book em expecifíco")
 	public String atualizarE_Book(@PathVariable("id") Long id, String preco) throws Exception {
 		Colecao_E_Book ceBusca = Colecao_E_BookServ.getColecaoEBookById(id);
 		if(ceBusca==null) {				
@@ -51,6 +54,7 @@ public class Colecao_E_BookRestController {
 	
 	@DeleteMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Deletar uma coleção de E-Book em expecifíco")
 	public String deletarE_BookSerie(@PathVariable("id") Long id) throws Exception {
 		Colecao_E_Book ceBusca = Colecao_E_BookServ.getColecaoEBookById(id);
 		if(ceBusca==null) {				
@@ -62,24 +66,28 @@ public class Colecao_E_BookRestController {
 	
 	@GetMapping("")
 	@ResponseBody
+	@Operation(summary = "Listar todas as coleções de E-Book")
 	public List<Colecao_E_Book> listarColecao_E_Books() throws Exception {
 		return Colecao_E_BookServ.listarColecao_E_Books();
 	}
 	
 	@GetMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Retornar uma coleção de E-Book em expecifíco")
 	public Colecao_E_Book buscarColecao_E_Books(@PathVariable("id") Long id) throws Exception {
 		return Colecao_E_BookServ.getColecaoEBookById(id);
 	}
 	
 	@GetMapping("/{id}/e_books")
 	@ResponseBody
+	@Operation(summary = "Listar os E-Books em uma coleção de E-Book em expecifíco")
 	public List<E_Book> listarE_Books(@PathVariable("id") Long id) throws Exception {
 		return EBookServ.ListarEBookPeloIdColecao(id);
 	}
 	
 	@PostMapping("/{id}/e_books")
 	@ResponseBody
+	@Operation(summary = "Adicionar um E-Book em uma coleção de E-Book em expecifíco")
 	public String addE_Book(@PathVariable("id") Long id, String titulo) throws Exception {
 		Colecao_E_Book ceBusca = Colecao_E_BookServ.getColecaoEBookById(id);
 		if(ceBusca==null) {				
@@ -91,6 +99,7 @@ public class Colecao_E_BookRestController {
 	
 	@DeleteMapping("/{id}/e_books")
 	@ResponseBody
+	@Operation(summary = "Deletar um E-Book uma coleção de E-Book em expecifíco")
 	public String removeE_Book(@PathVariable("id") Long id, String titulo) throws Exception {
 		Colecao_E_Book ceBusca = Colecao_E_BookServ.getColecaoEBookById(id);
 		if(ceBusca==null) {				

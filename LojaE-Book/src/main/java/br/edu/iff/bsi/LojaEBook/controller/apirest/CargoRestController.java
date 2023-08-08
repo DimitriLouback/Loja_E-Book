@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.iff.bsi.LojaEBook.model.Cargo;
 import br.edu.iff.bsi.LojaEBook.service.CargoService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping(path= "/api/v1/cargo")
@@ -25,10 +26,11 @@ public class CargoRestController {
 	
 	@PostMapping("/{id}")
 	@ResponseBody
-	public String addCargo(@PathVariable("id") Long id, @ModelAttribute Cargo cargo) throws Exception {
+	@Operation(summary = "Adicionar um cargo em expecifíco")
+	public String addCargo(@PathVariable("id") Long id, String funcao, double salario) throws Exception {
 		Cargo cBusca = CargoServ.getCargoById(id);
 		if(cBusca==null) {	
-			return CargoServ.addCargo(cargo);
+			return CargoServ.addCargo(new Cargo(funcao, salario));
 		}else {
 			return "Cargo já adicionada";
 		}
@@ -36,6 +38,7 @@ public class CargoRestController {
 	
 	@PutMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Atualizar um cargo em expecifíco")
 	public String atualizarCargo(@PathVariable("id") Long id, String salario) throws Exception {
 		Cargo cBusca = CargoServ.getCargoById(id);
 		if(cBusca==null) {			
@@ -47,6 +50,7 @@ public class CargoRestController {
 	
 	@DeleteMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Deletar um cargo em expecifíco")
 	public String deletarCargoFuncao(@PathVariable("id") Long id) throws Exception {
 		Cargo cBusca = CargoServ.getCargoById(id);
 		if(cBusca==null) {			
@@ -58,12 +62,14 @@ public class CargoRestController {
 	
 	@GetMapping("")
 	@ResponseBody
+	@Operation(summary = "Litar todos os cargos")
 	public List<Cargo> listarCargos() throws Exception {
 		return CargoServ.listarCargos();
 	}
 	
 	@GetMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Retornar um cargo em expecifíco")
 	public Cargo buscarCargos(@PathVariable("id") Long id) throws Exception {
 		return CargoServ.getCargoById(id);
 	}

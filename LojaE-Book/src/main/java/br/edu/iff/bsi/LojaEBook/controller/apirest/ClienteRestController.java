@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.iff.bsi.LojaEBook.model.Cliente;
 import br.edu.iff.bsi.LojaEBook.service.ClienteService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping(path= "/api/v1/cliente")
@@ -25,10 +26,11 @@ public class ClienteRestController {
 	
 	@PostMapping("/{id}")
 	@ResponseBody
-	public String addCliente(@PathVariable("id") Long id, @ModelAttribute Cliente cliente) throws Exception {
+	@Operation(summary = "Adicionar um cliente em expecifíco")
+	public String addCliente(@PathVariable("id") Long id, String nome, String email, String cpf, String senha, String telefone) throws Exception {
 		Cliente cBusca = clienteServ.getClienteById(id);
 		if(cBusca==null) {				
-			return clienteServ.addCliente(cliente);
+			return clienteServ.addCliente(new Cliente(nome, email, cpf, senha, telefone));
 		}else {
 			return "Cliente já adicionado";
 		}
@@ -36,6 +38,7 @@ public class ClienteRestController {
 	
 	@PutMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Atualizar um cliente em expecifíco")
 	public String atualizarCliente(@PathVariable("id") Long id, String nome, String email, String senha) throws Exception {
 		Cliente cBusca = clienteServ.getClienteById(id);
 		if(cBusca==null) {			
@@ -47,6 +50,7 @@ public class ClienteRestController {
 	
 	@DeleteMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Deletar um cliente em expecifíco")
 	public String deletarClienteCPF(@PathVariable("id") Long id) throws Exception {
 		Cliente cBusca = clienteServ.getClienteById(id);
 		if(cBusca==null) {			
@@ -58,24 +62,28 @@ public class ClienteRestController {
 	
 	@GetMapping("")
 	@ResponseBody
+	@Operation(summary = "Listar todos os clientes")
 	public List<Cliente> listarClientes() throws Exception {
 		return clienteServ.listarClientes();
 	}
 	
 	@GetMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Retornar um cliente em expecifíco")
 	public Cliente buscarClienteId(@PathVariable("id") Long id) throws Exception {
 		return clienteServ.getClienteById(id);
 	}
 	
 	@GetMapping("/{id}/telefones")
 	@ResponseBody
+	@Operation(summary = "Listar os telefones de um cliente em expecifíco")
 	public List<String> listarTelefones(@PathVariable("id") Long id) throws Exception {
 		return clienteServ.ListarTelefonePeloCPF(clienteServ.buscarPeloID(id).getCpf());
 	}
 	
 	@PostMapping("/{id}/telefones")
 	@ResponseBody
+	@Operation(summary = "Adicionar um telefone em um cliente em expecifíco")
 	public String addTelefone(@PathVariable("id") Long id, String telefone) throws Exception {
 		Cliente cBusca = clienteServ.getClienteById(id);
 		if(cBusca==null) {			
@@ -87,6 +95,7 @@ public class ClienteRestController {
 	
 	@DeleteMapping("/{id}/telefones")
 	@ResponseBody
+	@Operation(summary = "Deletar um telefone em um cliente em expecifíco")
 	public String removeTelefone(@PathVariable("id") Long id, String telefone) throws Exception {
 		Cliente cBusca = clienteServ.getClienteById(id);
 		if(cBusca==null) {			
@@ -98,12 +107,14 @@ public class ClienteRestController {
 	
 	@PostMapping("/{id}/carteira")
 	@ResponseBody
+	@Operation(summary = "Adicionar saldo em um cliente em expecifíco")
 	public String adicionarSaldo(@PathVariable("id") Long id, String saldo) throws Exception {
 		return clienteServ.adcionarSaldo(clienteServ.buscarPeloID(id).getCpf(), saldo);
 	}
 	
 	@GetMapping("/{id}/carteira")
 	@ResponseBody
+	@Operation(summary = "Retornar o saldo de um cliente em expecifíco")
 	public double verSaldo(@PathVariable("id") Long id) throws Exception {
 		return clienteServ.getSaldo(clienteServ.buscarPeloID(id).getCpf());
 	}

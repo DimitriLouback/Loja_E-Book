@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.iff.bsi.LojaEBook.model.E_Book;
 import br.edu.iff.bsi.LojaEBook.service.E_BookService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping(path= "/api/v1/e_book")
@@ -25,10 +26,11 @@ public class E_BookRestController {
 	
 	@PostMapping("/{id}")
 	@ResponseBody
-	public String addE_Book(@PathVariable("id") Long id, @ModelAttribute E_Book e_book) throws Exception {
+	@Operation(summary = "Adicionar um E-Book em expecifíco")
+	public String addE_Book(@PathVariable("id") Long id, double preco, String titulo, String genero, String autor, String editora, int qtdPaginas) throws Exception {
 		E_Book eBusca = EBookServ.getEBookById(id);
 		if(eBusca==null) {				
-			return EBookServ.addE_Book(e_book);
+			return EBookServ.addE_Book(new E_Book(preco, titulo, genero, autor, editora, qtdPaginas));
 		}else {
 			return "E-Book já adicionado";
 		}
@@ -36,6 +38,7 @@ public class E_BookRestController {
 	
 	@PutMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Atualizar um E-Book em expecifíco")
 	public String atualizarE_Book(@PathVariable("id") Long id, String preco, String genero, String autor, String editora, String qtdPaginas) throws Exception {
 		E_Book eBusca = EBookServ.getEBookById(id);
 		if(eBusca==null) {				
@@ -47,6 +50,7 @@ public class E_BookRestController {
 	
 	@DeleteMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Deletar um E-Book em expecifíco")
 	public String deletarE_Book(@PathVariable("id") Long id) throws Exception {
 		E_Book eBusca = EBookServ.getEBookById(id);
 		if(eBusca==null) {				
@@ -58,12 +62,14 @@ public class E_BookRestController {
 	
 	@GetMapping("")
 	@ResponseBody
+	@Operation(summary = "Listar todos os E-Books")
 	public List<E_Book> listarE_Books() throws Exception {
 		return EBookServ.listarE_Books();
 	}
 	
 	@GetMapping("/{id}")
 	@ResponseBody
+	@Operation(summary = "Retornar um E-Book em expecifíco")
 	public E_Book buscarE_Books(@PathVariable("id") Long id) throws Exception {
 		return EBookServ.getEBookById(id);
 	}
