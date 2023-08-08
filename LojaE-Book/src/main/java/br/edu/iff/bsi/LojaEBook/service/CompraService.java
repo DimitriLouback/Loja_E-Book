@@ -31,7 +31,7 @@ public class CompraService {
 		if(cl==null) {
 			return "Cliente não achado";
 		}else {
-			Compra compra = new Compra();
+			Compra compra = new Compra(cpf);
 			cl.adicionarCompra(compra);
 			Compra c = CompraRep.save(compra);
 			ClienteRep.flush();
@@ -44,7 +44,7 @@ public class CompraService {
 		if(cl==null) {
 			return "Cliente não achado";
 		}else {
-			Compra compra = new Compra(id);
+			Compra compra = new Compra(id, cpf);
 			cl.adicionarCompra(compra);
 			Compra c = CompraRep.save(compra);
 			ClienteRep.flush();
@@ -65,6 +65,7 @@ public class CompraService {
 					if(cl==null) {
 						return "Cliente não achado";
 					}else {
+						c.setCpfCliente(cpf);
 						cl.adicionarCompra(c);
 						ClienteRep.flush();
 					}

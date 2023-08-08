@@ -28,6 +28,7 @@ private static final long serialVersionUID = 1L;
 	private int qtdProdutos;
 	private double precoFinal;
 	private boolean finalizado;
+	private String cpfCliente;
 	
 	@ManyToMany
 	@JoinTable(name = "associacao_compra_produto",
@@ -35,19 +36,23 @@ private static final long serialVersionUID = 1L;
 				inverseJoinColumns = @JoinColumn(name = "fk_produto"))
 	private List<Produto> produto;
 	
-	public Compra() {
+	public Compra(String cpfCliente) {
 		this.finalizado = false;
 		this.qtdProdutos = 0;
 		this.produto = new ArrayList();
+		this.cpfCliente = cpfCliente;
 	}
 	
-	public Compra(Long id) {
+	public Compra(Long id, String cpfCliente) {
 		this.id = id;
 		this.finalizado = false;
 		this.qtdProdutos = 0;
 		this.produto = new ArrayList();
+		this.cpfCliente = cpfCliente;
 	}
 
+	private Compra() {}
+	
 	public Long getId() {
 		return id;
 	}
@@ -64,6 +69,14 @@ private static final long serialVersionUID = 1L;
 		return precoFinal;
 	}
 	
+	public String getCpfCliente() {
+		return cpfCliente;
+	}
+
+	public void setCpfCliente(String cpfCliente) {
+		this.cpfCliente = cpfCliente;
+	}
+
 	public void adicionarProduto(Produto produto) {
 		this.produto.add(produto);
 		this.qtdProdutos++;
