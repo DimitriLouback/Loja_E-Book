@@ -25,6 +25,11 @@ public class Cliente extends Pessoa {
 		this.compra = new ArrayList();
 	}
 
+	public Cliente(Long id, String nome, String email, String cpf, String senha, String telefone) {
+		super(id, nome, email, cpf, senha, telefone);
+		this.compra = new ArrayList();
+	}
+	
 	private Cliente() {}
 
 	public void setCarteira(Carteira carteira) {

@@ -29,6 +29,12 @@ public abstract class Produto implements Serializable {
 		super();
 		this.preco = preco;
 	}
+	
+	public Produto(Long id,double preco) {
+		super();
+		this.id = id;
+		this.preco = preco;
+	}
 
 	public Produto() {}
 	

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,7 +29,7 @@ public class ClienteRestController {
 	public String addCliente(@PathVariable("id") Long id, String nome, String email, String cpf, String senha, String telefone) throws Exception {
 		Cliente cBusca = clienteServ.getClienteById(id);
 		if(cBusca==null) {				
-			return clienteServ.addCliente(new Cliente(nome, email, cpf, senha, telefone));
+			return clienteServ.addCliente(new Cliente(id, nome, email, cpf, senha, telefone));
 		}else {
 			return "Cliente já adicionado";
 		}

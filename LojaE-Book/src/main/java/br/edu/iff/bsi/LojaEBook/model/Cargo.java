@@ -25,6 +25,13 @@ private static final long serialVersionUID = 1L;
 		this.funcao = funcao;
 		this.salario = salario;
 	}
+	
+	public Cargo(Long id, String funcao, double salario) {
+		super();
+		this.id = id;
+		this.funcao = funcao;
+		this.salario = salario;
+	}
 
 	private Cargo() {}
 	

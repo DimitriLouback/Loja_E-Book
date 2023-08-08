@@ -25,6 +25,15 @@ public class E_Book extends Produto {
 		this.editora = editora;
 		this.qtdPaginas = qtdPaginas;
 	}
+	
+	public E_Book(Long id, double preco, String titulo, String genero, String autor, String editora, int qtdPaginas) {
+		super(id, preco);
+		this.titulo = titulo;
+		this.genero = genero;
+		this.autor = autor;
+		this.editora = editora;
+		this.qtdPaginas = qtdPaginas;
+	}
 
 	private E_Book() {}
 	

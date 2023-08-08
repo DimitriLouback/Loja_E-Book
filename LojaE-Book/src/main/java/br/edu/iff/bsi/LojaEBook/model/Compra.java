@@ -40,6 +40,13 @@ private static final long serialVersionUID = 1L;
 		this.qtdProdutos = 0;
 		this.produto = new ArrayList();
 	}
+	
+	public Compra(Long id) {
+		this.id = id;
+		this.finalizado = false;
+		this.qtdProdutos = 0;
+		this.produto = new ArrayList();
+	}
 
 	public Long getId() {
 		return id;

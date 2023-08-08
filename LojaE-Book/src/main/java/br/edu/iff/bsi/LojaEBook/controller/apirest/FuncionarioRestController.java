@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,7 +29,7 @@ public class FuncionarioRestController {
 	public String addFuncionario(@PathVariable("id") Long id, String nome, String email, String cpf, String senha, String telefone, String funcao) throws Exception {
 		Funcionario fBusca = FuncionarioServ.getFuncionarioById(id);
 		if(fBusca==null) {				
-			return FuncionarioServ.addFuncionario(new Funcionario(nome, email, cpf, senha, telefone), funcao);
+			return FuncionarioServ.addFuncionario(new Funcionario(id, nome, email, cpf, senha, telefone), funcao);
 		}else {
 			return "Funcionario já adicionado";
 		}

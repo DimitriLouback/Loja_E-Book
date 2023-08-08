@@ -32,7 +32,7 @@ public class CompraRestController {
 	public String addCompra(@PathVariable("id") Long id, String cpf) throws Exception {
 		Compra cBusca = CompraServ.getCompraById(id);
 		if(cBusca==null) {				
-			return CompraServ.addCompra(cpf);
+			return CompraServ.addCompraAPI(id, cpf);
 		}else {
 			return "Compra já adicionada";
 		}	

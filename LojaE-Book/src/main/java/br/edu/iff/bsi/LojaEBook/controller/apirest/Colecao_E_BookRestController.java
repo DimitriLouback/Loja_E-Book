@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,7 +33,7 @@ public class Colecao_E_BookRestController {
 	public String addColecao_E_Book(@PathVariable("id") Long id, double preco, String serie) throws Exception {
 		Colecao_E_Book ceBusca = Colecao_E_BookServ.getColecaoEBookById(id);
 		if(ceBusca==null) {				
-			return Colecao_E_BookServ.addColecao_E_Book(new Colecao_E_Book(preco, serie));
+			return Colecao_E_BookServ.addColecao_E_Book(new Colecao_E_Book(id, preco, serie));
 		}else {
 			return "Coleção de E-Book já adicionado";
 		}
