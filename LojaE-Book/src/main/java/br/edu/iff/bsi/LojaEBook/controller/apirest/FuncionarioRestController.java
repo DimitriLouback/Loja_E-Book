@@ -23,16 +23,11 @@ public class FuncionarioRestController {
 	@Autowired
 	public FuncionarioService FuncionarioServ;
 	
-	@PostMapping("/{id}")
+	@PostMapping("")
 	@ResponseBody
 	@Operation(summary = "Adicionar um funcionário em expecifíco")
-	public String addFuncionario(@PathVariable("id") Long id, String nome, String email, String cpf, String senha, String telefone, String funcao) throws Exception {
-		Funcionario fBusca = FuncionarioServ.getFuncionarioById(id);
-		if(fBusca==null) {				
-			return FuncionarioServ.addFuncionario(new Funcionario(id, nome, email, cpf, senha, telefone), funcao);
-		}else {
-			return "Funcionario já adicionado";
-		}
+	public String addFuncionario(String nome, String email, String cpf, String senha, String telefone, String funcao) throws Exception {			
+		return FuncionarioServ.addFuncionario(new Funcionario(nome, email, cpf, senha, telefone), funcao);
 	}
 	
 	@PutMapping("/{id}")

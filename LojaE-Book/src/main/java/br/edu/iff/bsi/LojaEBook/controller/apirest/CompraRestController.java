@@ -26,16 +26,11 @@ public class CompraRestController {
 	@Autowired
 	private CompraService CompraServ;
 	
-	@PostMapping("/{id}")
+	@PostMapping("")
 	@ResponseBody
 	@Operation(summary = "Adicionar uma compra em expecifíco")
-	public String addCompra(@PathVariable("id") Long id, String cpf) throws Exception {
-		Compra cBusca = CompraServ.getCompraById(id);
-		if(cBusca==null) {				
-			return CompraServ.addCompraAPI(id, cpf);
-		}else {
-			return "Compra já adicionada";
-		}	
+	public String addCompra(String cpf) throws Exception {			
+		return CompraServ.addCompra(cpf);
 	}
 	
 	@PutMapping("/{id}")

@@ -23,16 +23,11 @@ public class CargoRestController {
 	@Autowired
 	public CargoService CargoServ;
 	
-	@PostMapping("/{id}")
+	@PostMapping("")
 	@ResponseBody
 	@Operation(summary = "Adicionar um cargo em expecifíco")
-	public String addCargo(@PathVariable("id") Long id, String funcao, double salario) throws Exception {
-		Cargo cBusca = CargoServ.getCargoById(id);
-		if(cBusca==null) {	
-			return CargoServ.addCargo(new Cargo(id, funcao, salario));
-		}else {
-			return "Cargo já adicionada";
-		}
+	public String addCargo(String funcao, double salario) throws Exception {
+		return CargoServ.addCargo(new Cargo(funcao, salario));
 	}
 	
 	@PutMapping("/{id}")

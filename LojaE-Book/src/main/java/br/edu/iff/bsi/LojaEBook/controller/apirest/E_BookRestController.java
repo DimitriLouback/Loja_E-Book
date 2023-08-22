@@ -23,16 +23,11 @@ public class E_BookRestController {
 	@Autowired
 	private E_BookService EBookServ;
 	
-	@PostMapping("/{id}")
+	@PostMapping("")
 	@ResponseBody
 	@Operation(summary = "Adicionar um E-Book em expecifíco")
-	public String addE_Book(@PathVariable("id") Long id, double preco, String titulo, String genero, String autor, String editora, int qtdPaginas) throws Exception {
-		E_Book eBusca = EBookServ.getEBookById(id);
-		if(eBusca==null) {				
-			return EBookServ.addE_Book(new E_Book(id, preco, titulo, genero, autor, editora, qtdPaginas));
-		}else {
-			return "E-Book já adicionado";
-		}
+	public String addE_Book(double preco, String titulo, String genero, String autor, String editora, int qtdPaginas) throws Exception {			
+		return EBookServ.addE_Book(new E_Book(preco, titulo, genero, autor, editora, qtdPaginas));
 	}
 	
 	@PutMapping("/{id}")

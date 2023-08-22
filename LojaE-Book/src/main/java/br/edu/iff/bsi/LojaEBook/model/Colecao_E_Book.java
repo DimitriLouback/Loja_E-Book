@@ -25,13 +25,6 @@ public class Colecao_E_Book extends Produto {
 		e_book = new ArrayList();
 		this.qtdVolumes = e_book.size();
 	}
-	
-	public Colecao_E_Book(Long id, double preco, String serie) {
-		super(id, preco);
-		this.serie = serie;
-		e_book = new ArrayList();
-		this.qtdVolumes = e_book.size();
-	}
 
 	private Colecao_E_Book() {}
 	

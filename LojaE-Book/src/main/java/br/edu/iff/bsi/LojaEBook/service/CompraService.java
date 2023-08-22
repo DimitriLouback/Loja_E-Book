@@ -39,18 +39,6 @@ public class CompraService {
 		}
 	}
 	
-	public String addCompraAPI(Long id, String cpf) {
-		Cliente cl = ClienteRep.buscarPeloCPF(cpf);
-		if(cl==null) {
-			return "Cliente não achado";
-		}else {
-			Compra compra = new Compra(id, cpf);
-			cl.adicionarCompra(compra);
-			Compra c = CompraRep.save(compra);
-			ClienteRep.flush();
-			return "Registrado no id "+c.getId();
-		}
-	}
 	
 	public String atualizarCompra(String idCompra, String cpf) {
 		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));

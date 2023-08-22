@@ -23,16 +23,11 @@ public class ClienteRestController {
 	@Autowired
 	public ClienteService clienteServ;
 	
-	@PostMapping("/{id}")
+	@PostMapping("")
 	@ResponseBody
 	@Operation(summary = "Adicionar um cliente em expecifíco")
-	public String addCliente(@PathVariable("id") Long id, String nome, String email, String cpf, String senha, String telefone) throws Exception {
-		Cliente cBusca = clienteServ.getClienteById(id);
-		if(cBusca==null) {				
-			return clienteServ.addCliente(new Cliente(id, nome, email, cpf, senha, telefone));
-		}else {
-			return "Cliente já adicionado";
-		}
+	public String addCliente(String nome, String email, String cpf, String senha, String telefone) throws Exception {			
+		return clienteServ.addCliente(new Cliente(nome, email, cpf, senha, telefone));
 	}
 	
 	@PutMapping("/{id}")

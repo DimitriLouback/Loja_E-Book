@@ -42,14 +42,6 @@ private static final long serialVersionUID = 1L;
 		this.produto = new ArrayList();
 		this.cpfCliente = cpfCliente;
 	}
-	
-	public Compra(Long id, String cpfCliente) {
-		this.id = id;
-		this.finalizado = false;
-		this.qtdProdutos = 0;
-		this.produto = new ArrayList();
-		this.cpfCliente = cpfCliente;
-	}
 
 	private Compra() {}
 	
