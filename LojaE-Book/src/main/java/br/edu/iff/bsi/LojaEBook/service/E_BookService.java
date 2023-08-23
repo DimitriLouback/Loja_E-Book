@@ -62,13 +62,8 @@ public class E_BookService {
 		return EBookRep.findAll();
 	}
 	
-	public String buscarE_Books(String titulo) {
-		E_Book e = EBookRep.buscarPeloTitulo(titulo);
-		if(e!=null) {			
-			return "Id do E-Book: "+e.getId();
-		}else {
-			return "E-Book não encontrado";
-		}
+	public E_Book buscarE_Books(String titulo) {
+		return EBookRep.buscarPeloTitulo(titulo);
 	}
 
 	public List<E_Book> ListarEBookPeloIdColecao(Long id) {

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Registrar E-Book.</title>
+</head>
+<style>
+table, th, td {
+  border:1px solid black;
+  text-align: center;
+}
+</style>
+<body>
+	
+	<h1>Registrar E-Book.</h1>
+	<form action="#" th:action="@{/e-book/add}" th:object="${e_books}" method="post">
+		<fieldset>
+			<legend>Insira os valores</legend>
+			<p>
+				<label for="Titulo">Título</label> <input type="text" name="titulo"
+					id="titulo" required />
+			</p>
+			<p>
+				<label for="Genero">Gênero</label> <input type="text" name="genero"
+					id="genero" required />
+			</p>
+			<p>
+				<label for="Autor">Autor</label> <input type="text" name="autor"
+					id="autor" required />
+			</p>
+			<p>
+				<label for="Editora">Editora</label> <input type="text"
+					name="editora" id="editora" required />
+			</p>
+			<p>
+				<label for="qtdPaginas">Quantidade de Páginas</label> <input
+					type="text" name="qtdPaginas" id="qtdPaginas" required />
+			</p>
+			<p>
+				<label for="Preco">Preço</label> <input type="text" name="preco"
+					id="preco" required />
+			</p>
+			<p>
+				<button type="submit">Registrar</button>
+			</p>
+
+		</fieldset>
+	</form>
+	
+	<table style="border:none">
+	<tr th:if="${respostaAdd != null}">
+			<td style="border:none" th:text="${respostaAdd}"></td>
+			</tr></table>
+	
+	<h2>Buscar E-Book.</h2>
+	<form action="/e-book/buscaTitulo" method="post">
+		<p>
+			<label for="titulo">Titulo</label> <input type="text" name="titulo"
+				id="titulo" required />
+
+			<button type="submit">Buscar</button>
+		</p>
+	</form>
+	<h3>Resultado da busca:</h3>
+	<table>
+		<tr>
+			<th>Id</th><th>Título</th><th>Preço</th><th>Gênero</th>
+			<th>Autor</th><th>Editora</th><th>Quantidade de Páginas</th> 
+		</tr>
+		<tr th:if="${e_book_achado != null}">
+			<td th:text="${e_book_achado.id}"></td>
+            <td th:text="${e_book_achado.titulo}"></td>
+            <td th:text="${e_book_achado.genero}"></td>
+            <td th:text="${e_book_achado.autor}"></td>
+            <td th:text="${e_book_achado.editora}"></td>
+            <td th:text="${e_book_achado.qtdPaginas}"></td>
+            <td th:text="${e_book_achado.preco}"></td>
+			<td>
+            	<button><a th:href="@{/e-book/editar(id=${e_book_achado.id})}">Editar</a></button>
+             	<button><a th:href="@{/e-book/deletaPorTitulo(titulo=${e_book_achado.titulo})}">Excluir</a></button>
+    		</td>
+    	</tr>
+	</table>
+	
+	<h1>Lista de E-Books.</h1>
+	<table>
+		<tr>
+			<th>Id</th><th>Título</th><th>Preço</th><th>Gênero</th>
+			<th>Autor</th><th>Editora</th><th>Quantidade de Páginas</th> 
+		</tr>
+		<tr th:each="e_book : ${e_books}">
+			<td th:text="${e_book.id}"></td>
+            <td th:text="${e_book.titulo}"></td>
+            <td th:text="${e_book.genero}"></td>
+            <td th:text="${e_book.autor}"></td>
+            <td th:text="${e_book.editora}"></td>
+            <td th:text="${e_book.qtdPaginas}"></td>
+            <td th:text="${e_book.preco}"></td>
+			<td>
+            	<button><a th:href="@{/e-book/editar(id=${e_book.id})}">Editar</a></button>
+             	<button><a th:href="@{/e-book/deletaPorTitulo(titulo=${e_book.titulo})}">Excluir</a></button>
+    		</td>
+    	</tr>
+	</table>
+	
+
+</body>
+</html>

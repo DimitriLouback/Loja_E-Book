@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1>Atualizar E-Book.</h1>
+	<form action="#" th:action="@{/e-book/atualizar}" th:object="${e_book}" method="post">
+		<fieldset>
+			<legend>Insira os valores</legend>
+			<p hidden>
+				<label for="Titulo">Título</label> <input type="text" name="titulo"
+					id="titulo" th:value="*{titulo}" required />
+			</p>
+			<p>
+				<label for="Genero">Novo gênero</label> <input type="text" name="genero"
+					id="genero" th:value="*{genero}" />
+			</p>
+			<p>
+				<label for="Autor">Nova autor</label> <input type="text" name="autor"
+					id="autor" th:value="*{autor}" />
+			</p>
+			<p>
+				<label for="Editora">Nova editora</label> <input type="text"
+					name="editora" id="editora" th:value="*{editora}" />
+			</p>
+			<p>
+				<label for="qtdPaginas">Nova quantidade de páginas</label> <input
+					type="text" name="qtdPaginas" id="qtdPaginas" th:value="*{qtdPaginas}" />
+			</p>
+			<p>
+				<label for="Preco">Novo preço</label> <input type="text" name="preco"
+					id="preco" th:value="*{preco}"  />
+			</p>
+			<p>
+				<button type="submit">Atulizar</button>
+			</p>
+
+		</fieldset>
+	</form>
+
+</body>
+</html>
