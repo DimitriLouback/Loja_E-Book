@@ -20,4 +20,9 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
 	@Query(value="SELECT COUNT(*) FROM ASSOCIACAO_COMPRA_PRODUTO JOIN COMPRA WHERE FK_PRODUTO = ?1 AND FK_COMPRA = ?2", nativeQuery = true)
 	int verificarProdutoCompra(Long idProduto, Long idCompra);
 	
+	@Query(value="SELECT * FROM COMPRA  WHERE CPF_CLIENTE = ?1", nativeQuery = true)
+	List<Compra> BuscarPeloCPF(String cpf);
+	
+	@Query(value="SELECT * FROM COMPRA  WHERE CPF_CLIENTE = ?1 AND FINALIZADO = FALSE", nativeQuery = true)
+	List<Compra> BuscarComprasAbertasPeloCPF(String cpf);
 }

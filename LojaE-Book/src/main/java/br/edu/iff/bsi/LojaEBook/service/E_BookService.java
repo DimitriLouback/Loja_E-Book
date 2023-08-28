@@ -51,8 +51,18 @@ public class E_BookService {
 	public String deletarE_BookTitulo(String titulo) {
 		E_Book e = EBookRep.buscarPeloTitulo(titulo);
 		if(e!=null) {	
-			EBookRep.delete(e);
-			return "E-Book deletado no id "+e.getId();
+			if(EBookRep.BuscarColecaoAssociadaEBook(e.getId())==null) {
+				if(EBookRep.QtdCompraAbertaAssociadaEBook(e.getId())!=0){
+					return "Ainda possui compra não finalizada associada ao E-Book";
+				}else {					
+					EBookRep.delete(e);
+					return "E-Book deletado no id "+e.getId();				
+				}
+			}
+			else {
+			
+				return "Ainda possui coleção associada ao E-Book";
+			}
 		}else {
 			return "E-Book não encontrado";
 		}

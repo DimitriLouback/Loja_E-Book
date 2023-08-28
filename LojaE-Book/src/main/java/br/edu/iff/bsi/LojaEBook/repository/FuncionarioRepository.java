@@ -22,4 +22,5 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
 	
 	@Query(value="SELECT TELEFONE FROM FUNCIONARIO_TELEFONE JOIN FUNCIONARIO WHERE CPF = ?1 AND ID = FUNCIONARIO_ID", nativeQuery = true)
 	List<String> ListarTelefonePeloCPF(String CPF);
+	
 }

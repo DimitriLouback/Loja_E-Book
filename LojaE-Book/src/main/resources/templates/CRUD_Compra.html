@@ -2,35 +2,125 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Registrar Compra.</title>
+<title>CRUD Compra.</title>
 </head>
+<style>
+table, th, td {
+	border: 1px solid black;
+	text-align: center;
+}
+</style>
 <body>
-	<h1>Registrar Compra.</h1>
-	<form action="/compra/" method="post">
-		<fieldset>
-			<legend>Insira os valores</legend>
-			<p>
-				<label for="cpf">CPF do Cliente</label> <input type="text"
-					name="cpf" id="cpf" required />
-			</p>
-			<p>
-				<button type="submit">Registrar</button>
-			</p>
 
-		</fieldset>
-	</form>
+	<button>
+		<a th:href="@{/compra/addForm}">Adicionar</a>
+	</button>
+	<button>
+		<a th:href="@{/compra/listarCompras}">Listar</a>
+	</button>
 
+	<div th:if="${compra_add != null}">
+		<h1>Registrar uma nova Compra.</h1>
+		<form action="#" th:action="@{/compra/add}" th:object="${compra_add}"
+			method="post">
+			<fieldset>
+				<legend>Escolha o cliente associado à compra</legend>
+				<div th:if="${#lists.isEmpty(cliente_lista)}">
+					<p>Nenhum cliente disponível no momento.</p>
+				</div>
+				<div th:unless="${#lists.isEmpty(cliente_lista)}">
+					<p>
+						<label for="cliente">Clientes:</label> <br /> <span
+							th:each="clienteAtual:${cliente_lista}"> <input
+							type="radio" name="clienteEscolhido"
+							th:value="${clienteAtual.cpf}" required /> Nome: <label
+							for="nome" th:text="${clienteAtual.nome}"></label> | CPF: <label
+							for="cpf" th:text="${clienteAtual.cpf}"></label><br />
+						</span>
+
+					</p>
+					<p>
+						<button type="submit">Registrar</button>
+					</p>
+				</div>
+
+
+			</fieldset>
+		</form>
+
+		<table style="border: none">
+			<tr th:if="${respostaAdd != null}">
+				<td style="border: none" th:text="${respostaAdd}"></td>
+			</tr>
+		</table>
+	</div>
+
+	<div th:if="${compra_lista != null}">
+		<h2>Buscar Compra.</h2>
+		<form action="/compra/buscaCompra" method="post">
+			<p>
+				<label for="cpf">CPF do Cliente</label> <input type="text" name="cpf"
+					id="cpf" required />
+
+				<button type="submit">Buscar</button>
+			</p>
+		</form>
+
+		<h1>Lista de todas as Compras.</h1>
+		<table>
+			<tr>
+				<th>Id</th>
+				<th>CPF do Cliente</th>
+				<th>Preço Final</th>
+				<th>Quantidade de Produtos</th>
+				<th>Data e hora da finalização</th>
+				<th>Está finalizado</th>
+			</tr>
+			<tr th:each="compra : ${compra_lista}" th:if="${compra.cpfCliente != null}">
+				<td th:text="${compra.id}"></td>
+				<td th:text="${compra.cpfCliente}"></td>
+				<td th:text="${compra.precoFinal}"></td>
+				<td th:text="${compra.qtdProdutos}"></td>
+				<td th:text="${compra.dataHora}"></td>
+				<td th:text="${compra.finalizado}"></td>
+				<td>
+					<button th:if="${compra.finalizado}==false">
+						<a th:href="@{/compra/editar(id=${compra.id})}">Editar</a>
+					</button>
+					<button>
+						<a th:href="@{/compra/deletar(id=${compra.id})}">Excluir</a>
+					</button>
+					<button th:if="${compra.finalizado}==false">
+						<a th:href="@{/compra/finalizar(id=${compra.id})}">Finalizar</a>
+					</button>
+				</td>
+			</tr>
+		</table>
+		<table style="border: none">
+			<tr th:if="${respostaFinalizar != null}">
+				<td style="border: none" th:text="${respostaFinalizar}"></td>
+			</tr>
+		</table>
+	</div>
+
+	<div th:if="${compra_edit != null}">
 	<h1>Atualizar Compra.</h1>
-	<form action="/compra/atualizar" method="post">
+	<form action="#" th:action="@{/compra/atualizar}"
+			th:object="${compra_edit}" method="post">
 		<fieldset>
 			<legend>Insira os valores</legend>
-			<p>
-				<label for="idCompra">Id Compra</label> <input type="text"
-					name="idCompra" id="idCompra" required />
+			<p hidden>
+				<label for="id">Id Compra</label> <input type="number"
+					name="id" id="id" th:value="*{id}" required />
 			</p>
 			<p>
-				<label for="cpf">CPF do novo Cliente</label> <input type="text"
-					name="cpf" id="cpf" required />
+				<label for="cpf">CPF do novo Cliente</label><br/> <span
+							th:each="clienteAtual:${cliente_lista}"> <input
+							type="radio" name="clienteEscolhido"
+							th:value="${clienteAtual.cpf}" th:checked="${clienteAtual.cpf == compra_edit.cpfCliente}" required /> Nome: <label
+							for="nome" th:text="${clienteAtual.nome}"></label> | CPF: <label
+							for="cpf" th:text="${clienteAtual.cpf}"></label><br />
+						</span>
 			</p>
 			<p>
 				<button type="submit">Atualizar</button>
@@ -39,100 +129,76 @@
 		</fieldset>
 	</form>
 	
-	<h2>Deletar Compra.</h2>
-	<form action="/compra/deletar" method="post">
-		
-			<p>
-				<label for="idCompra">Id Compra</label> <input type="text"
-					name="idCompra" id="idCompra" required />
-					
-				<button type="submit">Deletar</button>
-			</p>
-
-	</form>
-
-	<h2>Listar Compras.</h2>
-	<form action="/compra/listarCompras" method="post">
-		<p>
-			<button type="submit">Listar</button>
-		</p>
-	</form>
-
-	<h2>Adicionar E-Book.</h2>
+	<h2>Lista de E-Books.</h2>
+		<table>
+			<tr>
+				<th>Id</th>
+				<th>Título</th>
+				<th>Gênero</th>
+				<th>Autor</th>
+				<th>Editora</th>
+				<th>Quantidade de Páginas</th>
+				<th>Preço</th>
+			</tr>
+			<tr th:each="e_book : ${e_book_lista}" th:if="${e_book.titulo != null}">
+				<td th:text="${e_book.id}"></td>
+				<td th:text="${e_book.titulo}"></td>
+				<td th:text="${e_book.genero}"></td>
+				<td th:text="${e_book.autor}"></td>
+				<td th:text="${e_book.editora}"></td>
+				<td th:text="${e_book.qtdPaginas}"></td>
+				<td th:text="${e_book.preco}"></td>
+				<td>
+					<button>
+						<a th:href="@{/compra/removeE_Book(id=${compra_edit.id},titulo=${e_book.titulo})}">Excluir</a>
+					</button>
+				</td>
+			</tr>
+		</table>
+	<h3>Adicionar E-Book.</h3>
 	<form action="/compra/addE_Book" method="post">
-		<p>
-			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
-				id="idCompra" required /> <label for="titulo">Titulo:</label> <input
+		<p hidden>
+			<label for="id">Id Compra</label> <input type="number" name="id"
+				id="id" th:value="*{compra_edit.id}" required /></p>
+				<p> <label for="titulo">Titulo:</label> <input
 				type="text" name="titulo" id="titulo" required />
 
 			<button type="submit">Adicionar</button>
 		</p>
 	</form>
-
-	<h2>Remover E-Book.</h2>
-	<form action="/compra/removeE_Book" method="post">
-		<p>
-			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
-				id="idCompra" required /> <label for="titulo">Titulo:</label> <input
-				type="text" name="titulo" id="titulo" required />
-
-			<button type="submit">Remover</button>
-		</p>
-	</form>
 	
-	<h2>Listar E-Books de uma Compra.</h2>
-	<form action="/compra/listarE_Books" method="post">
-		<p>
-			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
-				id="idCompra" required />
-
-			<button type="submit">Listar</button>
-		</p>
-	</form>
-	
-	<h2>Adicionar Coleção de E-Book.</h2>
+	<h2>Lista de Coleções de E-Books.</h2>
+		<table>
+			<tr>
+				<th>Id</th>
+				<th>Serie</th>
+				<th>Preço</th>
+				<th>Quantidade de Volumes</th>
+			</tr>
+			<tr th:each="colecao_e_book : ${colecao_e_book_lista}" th:if="${colecao_e_book.serie != null}">
+				<td th:text="${colecao_e_book.id}"></td>
+				<td th:text="${colecao_e_book.serie}"></td>
+				<td th:text="${colecao_e_book.preco}"></td>
+				<td th:text="${colecao_e_book.qtdVolumes}"></td>
+				<td>
+					<button>
+						<a th:href="@{/compra/removeColecaoE_Book(id=${compra_edit.id},serie=${colecao_e_book.serie})}">Excluir</a>
+					</button>
+				</td>
+			</tr>
+		</table>
+	<h3>Adicionar Coleção de E-Book.</h3>
 	<form action="/compra/addColecaoE_Book" method="post">
-		<p>
-			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
-				id="idCompra" required /> <label for="serie">Série:</label> <input
+		<p hidden>
+			<label for="id">Id Compra</label> <input type="text" name="id"
+				id="id" th:value="*{compra_edit.id}" required /></p>
+				<p> <label for="serie">Série:</label> <input
 				type="text" name="serie" id="serie" required />
 
 			<button type="submit">Adicionar</button>
 		</p>
 	</form>
-
-	<h2>Remover Coleção de E-Book.</h2>
-	<form action="/compra/removeColecaoE_Book" method="post">
-		<p>
-			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
-				id="idCompra" required /> <label for="serie">Série:</label> <input
-				type="text" name="serie" id="serie" required />
-
-			<button type="submit">Remover</button>
-		</p>
-	</form>
-	
-	<h2>Listar Coleçaões E-Book de uma Compra.</h2>
-	<form action="/compra/listarColecoesE_Book" method="post">
-		<p>
-			<label for="idCompra">Id Compra</label> <input type="text" name="idCompra"
-				id="idCompra" required />
-
-			<button type="submit">Listar</button>
-		</p>
-	</form>
-	
-	<h2>Finalizar Compra.</h2>
-	<form action="/compra/finalizar" method="post">
-		
-			<p>
-				<label for="idCompra">Id Compra</label> <input type="text"
-					name="idCompra" id="idCompra" required />
-					
-				<button type="submit">Finalizar</button>
-			</p>
-
-	</form>
+	</div>
 
 </body>
 </html>

@@ -22,4 +22,7 @@ public interface Colecao_E_BookRepository extends JpaRepository<Colecao_E_Book, 
 	
 	@Query(value="SELECT * FROM COLECAO_E_BOOK WHERE ID IN(SELECT FK_PRODUTO FROM ASSOCIACAO_COMPRA_PRODUTO CP WHERE FK_COMPRA = ?1)", nativeQuery = true)
 	List<Colecao_E_Book> ListarColecaoEBookPeloIdCompra(Long id);
+	
+	@Query(value="SELECT COUNT(*) FROM ASSOCIACAO_COMPRA_PRODUTO JOIN COLECAO_E_BOOK JOIN COMPRA WHERE FK_PRODUTO = COLECAO_E_BOOK.ID AND FK_COMPRA = COMPRA.ID AND COMPRA.FINALIZADO = FALSE AND COLECAO_E_BOOK.ID = ?1", nativeQuery = true)
+	int QtdCompraAbertaAssociadaColecaoEBook(Long id);
 }

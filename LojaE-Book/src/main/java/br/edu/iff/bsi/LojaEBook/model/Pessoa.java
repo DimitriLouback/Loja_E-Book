@@ -64,6 +64,10 @@ public abstract class Pessoa implements Serializable {
 		return senha;
 	}
 	
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
@@ -82,6 +86,10 @@ public abstract class Pessoa implements Serializable {
 	
 	public void removerTelefone(String telefone) {
 		this.telefone.remove(telefone);
+	}
+	
+	public List<String> getTelefone() {
+		return telefone;
 	}
 	
 	public int getQtdTelefones() {

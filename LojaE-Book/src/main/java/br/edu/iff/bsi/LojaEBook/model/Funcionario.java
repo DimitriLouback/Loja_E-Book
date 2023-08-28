@@ -17,7 +17,7 @@ public class Funcionario extends Pessoa {
 	}
 	
 
-	private Funcionario() {}
+	public Funcionario() {}
 
 	public Cargo getCargo() {
 		return cargo;

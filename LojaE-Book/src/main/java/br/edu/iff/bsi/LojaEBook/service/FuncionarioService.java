@@ -24,7 +24,7 @@ public class FuncionarioService {
 		}else{			
 			Cargo cargoBusca = CargoRep.buscarPelaFuncao(funcao);
 			if(cargoBusca == null) {
-				return "Cargo não existe";
+				return "Cargo não definido";
 			}else {
 				funcionario.setCargo(cargoBusca);
 				Funcionario f = FuncionarioRep.save(funcionario);
@@ -74,13 +74,8 @@ public class FuncionarioService {
 		return FuncionarioRep.findAll();
 	}
 	
-	public String buscarFuncionarioCPF(String cpf) {
-		Funcionario f = FuncionarioRep.buscarPeloCPF(cpf);
-		if(f!=null) {			
-			return "Id do funcionário: "+f.getId();
-		}else {
-			return "Funcionário não encontrado";
-		}
+	public Funcionario buscarFuncionarioCPF(String cpf) {
+		return FuncionarioRep.buscarPeloCPF(cpf);
 	}
 	
 	public String addTelefone(String cpf, String telefone) {

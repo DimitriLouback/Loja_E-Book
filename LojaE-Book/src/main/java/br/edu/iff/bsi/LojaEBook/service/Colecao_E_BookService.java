@@ -42,9 +42,13 @@ public class Colecao_E_BookService {
 	
 	public String deletarE_BookSerie(String serie) {
 		Colecao_E_Book ce = Colecao_E_BookRep.buscarPelaSerie(serie);
-		if(ce!=null) {	
-			Colecao_E_BookRep.delete(ce);
-			return "Coleçao de E-Book deletado no id "+ce.getId();
+		if(ce!=null) {
+			if(Colecao_E_BookRep.QtdCompraAbertaAssociadaColecaoEBook(ce.getId())==0) {
+				Colecao_E_BookRep.delete(ce);
+				return "Coleçao de E-Book deletado no id "+ce.getId();				
+			}else {
+				return "Ainda possui compra não finalizada associada a colecao de E-Book";
+			}
 		}else {
 			return "Coleçao de E-Book não encontrado";
 		}
@@ -54,13 +58,8 @@ public class Colecao_E_BookService {
 		return Colecao_E_BookRep.findAll();
 	}
 	
-	public String buscarColecao_E_Books(String serie) {
-		Colecao_E_Book c = Colecao_E_BookRep.buscarPelaSerie(serie);
-		if(c!=null) {			
-			return "Id da Coleão de E-Book: "+c.getId();
-		}else {
-			return "Coleção de E-Book não encontrada";
-		}
+	public Colecao_E_Book buscarColecao_E_Books(String serie) {
+		return Colecao_E_BookRep.buscarPelaSerie(serie);
 	}
 	
 	public Colecao_E_Book buscarPelaSerie(String serie) {

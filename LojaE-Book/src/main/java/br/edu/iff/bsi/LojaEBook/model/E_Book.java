@@ -27,7 +27,7 @@ public class E_Book extends Produto {
 	}
 	
 
-	private E_Book() {}
+	public E_Book() {}
 	
 	public String getTitulo() {
 		return titulo;
@@ -48,6 +48,11 @@ public class E_Book extends Produto {
 	public int getQtdPaginas() {
 		return qtdPaginas;
 	}
+	
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
 
 	public void setGenero(String genero) {
 		this.genero = genero;

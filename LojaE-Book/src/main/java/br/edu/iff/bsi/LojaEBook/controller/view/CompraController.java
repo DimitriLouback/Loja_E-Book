@@ -1,5 +1,7 @@
 package br.edu.iff.bsi.LojaEBook.controller.view;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import br.edu.iff.bsi.LojaEBook.model.Colecao_E_Book;
 import br.edu.iff.bsi.LojaEBook.model.Compra;
-import br.edu.iff.bsi.LojaEBook.model.E_Book;
+import br.edu.iff.bsi.LojaEBook.service.ClienteService;
 import br.edu.iff.bsi.LojaEBook.service.CompraService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("compra")
@@ -21,76 +23,104 @@ public class CompraController {
 
 	@Autowired
 	private CompraService CompraServ;
+	@Autowired
+	public ClienteService clienteServ;
 	
 	@GetMapping("")
-	public String page(Model model) throws Exception {
-		model.addAttribute("compras", CompraServ.listarCompras());
-		return "formCompra";
+	public String page() throws Exception {
+		return "CRUD_Compra";
+	}
+
+	@GetMapping("/addForm")
+	public String addCompraForm(Model model, HttpServletRequest request) throws Exception {
+		model.addAttribute("compra_add", new Compra());
+		model.addAttribute("cliente_lista", clienteServ.listarClientes());
+		String resposta = request.getParameter("resposta");
+	    if (resposta != null) {
+	        model.addAttribute("respostaAdd", URLDecoder.decode(resposta, "UTF-8"));
+	    }
+		return "CRUD_Compra";
 	}
 	
-	@PostMapping("/")
-	@ResponseBody
-	public String addCompra(String cpf) throws Exception {
-		return CompraServ.addCompra(cpf);
+	@PostMapping("/add")
+	public String addCompra(@RequestParam String clienteEscolhido) throws Exception {
+		String resposta = CompraServ.addCompra(clienteEscolhido);
+		return "redirect:/compra/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+	}
+
+	@GetMapping("/listarCompras")
+	public String listarCompras(Model model, HttpServletRequest request) throws Exception {
+		String cpf = request.getParameter("cpf");
+		String resposta = request.getParameter("resposta");
+		if(cpf==null) {			
+			model.addAttribute("compra_lista", CompraServ.listarCompras());
+		}else {
+			List<Compra> busca = CompraServ.buscarPeloCPFCliente(URLDecoder.decode(cpf, "UTF-8"));
+			if(busca==null) {
+				model.addAttribute("compra_lista", new Compra());
+			}else {			
+				model.addAttribute("compra_lista", busca);
+			}
+		}
+		if (resposta != null) {
+	        model.addAttribute("respostaFinalizar", URLDecoder.decode(resposta, "UTF-8"));
+	    }
+		return "CRUD_Compra";
+	}
+	
+	@PostMapping("/buscaCompra")
+	public String buscarCompra(String cpf) throws Exception {
+		return "redirect:/compra/listarCompras?cpf="+URLEncoder.encode(cpf, "UTF-8");
+	}
+	
+	@GetMapping("/editar")
+	public String formEditar(Long id, Model model) throws Exception {
+		model.addAttribute("compra_edit", CompraServ.getCompraById(id));
+		model.addAttribute("cliente_lista", clienteServ.listarClientes());
+		model.addAttribute("e_book_lista", CompraServ.ListarEBookPeloIdCompra(id));
+		model.addAttribute("colecao_e_book_lista", CompraServ.ListarColecaoEBookPeloIdCompra(id));
+		return "CRUD_Compra";
 	}
 	
 	@PostMapping("/atualizar")
-	@ResponseBody
-	public String atualizarCompra(String idCompra, String cpf) throws Exception {
-		return CompraServ.atualizarCompra(idCompra, cpf);
+	public String atualizarCompra(Long id, String clienteEscolhido) throws Exception {
+		CompraServ.atualizarCompra(id, clienteEscolhido);
+		return "redirect:/compra/editar?id="+id;
 	}
 	
-	@PostMapping("/deletar")
-	@ResponseBody
-	public String deletarCompra(String idCompra) throws Exception {
-		return CompraServ.deletarCompra(idCompra);
-	}
-	
-	@PostMapping("/listarCompras")
-	@ResponseBody
-	public List<Compra> listarCompras() throws Exception {
-		return CompraServ.listarCompras();
+	@GetMapping("/deletar")
+	public String deletarCompra(@RequestParam Long id) throws Exception {
+		CompraServ.deletarCompra(id);
+		return "redirect:/compra/listarCompras";
 	}
 	
 	@PostMapping("/addE_Book")
-	@ResponseBody
-	public String addE_Book(String idCompra, String titulo) throws Exception {
-		return CompraServ.addE_Book(idCompra, titulo);
+	public String addE_Book(String id, String titulo) throws Exception {
+		CompraServ.addE_Book(id, titulo);
+		return "redirect:/compra/editar?id="+id;
 	}
 	
-	@PostMapping("/listarE_Books")
-	@ResponseBody
-	public List<E_Book> listarE_Books(String idCompra) throws Exception {
-		return CompraServ.ListarEBookPeloIdCompra(Long.parseLong(idCompra));
-	}
-	
-	@PostMapping("/removeE_Book")
-	@ResponseBody
-	public String removeE_Book(String idCompra, String titulo) throws Exception {
-		return CompraServ.removeE_Book(idCompra, titulo);
+	@GetMapping("/removeE_Book")
+	public String removeE_Book(String id, String titulo) throws Exception {
+		CompraServ.removeE_Book(id, titulo);
+		return "redirect:/compra/editar?id="+id;
 	}
 	
 	@PostMapping("/addColecaoE_Book")
-	@ResponseBody
-	public String addColecaoE_Book(String idCompra, String serie) throws Exception {
-		return CompraServ.addColecaoE_Book(idCompra, serie);
+	public String addColecaoE_Book(String id, String serie) throws Exception {
+		CompraServ.addColecaoE_Book(id, serie);
+		return "redirect:/compra/editar?id="+id;
 	}
 	
-	@PostMapping("/removeColecaoE_Book")
-	@ResponseBody
-	public String removeColecaoE_Book(String idCompra, String serie) throws Exception {
-		return CompraServ.removeColecaoE_Book(idCompra, serie);
+	@GetMapping("/removeColecaoE_Book")
+	public String removeColecaoE_Book(String id, String serie) throws Exception {
+		CompraServ.removeColecaoE_Book(id, serie);
+		return "redirect:/compra/editar?id="+id;
 	}
 	
-	@PostMapping("/listarColecoesE_Book")
-	@ResponseBody
-	public List<Colecao_E_Book> listarColecoesE_Book(String idCompra) throws Exception {
-		return CompraServ.ListarColecaoEBookPeloIdCompra(Long.parseLong(idCompra));
-	}
-	
-	@PostMapping("/finalizar")
-	@ResponseBody
-	public String finalizarCompra(String idCompra) throws Exception {
-		return CompraServ.finalizarCompraPeloId(idCompra);
+	@GetMapping("/finalizar")
+	public String finalizarCompra(Long id) throws Exception {
+		String resposta = CompraServ.finalizarCompraPeloId(id);
+		return "redirect:/compra/listarCompras?resposta=" + URLEncoder.encode(resposta, "UTF-8");
 	}
 }

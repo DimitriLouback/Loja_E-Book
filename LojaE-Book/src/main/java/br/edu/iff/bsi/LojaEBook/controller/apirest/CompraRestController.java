@@ -36,14 +36,14 @@ public class CompraRestController {
 	@PutMapping("/{id}")
 	@ResponseBody
 	@Operation(summary = "Atualizar uma compra em expecifíco")
-	public String atualizarCompra(@PathVariable("id") String id, String cpf) throws Exception {
+	public String atualizarCompra(@PathVariable("id") Long id, String cpf) throws Exception {
 		return CompraServ.atualizarCompra(id, cpf);
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseBody
 	@Operation(summary = "Deletar uma compra em expecifíco")
-	public String deletarCompra(@PathVariable("id") String id) throws Exception {
+	public String deletarCompra(@PathVariable("id") Long id) throws Exception {
 		return CompraServ.deletarCompra(id);
 	}
 	
@@ -106,7 +106,7 @@ public class CompraRestController {
 	@PatchMapping("/{id}")
 	@ResponseBody
 	@Operation(summary = "Finalizar uma compra em expecifíco")
-	public String finalizarCompra(@PathVariable("id") String id) throws Exception {
+	public String finalizarCompra(@PathVariable("id") Long id) throws Exception {
 		return CompraServ.finalizarCompraPeloId(id);
 	}
 }

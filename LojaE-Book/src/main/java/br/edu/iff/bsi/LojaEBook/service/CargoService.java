@@ -43,8 +43,12 @@ public class CargoService {
 	public String deletarCargoFuncao(String funcao) throws Exception {
 		Cargo c = CargoRep.buscarPelaFuncao(funcao);
 		if(c!=null) {	
-			CargoRep.delete(c);
-			return "Cargo deletado no id "+c.getId();
+			if(CargoRep.BuscarFuncionariosPeloCargo(funcao)==0) {
+				CargoRep.delete(c);
+				return "Cargo deletado no id "+c.getId();				
+			}else {
+				return "O cargo ainda possui funcionários afiliados";
+			}
 		}else {
 			return "Cargo não encontrado";
 		}

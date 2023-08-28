@@ -1,6 +1,7 @@
 package br.edu.iff.bsi.LojaEBook.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -43,14 +44,19 @@ private static final long serialVersionUID = 1L;
 		this.cpfCliente = cpfCliente;
 	}
 
-	private Compra() {}
+	public Compra() {}
 	
 	public Long getId() {
 		return id;
 	}
 
-	public Calendar getDataHora() {
-		return dataHora;
+	public String getDataHora() {
+		if (dataHora != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            return dateFormat.format(dataHora.getTime());
+        } else {
+            return "";
+        }
 	}
 
 	public int getQtdProdutos() {

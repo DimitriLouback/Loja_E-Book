@@ -25,7 +25,7 @@ public class Cliente extends Pessoa {
 		this.compra = new ArrayList();
 	}
 	
-	private Cliente() {}
+	public Cliente() {}
 
 	public void setCarteira(Carteira carteira) {
 		this.carteira = carteira;

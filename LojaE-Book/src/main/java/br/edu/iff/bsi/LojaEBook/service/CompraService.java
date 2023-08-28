@@ -40,8 +40,8 @@ public class CompraService {
 	}
 	
 	
-	public String atualizarCompra(String idCompra, String cpf) {
-		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));
+	public String atualizarCompra(Long idCompra, String cpf) {
+		Compra c = CompraRep.BuscarPeloId(idCompra);
 		if(c==null) {
 			return "Compra não achada";
 		}else {		
@@ -64,12 +64,12 @@ public class CompraService {
 		}
 	}
 	
-	public String deletarCompra(String idCompra) {
-		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));
+	public String deletarCompra(Long idCompra) {
+		Compra c = CompraRep.BuscarPeloId(idCompra);
 		if(c==null) {
 			return "Compra não achada";
 		}else {		
-			Long idCliente = CompraRep.BuscarPeloIdCliente(Long.parseLong(idCompra));
+			Long idCliente = CompraRep.BuscarPeloIdCliente(idCompra);
 			Cliente cl = ClienteRep.BuscarPeloId(idCliente);
 			if(cl==null) {
 				return "Cliente não achado";
@@ -187,8 +187,8 @@ public class CompraService {
 		return Colecao_E_BookRep.ListarColecaoEBookPeloIdCompra(id);
 	}
 	
-	public String finalizarCompraPeloId(String idCompra) {
-		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));
+	public String finalizarCompraPeloId(Long idCompra) {
+		Compra c = CompraRep.BuscarPeloId(idCompra);
 		if(c==null) {
 			return "Compra não encontrada";
 		}else {	
@@ -216,4 +216,8 @@ public class CompraService {
 	public Compra getCompraById(Long id) {
 		return CompraRep.BuscarPeloId(id);
 	}
+	
+	public List<Compra> buscarPeloCPFCliente(String cpf) throws Exception {
+		return CompraRep.BuscarPeloCPF(cpf);
+	} 
 }

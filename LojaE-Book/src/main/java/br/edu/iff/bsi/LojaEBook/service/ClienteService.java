@@ -9,6 +9,7 @@ import br.edu.iff.bsi.LojaEBook.model.Carteira;
 import br.edu.iff.bsi.LojaEBook.model.Cliente;
 import br.edu.iff.bsi.LojaEBook.repository.CarteiraRepository;
 import br.edu.iff.bsi.LojaEBook.repository.ClienteRepository;
+import br.edu.iff.bsi.LojaEBook.repository.CompraRepository;
 
 @Service
 public class ClienteService {
@@ -17,6 +18,8 @@ public class ClienteService {
 	private ClienteRepository ClienteRep;
 	@Autowired
 	private CarteiraRepository CarteiraRep;
+	@Autowired
+	private CompraRepository CompraRep;
 	
 	
 	public Carteira salvarCarteira(Carteira carteira) {
@@ -55,9 +58,13 @@ public class ClienteService {
 	
 	public String deletarCliente(String cpf) {
 		Cliente c = ClienteRep.buscarPeloCPF(cpf);
-		if(c!=null) {	
-			ClienteRep.delete(c);
-			return "Cliente deletado no id "+c.getId();
+		if(c!=null) {
+			if(CompraRep.BuscarComprasAbertasPeloCPF(cpf).isEmpty()) {
+				ClienteRep.delete(c);
+				return "Cliente deletado no id "+c.getId();
+			}else {
+				return "Cliente ainda tem compras não finalizadas";
+			}
 		}else {
 			return "Cliente não encontrado";
 		}
@@ -67,13 +74,8 @@ public class ClienteService {
 		return ClienteRep.findAll();
 	}
 	
-	public String buscarClienteCPF(String cpf) throws Exception {
-		Cliente c = ClienteRep.buscarPeloCPF(cpf);
-		if(c!=null) {			
-			return "Id do cliente: "+c.getId();
-		}else {
-			return "Cliente não encontrado";
-		}
+	public Cliente buscarClienteCPF(String cpf) throws Exception {
+		return ClienteRep.buscarPeloCPF(cpf);
 	}
 	
 	public List<String> ListarTelefonePeloCPF(String cpf){

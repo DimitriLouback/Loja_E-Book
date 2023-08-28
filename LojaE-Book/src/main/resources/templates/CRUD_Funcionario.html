@@ -2,37 +2,58 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Registrar Funcionário.</title>
+<title>CRUD Funcionário.</title>
 </head>
+<style>
+table, th, td {
+	border: 1px solid black;
+	text-align: center;
+}
+</style>
 <body>
+
+	<button>
+		<a th:href="@{/funcionario/addForm}">Adicionar</a>
+	</button>
+	<button>
+		<a th:href="@{/funcionario/listarFuncionarios}">Listar</a>
+	</button>
+
+	<div th:if="${funcionario_add != null}">
 	<h1>Registrar Funcionário.</h1>
-	<form action="/funcionario/" method="post">
+	<form action="#" th:action="@{/funcionario/add}" th:object="${funcionario_add}"
+			method="post">
 		<fieldset>
 			<legend>Insira os valores</legend>
 			<p>
-				<label for="nome">Nome</label> <input type="text" name="nome"
-					id="nome" required />
-			</p>
-			<p>
-				<label for="email">Email</label> <input type="text" name="email"
-					id="email" required />
-			</p>
-			<p>
-				<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
-					required />
-			</p>
-			<p>
-				<label for="senha">Senha</label> <input type="text" name="senha"
-					id="senha" required />
-			</p>
-			<p>
-				<label for="telefone">Telefone:</label> <input type="text"
-					name="telefone" id="telefone" required />
-			</p>
-			<p>
-				<label for="funcao">Função do cargo:</label> <input type="text"
-					name="funcao" id="funcao" required />
-			</p>
+					<label for="nome">Nome</label> <input type="text" name="nome"
+						id="nome" th:field="*{nome}" required />
+				</p>
+				<p>
+					<label for="email">Email</label> <input type="email" name="email"
+						id="email" th:field="*{email}" required />
+				</p>
+				<p>
+					<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+						th:field="*{cpf}" required />
+				</p>
+				<p>
+					<label for="senha">Senha</label> <input type="text" name="senha"
+						id="senha" th:field="*{senha}" required />
+				</p>
+				<p>
+					<label for="telefone">Telefone:</label> <input type="tel"
+						name="telefone" th:field="*{telefone[0]}" id="telefone" required />
+				</p>
+				<p>
+				<label for="cargo">Cargo:</label>
+						<br/>
+						<span th:each="cargoAtual:${cargo_lista}">
+							<input type="radio" name="cargoEscolhido" th:value="${cargoAtual.funcao}" required />
+							<label for="funcao" th:text="${cargoAtual.funcao}"></label><br/>
+						</span>
+					
+				</p>
 			<p>
 				<button type="submit">Registrar</button>
 			</p>
@@ -40,30 +61,88 @@
 		</fieldset>
 	</form>
 
+	<table style="border: none">
+			<tr th:if="${respostaAdd != null}">
+				<td style="border: none" th:text="${respostaAdd}"></td>
+			</tr>
+		</table>
+	</div>
+
+
+	<div th:if="${funcionario_lista != null}">
+		<h2>Buscar Funcionário.</h2>
+		<form action="/funcionario/buscaCPF" method="post">
+			<p>
+				<label for="cpf">CPF</label> <input type="text" name="cpf"
+					id="cpf" required />
+
+				<button type="submit">Buscar</button>
+			</p>
+		</form>
+
+		<h1>Lista de Funcionários.</h1>
+		<table>
+			<tr>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>Email</th>
+				<th>CPF</th>
+				<th>Senha</th>
+				<th>Cargo</th>
+				<th>Telefones</th>
+			</tr>
+			<tr th:each="funcionario : ${funcionario_lista}" th:if="${funcionario.cpf != null}">
+				<td th:text="${funcionario.id}"></td>
+				<td th:text="${funcionario.nome}"></td>
+				<td th:text="${funcionario.email}"></td>
+				<td th:text="${funcionario.cpf}"></td>
+				<td th:text="${funcionario.senha}"></td>
+				<td th:text="${funcionario.getCargo.getFuncao}"></td>
+				<td th:text="${#strings.listJoin(funcionario.telefone, ', ')}"></td>
+				<td>
+					<button>
+						<a th:href="@{/funcionario/editar(id=${funcionario.id})}">Editar</a>
+					</button>
+					<button>
+						<a th:href="@{/funcionario/deletePorCPF(cpf=${funcionario.cpf})}">Excluir</a>
+					</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	
+	<div th:if="${funcionario_edit != null}">
 	<h1>Atualizar Funcionario.</h1>
-	<form action="/funcionario/atualizar" method="post">
-		<fieldset>
+	<form action="#" th:action="@{/funcionario/atualizar}"
+			th:object="${funcionario_edit}" method="post">
+			<fieldset>
 			<legend>Insira os valores</legend>
-			<p>
+			<p hidden>
 				<label for="cpf">CPF do Cliente</label> <input type="text"
-					name="cpf" id="cpf" required />
+					name="cpf" id="cpf" th:value="*{cpf}" required />
 			</p>
 			<p>
-				<label for="nome">Novo Nome</label> <input type="text" name="nome"
-					id="nome" />
-			</p>
+					<label for="nome">Novo Nome</label> <input type="text" name="nome"
+						id="nome" th:value="*{nome}" />
+				</p>
+				<p>
+					<label for="email">Novo Email</label> <input type="email"
+						name="email" id="email" th:value="*{email}" />
+				</p>
+				<p>
+					<label for="senha">Nova Senha</label> <input type="text"
+						name="senha" id="senha" th:value="*{senha}" />
+				</p>
 			<p>
-				<label for="email">Novo Email</label> <input type="text"
-					name="email" id="email" />
-			</p>
-			<p>
-				<label for="senha">Nova Senha</label> <input type="text"
-					name="senha" id="senha" />
-			</p>
-			<p>
-				<label for="funcao">Nova função do cargo:</label> <input type="text"
-					name="funcao" id="funcao" />
-			</p>
+				<label for="cargo">Novo Cargo:</label>
+						<br/>
+						<span th:each="cargoAtual:${cargo_lista}">
+							<input type="radio" name="cargoEscolhido" th:value="${cargoAtual.funcao}" th:checked="${cargoAtual.funcao == funcionario_edit.getCargo.getFuncao}"/>
+							<label for="funcao" th:text="${cargoAtual.funcao}"></label><br/>
+						</span>
+					
+				</p>
 			<p>
 				<button type="submit">Atualizar</button>
 			</p>
@@ -71,64 +150,35 @@
 		</fieldset>
 	</form>
 
-	<h2>Deletar Funcionario.</h2>
-	<form action="/funcionario/deletePorCPF" method="post">
-		<p>
-			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
-				required />
+	<h2>Lista de Telefones.</h2>
+		<table>
+			<tr>
+				<th>Telefones</th>
+			</tr>
+			<tr th:each="telefone : ${telefone_lista}">
+				<td th:text="${telefone}"></td>
+				<td>
+					<button>
+						<a th:href="@{/funcionario/removeTelefone(cpf=${funcionario_edit.cpf},telefone=${telefone})}">Excluir</a>
+					</button>
+				</td>
+			</tr>
+		</table>
+		
+		<h2>Adicionar Telefone (Limite de 3).</h2>
+		<form action="/funcionario/addTelefone" method="post">
+			<p hidden>
+				<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf" th:value="*{funcionario_edit.cpf}"
+					required /></p>
+					<p> 
+					<label for="telefone">Telefone:</label> <input
+					type="tel" name="telefone" id="telefone" required />
 
-			<button type="submit">Deletar</button>
-		</p>
-	</form>
+				<button type="submit">Adicionar</button>
+			</p>
+		</form>
 
+	</div>
 
-	<h2>Listar Funcionários.</h2>
-	<form action="/funcionario/listarFuncionarios" method="post">
-		<p>
-			<button type="submit">Listar</button>
-		</p>
-	</form>
-
-	<h2>Buscar Funcionário.</h2>
-	<form action="/funcionario/buscaCPF" method="post">
-		<p>
-			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
-				required />
-
-			<button type="submit">Buscar</button>
-		</p>
-	</form>
-
-	<h2>Listar Telefone de Funcionário.</h2>
-	<form action="/funcionario/listarTelefones" method="post">
-		<p>
-			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
-				required />
-
-			<button type="submit">Listar</button>
-		</p>
-	</form>
-
-	<h2>Adicionar Telefone.</h2>
-	<form action="/funcionario/addTelefone" method="post">
-		<p>
-			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
-				required /> <label for="telefone">Telefone:</label> <input
-				type="text" name="telefone" id="telefone" required />
-
-			<button type="submit">Adicionar</button>
-		</p>
-	</form>
-
-	<h2>Remover Telefone.</h2>
-	<form action="/funcionario/removeTelefone" method="post">
-		<p>
-			<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
-				required /> <label for="telefone">Telefone:</label> <input
-				type="text" name="telefone" id="telefone" required />
-
-			<button type="submit">Remover</button>
-		</p>
-	</form>
 </body>
 </html>

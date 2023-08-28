@@ -26,8 +26,12 @@ public class Colecao_E_Book extends Produto {
 		this.qtdVolumes = e_book.size();
 	}
 
-	private Colecao_E_Book() {}
+	public Colecao_E_Book() {}
 	
+	public void setSerie(String serie) {
+		this.serie = serie;
+	}
+
 	public String getSerie() {
 		return serie;
 	}

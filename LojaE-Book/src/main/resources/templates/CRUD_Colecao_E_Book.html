@@ -2,20 +2,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Registrar Coleção de E-Book.</title>
+<title>CRUD Coleção de E-Book.</title>
 </head>
+<style>
+table, th, td {
+	border: 1px solid black;
+	text-align: center;
+}
+</style>
 <body>
+
+	<button>
+		<a th:href="@{/colecao-e-book/addForm}">Adicionar</a>
+	</button>
+	<button>
+		<a th:href="@{/colecao-e-book/listarColecao_E_Books}">Listar</a>
+	</button>
+
+	<div th:if="${colecao_e_book_add != null}">
 	<h1>Registrar Coleção de E-Book.</h1>
-	<form action="/colecao-e-book/" method="post">
+	<form action="#" th:action="@{/colecao-e-book/add}" th:object="${colecao_e_book_add}"
+			method="post">
 		<fieldset>
 			<legend>Insira os valores</legend>
 			<p>
-				<label for="Preco">Preço</label> <input type="text" name="preco"
-					id="preco" required />
+				<label for="Serie">Série</label> <input type="text" name="serie"
+					id="serie" th:field="*{serie}" required />
 			</p>
 			<p>
-				<label for="Serie">Série</label> <input type="text" name="serie"
-					id="serie" required />
+				<label for="Preco">Preço</label> <input type="number" name="preco"
+					id="preco" th:field="*{preco}" required />
 			</p>
 			<p>
 				<button type="submit">Registrar</button>
@@ -24,17 +40,63 @@
 		</fieldset>
 	</form>
 	
+	<table style="border: none">
+			<tr th:if="${respostaAdd != null}">
+				<td style="border: none" th:text="${respostaAdd}"></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div th:if="${colecao_e_book_lista != null}">
+		<h2>Buscar E-Book.</h2>
+		<form action="/colecao-e-book/buscaSerie" method="post">
+			<p>
+				<label for="serie">Serie</label> <input type="text" name="serie"
+					id="serie" required />
+
+				<button type="submit">Buscar</button>
+			</p>
+		</form>
+
+		<h1>Lista de Coleções de E-Books.</h1>
+		<table>
+			<tr>
+				<th>Id</th>
+				<th>Serie</th>
+				<th>Preço</th>
+				<th>Quantidade de Volumes</th>
+			</tr>
+			<tr th:each="colecao_e_book : ${colecao_e_book_lista}" th:if="${colecao_e_book.serie != null}">
+				<td th:text="${colecao_e_book.id}"></td>
+				<td th:text="${colecao_e_book.serie}"></td>
+				<td th:text="${colecao_e_book.preco}"></td>
+				<td th:text="${colecao_e_book.qtdVolumes}"></td>
+				<td>
+					<button>
+						<a th:href="@{/colecao-e-book/editar(id=${colecao_e_book.id})}">Editar</a>
+					</button>
+					<button>
+						<a th:href="@{/colecao-e-book/deletarPorSerie(serie=${colecao_e_book.serie})}">Excluir</a>
+					</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	
+	<div th:if="${colecao_e_book_edit != null}">
 	<h1>Atualizar Coleção de E-Book.</h1>
-	<form action="/colecao-e-book/atualizar" method="post">
+	<form action="#" th:action="@{/colecao-e-book/atualizar}"
+			th:object="${colecao_e_book_edit}" method="post">
 		<fieldset>
 			<legend>Insira os valores</legend>
-			<p>
+			<p hidden>
 				<label for="Serie">Série</label> <input type="text" name="serie"
-					id="serie" required />
+					id="serie" th:value="*{serie}" required />
 			</p>
 			<p>
-				<label for="Preco">Preço</label> <input type="text" name="preco"
-					id="preco" />
+				<label for="Preco">Preço</label> <input type="number" name="preco"
+					id="preco" th:value="*{preco}" />
 			</p>
 			<p>
 				<button type="submit">Atualizar</button>
@@ -43,63 +105,45 @@
 		</fieldset>
 	</form>
 
-	<h2>Deletar Coleção de E-Book.</h2>
-	<form action="/colecao-e-book/deletarPorSerie" method="post">
-		<p>
-			<label for="serie">Serie</label> <input type="text" name="serie"
-				id="serie" required />
-
-			<button type="submit">Deletar</button>
-		</p>
-	</form>
-
-	<h2>Listar Coleção de E-Books.</h2>
-	<form action="/colecao-e-book/listarColecao_E_Books" method="post">
-		<p>
-			<button type="submit">Listar</button>
-		</p>
-	</form>
-
-	<h2>Buscar Coleção de E-Book.</h2>
-	<form action="/colecao-e-book/buscaSerie" method="post">
-		<p>
-			<label for="serie">Serie</label> <input type="text" name="serie"
-				id="serie" required />
-
-			<button type="submit">Buscar</button>
-		</p>
-	</form>
-
-	<h2>Listar E-Books de uma Coleção.</h2>
-	<form action="/colecao-e-book/listarE_Books" method="post">
-		<p>
-			<label for="serie">Serie</label> <input type="text" name="serie"
-				id="serie" required />
-
-			<button type="submit">Listar</button>
-		</p>
-	</form>
+	<h2>Lista de E-Books.</h2>
+		<table>
+			<tr>
+				<th>Id</th>
+				<th>Título</th>
+				<th>Gênero</th>
+				<th>Autor</th>
+				<th>Editora</th>
+				<th>Quantidade de Páginas</th>
+				<th>Preço</th>
+			</tr>
+			<tr th:each="e_book : ${e_book_lista}" th:if="${e_book.titulo != null}">
+				<td th:text="${e_book.id}"></td>
+				<td th:text="${e_book.titulo}"></td>
+				<td th:text="${e_book.genero}"></td>
+				<td th:text="${e_book.autor}"></td>
+				<td th:text="${e_book.editora}"></td>
+				<td th:text="${e_book.qtdPaginas}"></td>
+				<td th:text="${e_book.preco}"></td>
+				<td>
+					<button>
+						<a th:href="@{/colecao-e-book/removeE_Book(serie=${colecao_e_book_edit.serie},titulo=${e_book.titulo})}">Excluir</a>
+					</button>
+				</td>
+			</tr>
+		</table>
 
 	<h2>Adicionar E-Book.</h2>
 	<form action="/colecao-e-book/addE_Book" method="post">
-		<p>
+		<p hidden>
 			<label for="serie">Serie</label> <input type="text" name="serie"
-				id="serie" required /> <label for="titulo">Titulo:</label> <input
+				id="serie" th:value="*{colecao_e_book_edit.serie}" required /></p>
+				<p> <label for="titulo">Titulo:</label> <input
 				type="text" name="titulo" id="titulo" required />
 
 			<button type="submit">Adicionar</button>
 		</p>
 	</form>
+	</div>
 
-	<h2>Remover E-Book.</h2>
-	<form action="/colecao-e-book/removeE_Book" method="post">
-		<p>
-			<label for="serie">Serie</label> <input type="text" name="serie"
-				id="serie" required /> <label for="titulo">Titulo:</label> <input
-				type="text" name="titulo" id="titulo" required />
-
-			<button type="submit">Remover</button>
-		</p>
-	</form>
 </body>
 </html>

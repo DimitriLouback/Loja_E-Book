@@ -26,7 +26,7 @@ private static final long serialVersionUID = 1L;
 		this.salario = salario;
 	}
 
-	private Cargo() {}
+	public Cargo() {}
 	
 	public Long getId() {
 		return id;
