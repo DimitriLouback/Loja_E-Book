@@ -27,13 +27,13 @@ public class Colecao_E_BookService {
 		}
 	}
 	
-	public String atualizarE_Book(String serie, String preco) {
+	public String atualizarE_Book(String serie, double preco) {
 		Colecao_E_Book ce = Colecao_E_BookRep.buscarPelaSerie(serie);
 		if(ce==null) {
 			return "Coleçao de E-Book não achado";
 		}else {		
-			if(preco!=null&&Double.parseDouble(preco)>0) {
-				ce.setPreco(Double.parseDouble(preco));
+			if(preco>=0) {
+				ce.setPreco(preco);
 			}
 			Colecao_E_BookRep.flush();
 			return "Atualizado no id "+ce.getId();

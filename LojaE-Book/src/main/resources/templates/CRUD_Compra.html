@@ -32,7 +32,7 @@ table, th, td {
 					<p>
 						<label for="cliente">Clientes:</label> <br /> <span
 							th:each="clienteAtual:${cliente_lista}"> <input
-							type="radio" name="clienteEscolhido"
+							type="radio" name="clienteEscolhido" th:field="*{cpfCliente}"
 							th:value="${clienteAtual.cpf}" required /> Nome: <label
 							for="nome" th:text="${clienteAtual.nome}"></label> | CPF: <label
 							for="cpf" th:text="${clienteAtual.cpf}"></label><br />
@@ -44,15 +44,10 @@ table, th, td {
 					</p>
 				</div>
 
-
 			</fieldset>
 		</form>
-
-		<table style="border: none">
-			<tr th:if="${respostaAdd != null}">
-				<td style="border: none" th:text="${respostaAdd}"></td>
-			</tr>
-		</table>
+		<div th:if="${respostaAdd != null}"><span th:text="${respostaAdd}"></span></div>
+		
 	</div>
 
 	<div th:if="${compra_lista != null}">
@@ -116,7 +111,7 @@ table, th, td {
 			<p>
 				<label for="cpf">CPF do novo Cliente</label><br/> <span
 							th:each="clienteAtual:${cliente_lista}"> <input
-							type="radio" name="clienteEscolhido"
+							type="radio" name="clienteEscolhido" th:field="*{cpfCliente}"
 							th:value="${clienteAtual.cpf}" th:checked="${clienteAtual.cpf == compra_edit.cpfCliente}" required /> Nome: <label
 							for="nome" th:text="${clienteAtual.nome}"></label> | CPF: <label
 							for="cpf" th:text="${clienteAtual.cpf}"></label><br />

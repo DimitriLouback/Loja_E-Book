@@ -1,23 +1,23 @@
 package br.edu.iff.bsi.LojaEBook.controller.view;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.iff.bsi.LojaEBook.model.Cargo;
-import br.edu.iff.bsi.LojaEBook.model.E_Book;
 import br.edu.iff.bsi.LojaEBook.service.CargoService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("cargo")
@@ -43,14 +43,29 @@ public class CargoController {
 	}
 	
 	@PostMapping("/add")
-	public String addCargo(@ModelAttribute Cargo cargo) throws Exception {
-		String resposta = CargoServ.addCargo(cargo);
-		return "redirect:/cargo/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+	public String addCargo(@Valid @ModelAttribute Cargo cargo, BindingResult resultado, Model model) {
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {
+			String resposta = CargoServ.addCargo(cargo);
+			try {
+				return "redirect:/cargo/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "erro";
+			}		
+		}
 	}
 
 	@GetMapping("/listarCargos")
 	public String listarCargos(Model model, HttpServletRequest request) throws Exception {
 		String funcao = request.getParameter("funcao");
+		String resposta = request.getParameter("resposta");
+	    if (resposta != null) {
+	        model.addAttribute("respostaDelete", URLDecoder.decode(resposta, "UTF-8"));
+	    }
 		if(funcao==null) {
 			model.addAttribute("cargo_lista", CargoServ.listarCargos());			
 		} else {
@@ -75,15 +90,22 @@ public class CargoController {
 	}
 	
 	@PostMapping("/atualizar")
-	public String atualizarCargo(String funcao, String salario) throws Exception {
-		CargoServ.atualizarCargo(funcao, salario);
-		return "redirect:/cargo/listarCargos";
+	public String atualizarCargo(@Valid @ModelAttribute Cargo cargo, BindingResult resultado, Model model) {
+		String funcao = cargo.getFuncao();
+		double salario = cargo.getSalario();
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {			
+			CargoServ.atualizarCargo(funcao, salario);
+			return "redirect:/cargo/listarCargos";
+		}
 	}
 	
 	@GetMapping("/deletaPorFuncao")
 	public String deletarCargoFuncao(String funcao) throws Exception {
-		CargoServ.deletarCargoFuncao(funcao);
-		return "redirect:/cargo/listarCargos";
+		String resposta = CargoServ.deletarCargoFuncao(funcao);
+		return "redirect:/cargo/listarCargos?resposta=" + URLEncoder.encode(resposta, "UTF-8");
 	}
 	
 }

@@ -1,19 +1,23 @@
 package br.edu.iff.bsi.LojaEBook.controller.view;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import br.edu.iff.bsi.LojaEBook.model.E_Book;
 import br.edu.iff.bsi.LojaEBook.service.E_BookService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("e-book")
@@ -38,9 +42,20 @@ public class E_BookController {
 	}
 	
 	@PostMapping("/add")
-	public String addE_Book(@ModelAttribute E_Book e_book) throws Exception {
-		String resposta = EBookServ.addE_Book(e_book);
-		return "redirect:/e-book/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+	public String addE_Book(@Valid @ModelAttribute E_Book e_book, BindingResult resultado, Model model) {
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {			
+			String resposta = EBookServ.addE_Book(e_book);
+			try {
+				return "redirect:/e-book/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "erro";
+			}
+		}
 	}
 	
 	@GetMapping("/listarE_Books")
@@ -70,9 +85,20 @@ public class E_BookController {
 	}
 
 	@PostMapping("/atualizar")
-	public String atualizarE_Book(String titulo, String preco, String genero, String autor, String editora, String qtdPaginas) throws Exception {
-		EBookServ.atualizarE_Book(titulo, preco, genero, autor, editora, qtdPaginas);
-		return "redirect:/e-book/listarE_Books"; 
+	public String atualizarE_Book(@Valid @ModelAttribute E_Book e_book, BindingResult resultado, Model model) {
+		String titulo = e_book.getTitulo();
+		double preco = e_book.getPreco();
+		String genero = e_book.getGenero();
+		String autor = e_book.getAutor();
+		String editora = e_book.getEditora();
+		int qtdPaginas = e_book.getQtdPaginas();
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {			
+			EBookServ.atualizarE_Book(titulo, preco, genero, autor, editora, qtdPaginas);
+			return "redirect:/e-book/listarE_Books"; 
+		}
 	}
 	
 	@GetMapping("/deletaPorTitulo")

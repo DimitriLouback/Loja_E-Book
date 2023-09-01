@@ -35,11 +35,8 @@ table, th, td {
 
 		</fieldset>
 	</form>
-	<table style="border: none">
-			<tr th:if="${respostaAdd != null}">
-				<td style="border: none" th:text="${respostaAdd}"></td>
-			</tr>
-		</table>
+	<div th:if="${respostaAdd != null}"><span th:text="${respostaAdd}"></span></div>
+	
 	</div>
 
 	<div th:if="${cargo_lista != null}">
@@ -54,6 +51,7 @@ table, th, td {
 		</form>
 
 		<h1>Lista de Cargos.</h1>
+		<div th:if="${respostaDelete != null}"><span th:text="${respostaDelete}"></span></div>
 		<table>
 			<tr>
 				<th>Id</th>

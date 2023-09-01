@@ -102,7 +102,7 @@ public class ClienteRestController {
 	@PostMapping("/{id}/carteira")
 	@ResponseBody
 	@Operation(summary = "Adicionar saldo em um cliente em expecifíco")
-	public String adicionarSaldo(@PathVariable("id") Long id, String saldo) throws Exception {
+	public String adicionarSaldo(@PathVariable("id") Long id, double saldo) throws Exception {
 		return clienteServ.adcionarSaldo(clienteServ.buscarPeloID(id).getCpf(), saldo);
 	}
 	

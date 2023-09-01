@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 public class Carteira implements Serializable {
@@ -16,6 +17,7 @@ public class Carteira implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	@PositiveOrZero(message="Tem que ser maior ou igual a 0")
 	private double saldoDisponivel;
 	
 	@OneToOne(mappedBy="carteira")

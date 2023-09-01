@@ -33,7 +33,7 @@ public class E_BookRestController {
 	@PutMapping("/{id}")
 	@ResponseBody
 	@Operation(summary = "Atualizar um E-Book em expecifíco")
-	public String atualizarE_Book(@PathVariable("id") Long id, String preco, String genero, String autor, String editora, String qtdPaginas) throws Exception {
+	public String atualizarE_Book(@PathVariable("id") Long id, double preco, String genero, String autor, String editora, int qtdPaginas) throws Exception {
 		E_Book eBusca = EBookServ.getEBookById(id);
 		if(eBusca==null) {				
 			return "E-Book não achado";

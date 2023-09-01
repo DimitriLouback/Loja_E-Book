@@ -1,5 +1,6 @@
 package br.edu.iff.bsi.LojaEBook.controller.view;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ import br.edu.iff.bsi.LojaEBook.model.Funcionario;
 import br.edu.iff.bsi.LojaEBook.service.CargoService;
 import br.edu.iff.bsi.LojaEBook.service.FuncionarioService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("funcionario")
@@ -48,9 +51,20 @@ public class FuncionarioController {
 	}
 	
 	@PostMapping("/add")
-	public String addFuncionario(@ModelAttribute Funcionario funcionario, @RequestParam String cargoEscolhido) throws Exception {
-		String resposta = FuncionarioServ.addFuncionario(funcionario, cargoEscolhido);
-		return  "redirect:/funcionario/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+	public String addFuncionario(@Valid @ModelAttribute Funcionario funcionario, BindingResult resultado, Model model, @RequestParam String cargoEscolhido) {
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {			
+			String resposta = FuncionarioServ.addFuncionario(funcionario, cargoEscolhido);
+			try {
+				return  "redirect:/funcionario/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "erro";
+			}
+		}
 	}
 	
 	@GetMapping("/listarFuncionarios")
@@ -84,9 +98,18 @@ public class FuncionarioController {
 	}
 	
 	@PostMapping("/atualizar")
-	public String atualizarFuncionario(String cpf, String nome, String email, String senha, String cargoEscolhido) throws Exception {
-		FuncionarioServ.atualizarFuncionario(cpf, nome, email, senha, cargoEscolhido);
-		return "redirect:/funcionario/editar?id="+FuncionarioServ.buscarFuncionarioCPF(cpf).getId();
+	public String atualizarFuncionario(@Valid @ModelAttribute Funcionario funcionario, BindingResult resultado, Model model, String cargoEscolhido) {
+		String cpf = funcionario.getCpf();
+		String nome = funcionario.getNome();
+		String email = funcionario.getEmail();
+		String senha = funcionario.getSenha();
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {						
+			FuncionarioServ.atualizarFuncionario(cpf, nome, email, senha, cargoEscolhido);
+			return "redirect:/funcionario/editar?id="+FuncionarioServ.buscarFuncionarioCPF(cpf).getId();
+		}
 	}
 	
 	@GetMapping("/deletePorCPF")
@@ -104,8 +127,15 @@ public class FuncionarioController {
 	}
 	
 	@PostMapping("/addTelefone")
-	public String addTelefone(String cpf, String telefone) throws Exception {
-		FuncionarioServ.addTelefone(cpf, telefone);
-		return "redirect:/funcionario/editar?id="+FuncionarioServ.buscarFuncionarioCPF(cpf).getId();
+	public String addTelefone(@Valid @ModelAttribute Funcionario funcionario, BindingResult resultado, Model model) {
+		String cpf = funcionario.getCpf();
+		String telefone = funcionario.getTelefone().get(0);
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {				
+			FuncionarioServ.addTelefone(cpf, telefone);
+			return "redirect:/funcionario/editar?id="+FuncionarioServ.buscarFuncionarioCPF(cpf).getId();
+		}
 	}
 }

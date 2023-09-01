@@ -12,6 +12,12 @@ table, th, td {
 </style>
 <body>
 
+	<script th:inline="javascript">
+			document.addEventListener('DOMContentLoaded', function() {
+				document.getElementById('tituloAdd').value = '';
+			});
+		</script>
+
 	<button>
 		<a th:href="@{/e-book/addForm}">Adicionar</a>
 	</button>
@@ -27,7 +33,7 @@ table, th, td {
 				<legend>Insira os valores</legend>
 				<p>
 					<label for="Titulo">Título</label> <input type="text" name="titulo"
-						id="titulo" th:field="*{titulo}" required />
+						id="tituloAdd" th:field="*{titulo}" required />
 				</p>
 				<p>
 					<label for="Genero">Gênero</label> <input type="text" name="genero"
@@ -56,12 +62,8 @@ table, th, td {
 
 			</fieldset>
 		</form>
-
-		<table style="border: none">
-			<tr th:if="${respostaAdd != null}">
-				<td style="border: none" th:text="${respostaAdd}"></td>
-			</tr>
-		</table>
+		<div th:if="${respostaAdd != null}"><span th:text="${respostaAdd}"></span></div>
+		
 	</div>
 
 	<div th:if="${e_book_lista != null}">

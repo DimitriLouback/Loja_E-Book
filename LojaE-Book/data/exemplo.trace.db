@@ -461,3 +461,12 @@ SELECT COUNT(*) FROM ASSOCIACAO_COMPRA_PRODUTO JOIN E_BOOK WHERE FK_PRODUTO = E_
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-08-30 18:31:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "SENHA CHARACTER VARYING(20)": "'1234512345123451234512345' (25)"; SQL statement:
+insert into cliente (fk_carteira,cpf,email,nome,senha,id) values (?,?,?,?,?,?) [22001-214]
+2023-08-30 18:32:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "SENHA CHARACTER VARYING(20)": "'123451234512345123451234512345' (30)"; SQL statement:
+insert into cliente (fk_carteira,cpf,email,nome,senha,id) values (?,?,?,?,?,?) [22001-214]
+2023-08-30 18:33:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "SENHA CHARACTER VARYING(20)": "'123451234512345123451234512345' (30)"; SQL statement:
+insert into cliente (fk_carteira,cpf,email,nome,senha,id) values (?,?,?,?,?,?) [22001-214]

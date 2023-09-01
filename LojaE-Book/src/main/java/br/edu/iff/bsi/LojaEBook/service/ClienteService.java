@@ -10,6 +10,7 @@ import br.edu.iff.bsi.LojaEBook.model.Cliente;
 import br.edu.iff.bsi.LojaEBook.repository.CarteiraRepository;
 import br.edu.iff.bsi.LojaEBook.repository.ClienteRepository;
 import br.edu.iff.bsi.LojaEBook.repository.CompraRepository;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Service
 public class ClienteService {
@@ -74,7 +75,7 @@ public class ClienteService {
 		return ClienteRep.findAll();
 	}
 	
-	public Cliente buscarClienteCPF(String cpf) throws Exception {
+	public Cliente buscarClienteCPF(String cpf) {
 		return ClienteRep.buscarPeloCPF(cpf);
 	}
 	
@@ -125,12 +126,12 @@ public class ClienteService {
 		return ClienteRep.BuscarPeloId(id);
 	}
 	
-	public String adcionarSaldo(String cpf, String saldo) {
+	public String adcionarSaldo(String cpf, double saldo) {
 		Cliente c = ClienteRep.buscarPeloCPF(cpf);
 		if(c==null) {
 			return "Cliente não encontrado";
 		}else {		
-			c.adicionarSaldo(Double.parseDouble(saldo));
+			c.adicionarSaldo(saldo);
 			ClienteRep.flush();
 			CarteiraRep.flush();
 			return "Saldo adicionado";

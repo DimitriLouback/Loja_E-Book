@@ -1,20 +1,24 @@
 package br.edu.iff.bsi.LojaEBook.controller.view;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import br.edu.iff.bsi.LojaEBook.model.Colecao_E_Book;
 import br.edu.iff.bsi.LojaEBook.service.Colecao_E_BookService;
 import br.edu.iff.bsi.LojaEBook.service.E_BookService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("colecao-e-book")
@@ -41,9 +45,20 @@ public class Colecao_E_BookController {
 	}
 	
 	@PostMapping("/add")
-	public String addColecao_E_Book(@ModelAttribute Colecao_E_Book colecao_e_book) throws Exception {
-		String resposta = Colecao_E_BookServ.addColecao_E_Book(colecao_e_book);
-		return "redirect:/colecao-e-book/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+	public String addColecao_E_Book(@Valid @ModelAttribute Colecao_E_Book colecao_e_book, BindingResult resultado, Model model) {
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {			
+			String resposta = Colecao_E_BookServ.addColecao_E_Book(colecao_e_book);
+			try {
+				return "redirect:/colecao-e-book/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "erro";
+			}
+		}
 	}
 	
 	@GetMapping("/listarColecao_E_Books")
@@ -74,9 +89,16 @@ public class Colecao_E_BookController {
 	}
 	
 	@PostMapping("/atualizar")
-	public String atualizarE_Book(String serie, String preco) throws Exception {
-		Colecao_E_BookServ.atualizarE_Book(serie, preco);
-		return "redirect:/colecao-e-book/editar?id="+Colecao_E_BookServ.buscarColecao_E_Books(serie).getId();
+	public String atualizarE_Book(@Valid @ModelAttribute Colecao_E_Book colecao_e_book, BindingResult resultado, Model model) {
+		String serie = colecao_e_book.getSerie();
+		double preco = colecao_e_book.getPreco();
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {						
+			Colecao_E_BookServ.atualizarE_Book(serie, preco);
+			return "redirect:/colecao-e-book/editar?id="+Colecao_E_BookServ.buscarColecao_E_Books(serie).getId();
+		}
 	}
 	
 	@GetMapping("/deletarPorSerie")

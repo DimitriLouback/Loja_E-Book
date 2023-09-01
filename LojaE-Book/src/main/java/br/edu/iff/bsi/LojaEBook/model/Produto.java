@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
@@ -20,6 +21,7 @@ public abstract class Produto implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	@Positive(message="Tem que ser maior que 0")
 	private double preco;
 
 	@ManyToMany(mappedBy="produto")

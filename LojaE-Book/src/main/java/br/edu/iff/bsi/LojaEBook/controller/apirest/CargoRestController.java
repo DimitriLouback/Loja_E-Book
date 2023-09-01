@@ -33,7 +33,7 @@ public class CargoRestController {
 	@PutMapping("/{id}")
 	@ResponseBody
 	@Operation(summary = "Atualizar um cargo em expecifíco")
-	public String atualizarCargo(@PathVariable("id") Long id, String salario) throws Exception {
+	public String atualizarCargo(@PathVariable("id") Long id, double salario) throws Exception {
 		Cargo cBusca = CargoServ.getCargoById(id);
 		if(cBusca==null) {			
 			return "Cargo não achado";

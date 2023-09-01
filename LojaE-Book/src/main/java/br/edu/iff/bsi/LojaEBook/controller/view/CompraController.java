@@ -1,5 +1,6 @@
 package br.edu.iff.bsi.LojaEBook.controller.view;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
@@ -7,7 +8,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +19,7 @@ import br.edu.iff.bsi.LojaEBook.model.Compra;
 import br.edu.iff.bsi.LojaEBook.service.ClienteService;
 import br.edu.iff.bsi.LojaEBook.service.CompraService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("compra")
@@ -43,9 +47,21 @@ public class CompraController {
 	}
 	
 	@PostMapping("/add")
-	public String addCompra(@RequestParam String clienteEscolhido) throws Exception {
-		String resposta = CompraServ.addCompra(clienteEscolhido);
-		return "redirect:/compra/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+	public String addCompra(@Valid @ModelAttribute Compra compra, BindingResult resultado, Model model) {
+		String clienteEscolhido = compra.getCpfCliente();
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {			
+			String resposta = CompraServ.addCompra(clienteEscolhido);
+			try {
+				return "redirect:/compra/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "erro";
+			}
+		}
 	}
 
 	@GetMapping("/listarCompras")
@@ -83,9 +99,15 @@ public class CompraController {
 	}
 	
 	@PostMapping("/atualizar")
-	public String atualizarCompra(Long id, String clienteEscolhido) throws Exception {
-		CompraServ.atualizarCompra(id, clienteEscolhido);
-		return "redirect:/compra/editar?id="+id;
+	public String atualizarCompra(Long id, @Valid @ModelAttribute Compra compra, BindingResult resultado, Model model) {
+		String clienteEscolhido = compra.getCpfCliente();
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {						
+			CompraServ.atualizarCompra(id, clienteEscolhido);
+			return "redirect:/compra/editar?id="+id;
+		}
 	}
 	
 	@GetMapping("/deletar")

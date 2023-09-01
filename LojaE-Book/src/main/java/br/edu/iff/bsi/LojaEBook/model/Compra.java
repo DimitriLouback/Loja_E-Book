@@ -15,6 +15,10 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 public class Compra implements Serializable {
@@ -24,12 +28,17 @@ private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	@PastOrPresent(message="Não pode ser no futuro")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataHora;
+	@PositiveOrZero(message="Tem que ser maior ou igual a 0")
 	private int qtdProdutos;
+	@PositiveOrZero(message="Tem que ser maior ou igual a 0")
 	private double precoFinal;
 	private boolean finalizado;
-	private String cpfCliente;
+	@NotBlank(message="Não pode ser em branco ou nulo")
+	@Pattern(regexp="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}", message="Deve seguir o padrão do CPF")
+	private String cpfCliente = " ";
 	
 	@ManyToMany
 	@JoinTable(name = "associacao_compra_produto",

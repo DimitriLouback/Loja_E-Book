@@ -11,7 +11,14 @@ table, th, td {
 }
 </style>
 <body>
-
+		<script th:inline="javascript">
+			document.addEventListener('DOMContentLoaded', function() {
+				document.getElementById('telefoneAdd').value = '';
+			});
+			document.addEventListener('DOMContentLoaded', function() {
+				document.getElementById('cpfAdd').value = '';
+			});
+		</script>
 	<button>
 		<a th:href="@{/cliente/addForm}">Adicionar</a>
 	</button>
@@ -21,8 +28,8 @@ table, th, td {
 
 	<div th:if="${cliente_add != null}">
 		<h1>Registrar Cliente.</h1>
-		<form action="#" th:action="@{/cliente/add}" th:object="${cliente_add}"
-			method="post">
+		<form action="#" th:action="@{/cliente/add}"
+			th:object="${cliente_add}" method="post">
 			<fieldset>
 				<legend>Insira os valores</legend>
 				<p>
@@ -34,8 +41,8 @@ table, th, td {
 						id="email" th:field="*{email}" required />
 				</p>
 				<p>
-					<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
-						th:field="*{cpf}" required />
+					<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpfAdd"
+						th:field="*{cpf}" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}" placeholder="000.000.000-00" required />
 				</p>
 				<p>
 					<label for="senha">Senha</label> <input type="text" name="senha"
@@ -43,7 +50,7 @@ table, th, td {
 				</p>
 				<p>
 					<label for="telefone">Telefone:</label> <input type="tel"
-						name="telefone" th:field="*{telefone[0]}" id="telefone" required />
+						name="telefone" th:field="*{telefone[0]}" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" placeholder="(00) 00000-0000" id="telefone" required />
 				</p>
 				<p>
 					<button type="submit">Registrar</button>
@@ -51,20 +58,16 @@ table, th, td {
 
 			</fieldset>
 		</form>
-
-		<table style="border: none">
-			<tr th:if="${respostaAdd != null}">
-				<td style="border: none" th:text="${respostaAdd}"></td>
-			</tr>
-		</table>
-		</div>
+		<div th:if="${respostaAdd != null}"><span th:text="${respostaAdd}"></span></div>
 		
-		<div th:if="${cliente_lista != null}">
+	</div>
+
+	<div th:if="${cliente_lista != null}">
 		<h2>Buscar Cliente.</h2>
 		<form action="/cliente/buscaCPF" method="post">
 			<p>
-				<label for="cpf">CPF</label> <input type="text" name="cpf"
-					id="cpf" required />
+				<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+					required />
 
 				<button type="submit">Buscar</button>
 			</p>
@@ -81,7 +84,8 @@ table, th, td {
 				<th>Saldo</th>
 				<th>Telefones</th>
 			</tr>
-			<tr th:each="cliente : ${cliente_lista}" th:if="${cliente.cpf != null}">
+			<tr th:each="cliente : ${cliente_lista}"
+				th:if="${cliente.cpf != null}">
 				<td th:text="${cliente.id}"></td>
 				<td th:text="${cliente.nome}"></td>
 				<td th:text="${cliente.email}"></td>
@@ -100,9 +104,9 @@ table, th, td {
 			</tr>
 		</table>
 	</div>
-		
+
 	<div th:if="${cliente_edit != null}">
-		
+
 		<h1>Atualizar Cliente.</h1>
 		<form action="#" th:action="@{/cliente/atualizar}"
 			th:object="${cliente_edit}" method="post">
@@ -124,25 +128,34 @@ table, th, td {
 					<label for="senha">Nova Senha</label> <input type="text"
 						name="senha" id="senha" th:value="*{senha}" />
 				</p>
+				<p hidden>
+					<label for="telefone">Telefone:</label> <input type="tel"
+						name="telefone" th:field="*{telefone[0]}" id="telefone" required />
+				</p>
 				<p>
 					<button type="submit">Atualizar</button>
 				</p>
 
 			</fieldset>
 		</form>
-		
-		<h2>Adicionar Saldo (Saldo Atual: R$ <span th:text="*{cliente_edit.verSaldo}"></span>)</h2>
+
+		<h2>
+			Adicionar Saldo (Saldo Atual: R$ <span
+				th:text="*{cliente_edit.verSaldo}"></span>)
+		</h2>
 		<form action="/cliente/addSaldo" method="post">
 			<p hidden>
-				<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf" th:value="*{cliente_edit.cpf}"
-					required /> </p>
-					<p> <label for="saldo">Saldo</label> <input type="number"
-					name="saldo" id="saldo" required />
+				<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf"
+					th:value="*{cliente_edit.cpf}" required />
+			</p>
+			<p>
+				<label for="saldo">Saldo</label> <input type="number" name="saldo"
+					id="saldo" required />
 
 				<button type="submit">Adicionar</button>
 			</p>
 		</form>
-		
+
 		<h2>Lista de Telefones.</h2>
 		<table>
 			<tr>
@@ -157,22 +170,29 @@ table, th, td {
 				</td>
 			</tr>
 		</table>
-		
+
 		<h2>Adicionar Telefone (Limite de 3).</h2>
 		<form action="/cliente/addTelefone" method="post">
 			<p hidden>
-				<label for="cpf">CPF</label> <input type="text" name="cpf" id="cpf" th:value="*{cliente_edit.cpf}"
-					required /></p>
-					<p> 
-					<label for="telefone">Telefone:</label> <input
-					type="tel" name="telefone" id="telefone" required />
+				<input type="text" name="cpf" id="cpf"
+					th:value="*{cliente_edit.cpf}" required /> <input type="text"
+					name="nome" id="nome" th:value="*{cliente_edit.nome}" /> <input
+					type="email" name="email" id="email"
+					th:value="*{cliente_edit.email}" /> <input type="text"
+					name="senha" id="senha" th:value="*{cliente_edit.senha}" />
+			</p>
+			<p>
+				<label for="telefone">Telefone:</label> <input type="tel"
+					name="telefone" th:field="*{cliente_edit.telefone[0]}"
+					id="telefoneAdd" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" placeholder="(00) 00000-0000" required />
+
 
 				<button type="submit">Adicionar</button>
 			</p>
 		</form>
-		
-		</div>
+	</div>
 
-		
+
+
 </body>
 </html>

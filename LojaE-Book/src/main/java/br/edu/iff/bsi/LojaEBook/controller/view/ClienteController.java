@@ -1,22 +1,24 @@
 package br.edu.iff.bsi.LojaEBook.controller.view;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.iff.bsi.LojaEBook.model.Carteira;
 import br.edu.iff.bsi.LojaEBook.model.Cliente;
 import br.edu.iff.bsi.LojaEBook.service.ClienteService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("cliente")
@@ -41,9 +43,20 @@ public class ClienteController {
 	}
 	
 	@PostMapping("/add")
-	public String addCliente(@ModelAttribute Cliente cliente) throws Exception {
-		String resposta = clienteServ.addCliente(cliente);
-		return  "redirect:/cliente/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+	public String addCliente(@Valid @ModelAttribute Cliente cliente, BindingResult resultado, Model model) {
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {
+			String resposta = clienteServ.addCliente(cliente);
+			try {
+				return  "redirect:/cliente/addForm?resposta=" + URLEncoder.encode(resposta, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "erro";
+			}			
+		}
 	}
 	
 	@GetMapping("/listarClientes")
@@ -76,9 +89,18 @@ public class ClienteController {
 	}
 	
 	@PostMapping("/atualizar")
-	public String atualizarCliente(String cpf, String nome, String email, String senha) throws Exception {
-		clienteServ.atualizarCliente(cpf, nome, email, senha);
-		return "redirect:/cliente/editar?id="+clienteServ.buscarClienteCPF(cpf).getId();
+	public String atualizarCliente(@Valid @ModelAttribute Cliente cliente ,BindingResult resultado, Model model) {
+		String cpf = cliente.getCpf();
+		String nome = cliente.getNome();
+		String email = cliente.getEmail();
+		String senha = cliente.getSenha();
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {			
+			clienteServ.atualizarCliente(cpf, nome, email, senha);
+			return "redirect:/cliente/editar?id="+clienteServ.buscarClienteCPF(cpf).getId();
+		}
 	}
 	
 	@GetMapping("/deletePorCPF")
@@ -96,15 +118,27 @@ public class ClienteController {
 	}
 	
 	@PostMapping("/addTelefone")
-	public String addTelefone(String cpf, String telefone) throws Exception {
-		clienteServ.addTelefone(cpf, telefone);
-		return "redirect:/cliente/editar?id="+clienteServ.buscarClienteCPF(cpf).getId();
+	public String addTelefone(@Valid @ModelAttribute Cliente cliente ,BindingResult resultado, Model model) {
+		String cpf = cliente.getCpf();
+		String telefone = cliente.getTelefone().get(0);
+		if(resultado.hasErrors()) {
+			model.addAttribute("mensagemErro", resultado.getAllErrors());
+			return "erro";
+		}else {			
+			clienteServ.addTelefone(cpf, telefone);
+			return "redirect:/cliente/editar?id="+clienteServ.buscarClienteCPF(cpf).getId();
+		}
 	}
 	
 	@PostMapping("/addSaldo")
-	public String adicionarSaldo(String cpf, String saldo) throws Exception {
-		clienteServ.adcionarSaldo(cpf, saldo);
-		return "redirect:/cliente/editar?id="+clienteServ.buscarClienteCPF(cpf).getId();
+	public String adicionarSaldo(String cpf, double saldo, Model model) {
+		if(saldo<=0) {
+			model.addAttribute("mensagemErro", "Tem que ser maior que 0");
+			return "erro";
+		}else {				
+			clienteServ.adcionarSaldo(cpf, saldo);
+			return "redirect:/cliente/editar?id="+clienteServ.buscarClienteCPF(cpf).getId();
+		}
 	}
 	
 }

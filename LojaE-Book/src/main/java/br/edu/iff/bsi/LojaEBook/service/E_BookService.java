@@ -23,16 +23,16 @@ public class E_BookService {
 		}
 	}
 	
-	public String atualizarE_Book(String titulo, String preco, String genero, String autor, String editora, String qtdPaginas) {
+	public String atualizarE_Book(String titulo, double preco, String genero, String autor, String editora, int qtdPaginas) {
 		E_Book e = EBookRep.buscarPeloTitulo(titulo);
 		if(e==null) {
 			return "E-Book não achado";
 		}else {		
-			if(preco!=null&&Double.parseDouble(preco)>0) {
-				e.setPreco(Double.parseDouble(preco));
+			if(preco>=0) {
+				e.setPreco(preco);
 			}
-			if(qtdPaginas!=null&&Integer.parseInt(qtdPaginas)>0) {				
-				e.setQtdPaginas(Integer.parseInt(qtdPaginas));
+			if(qtdPaginas>=0) {				
+				e.setQtdPaginas(qtdPaginas);
 			}
 			if(genero!=null) {				
 				e.setGenero(genero);
