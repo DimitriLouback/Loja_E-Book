@@ -41,7 +41,7 @@
     - _Sim_
 - Atributos de coleção:
   - Mínimo ou máximo de elementos.
-    - _telefone (Pessoa)= Mínimo: 0; Máximo: 6_
+    - _telefone (Pessoa)= Mínimo: 1; Máximo: 3_
   - Atributos de relacionamento entre classes
     - _cpfCliente (Compra)_
   - Objeto A deve estar relacionamento com o objeto B.
