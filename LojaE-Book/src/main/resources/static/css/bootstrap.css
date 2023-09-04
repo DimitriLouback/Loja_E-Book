@@ -1386,7 +1386,7 @@ progress {
   }
   .col-lg-2 {
     flex: 0 0 auto;
-    width: 16.66666667%;
+    width: 12.66666667%;
   }
   .col-lg-3 {
     flex: 0 0 auto;
@@ -3734,7 +3734,7 @@ textarea.form-control-lg {
 .btn-toolbar {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
 }
 .btn-toolbar .input-group {
   width: auto;

@@ -79,6 +79,10 @@ private static final long serialVersionUID = 1L;
 	public String getCpfCliente() {
 		return cpfCliente;
 	}
+	
+	public void setPrecoFinal(double precoFinal) {
+		this.precoFinal = precoFinal;
+	}
 
 	public void setCpfCliente(String cpfCliente) {
 		this.cpfCliente = cpfCliente;

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<div th:replace="~{layoutBase2 :: import}"></div>
+<title>Administrar CRUDs</title>
+</head>
+<style>
+table, th, td {
+	border: 1px solid black;
+	text-align: center;
+}
+</style>
+<body>
+	<div th:replace="~{layoutBase2 :: header}">
+	</div>
+	<div class="row">
+		<div
+			class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+
+
+			<div th:replace="~{layoutBase2 :: sidebar}"></div>
+			<div th:replace="~{layoutBase2 :: icones}"></div>
+
+		</div>
+		<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<div>
+				<h1>Administrar todos os dados do sistema:</h1>
+				<p>
+				É aqui onde todos os dados do sistema são administrado pelos funcionários, e também, 
+				onde os erros relacionados aos dados (caso tenha algum) são notificados.
+				</p>
+				<p>
+				Cada cargo possuí seu nível de acesso e ele determina o que o funcionário que está naquele 
+				cargo pode fazer em relação a manipulação de dados, variando de 0 (baixo) a 10 (alto).
+				</p>
+				<p>
+				Na barra ao lado é possível ver todas as opções de manipulação de dados, onde ao escolher
+				listar os dados de alguem tipo de objeto, é possível fazer uma pesquisa por um dado em
+				específico, editar dados ou excluí-los.
+				</p>
+				<p>
+				Também é possível acessar a documentação API, onde são feitos testes sobre a comunicação
+				com a API e acessar o bando de dados diretamente, porém é necessário uma senha.
+				</p>
+			</div>
+			<div th:if="${mensagemErro != null}">
+				<h3 style="color:red">Lista de Erros:</h3>
+				<h4 style="color:red" th:text="${mensagemErro}"></h4>
+			</div>
+		</main>
+	</div>
+	<div th:insert="~{layoutBase :: botaoTema}"></div>
+</body>
+</html>

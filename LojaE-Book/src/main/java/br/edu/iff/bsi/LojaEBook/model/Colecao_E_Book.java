@@ -55,5 +55,11 @@ public class Colecao_E_Book extends Produto {
 		this.e_book.remove(e_book);
 		this.qtdVolumes--;
 	}
+
+	public List<E_Book> getE_book() {
+		return e_book;
+	}
+	
+	
 	
 }

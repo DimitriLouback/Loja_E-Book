@@ -29,7 +29,7 @@ public class ClienteController {
 	
 	@GetMapping("")
 	public String page() throws Exception {
-		return "CRUD_Cliente";
+		return "redirect:/cliente/listarClientes";
 	}
 	
 	@GetMapping("/addForm")
@@ -46,7 +46,7 @@ public class ClienteController {
 	public String addCliente(@Valid @ModelAttribute Cliente cliente, BindingResult resultado, Model model) {
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "erro";
+			return "CRUD_Main";
 		}else {
 			String resposta = clienteServ.addCliente(cliente);
 			try {
@@ -54,7 +54,7 @@ public class ClienteController {
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return "erro";
+				return "CRUD_Main";
 			}			
 		}
 	}
@@ -96,7 +96,7 @@ public class ClienteController {
 		String senha = cliente.getSenha();
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "erro";
+			return "CRUD_Main";
 		}else {			
 			clienteServ.atualizarCliente(cpf, nome, email, senha);
 			return "redirect:/cliente/editar?id="+clienteServ.buscarClienteCPF(cpf).getId();
@@ -123,7 +123,7 @@ public class ClienteController {
 		String telefone = cliente.getTelefone().get(0);
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "erro";
+			return "CRUD_Main";
 		}else {			
 			clienteServ.addTelefone(cpf, telefone);
 			return "redirect:/cliente/editar?id="+clienteServ.buscarClienteCPF(cpf).getId();
@@ -134,7 +134,7 @@ public class ClienteController {
 	public String adicionarSaldo(String cpf, double saldo, Model model) {
 		if(saldo<=0) {
 			model.addAttribute("mensagemErro", "Tem que ser maior que 0");
-			return "erro";
+			return "CRUD_Main";
 		}else {				
 			clienteServ.adcionarSaldo(cpf, saldo);
 			return "redirect:/cliente/editar?id="+clienteServ.buscarClienteCPF(cpf).getId();

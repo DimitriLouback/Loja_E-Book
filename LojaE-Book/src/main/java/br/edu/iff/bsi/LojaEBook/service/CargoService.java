@@ -27,13 +27,16 @@ public class CargoService {
 		}
 	}
 	
-	public String atualizarCargo(String funcao, double salario) {
+	public String atualizarCargo(String funcao, double salario, int nivelAcesso) {
 		Cargo c = CargoRep.buscarPelaFuncao(funcao);
 		if(c==null) {
 			return "Cargo não achado";
 		}else {
 			if(salario>0) {
 				c.setSalario(salario);
+			}
+			if(nivelAcesso>=0) {
+				c.setNivelAcesso(nivelAcesso);;
 			}
 			CargoRep.flush();
 			return "Atualizado no id "+c.getId();

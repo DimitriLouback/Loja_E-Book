@@ -2,35 +2,36 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<script th:src="@{js/color-modes.js}"></script>	
-<script th:src="@{js/bootstrap.min.js}"></script>
-<link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+<script th:src="@{~/js/color-modes.js}"></script>
+<script th:src="@{~/js/bootstrap.bundle.min.js}"></script>
+<link th:href="@{~/css/bootstrap.min.css}" rel="stylesheet">
 <title>Loja E-Book.</title>
 </head>
 <body>
 
 	<div th:insert="~{layoutBase :: header}"></div>
+
+	<div style="position: absolute;right: 50px;top: 80px;"><a class="btn btn-secondary my-2" href="./CRUDs">Administrar Dados</a></div>
 	
-	<h1>Opções de ADM.</h1>
-	
-	<h4>CRUDs:</h4>
-	<ul><li><a href="./cliente">Cliente</a>
-	<li><a href="./cargo">Cargo</a>
-	<li><a href="./funcionario">Funcionário</a>
-	<li><a href="./e-book">E-Book</a>
-	<li><a href="./colecao-e-book">Coleção de E-Books</a>
-	<li><a href="./compra">Compra</a></ul>
-	</br>
-	<h4><a href="./h2-console">Banco de dados</a></h4>
-	<h4><a href="./swagger-ui.html">Documentação API</a></h4>
-	
-	<tr th:each="e_books : ${e_books}">
-            <td th:text="${e_books.autor}"></td>
-            <td th:text="${e_books.preco}"></td>
-            
-        </tr>
+	<div th:insert="~{layoutBase :: meio}"></div>
+	<div class="album py-5 bg-body-tertiary">
+		<div class="container">
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+				<div th:each="e_book : ${e_book_lista}"
+					th:if="${e_book.titulo != null}">
+					<div th:insert="~{layoutBase :: amostra_e-book}"></div>
+				</div>
+				
+				<div th:each="colecao_e_book : ${colecao_e_book_lista}"
+					th:if="${colecao_e_book.serie != null}">
+					<div th:insert="~{layoutBase :: amostra_colecao-e-book}"></div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 	
 	<div th:insert="~{layoutBase :: botaoTema}"></div>
 </body>
-<script th:src="@{js/bootstrap.bundle.min.js}"></script>
+
 </html>

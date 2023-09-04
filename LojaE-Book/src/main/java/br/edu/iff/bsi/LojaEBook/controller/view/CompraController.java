@@ -32,7 +32,7 @@ public class CompraController {
 	
 	@GetMapping("")
 	public String page() throws Exception {
-		return "CRUD_Compra";
+		return "redirect:/compra/listarCompras";
 	}
 
 	@GetMapping("/addForm")
@@ -51,7 +51,7 @@ public class CompraController {
 		String clienteEscolhido = compra.getCpfCliente();
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "erro";
+			return "CRUD_Main";
 		}else {			
 			String resposta = CompraServ.addCompra(clienteEscolhido);
 			try {
@@ -59,7 +59,7 @@ public class CompraController {
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return "erro";
+				return "CRUD_Main";
 			}
 		}
 	}
@@ -103,7 +103,7 @@ public class CompraController {
 		String clienteEscolhido = compra.getCpfCliente();
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "erro";
+			return "CRUD_Main";
 		}else {						
 			CompraServ.atualizarCompra(id, clienteEscolhido);
 			return "redirect:/compra/editar?id="+id;

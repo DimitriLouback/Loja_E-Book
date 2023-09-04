@@ -31,11 +31,15 @@ public class CompraService {
 		if(cl==null) {
 			return "Cliente não achado";
 		}else {
-			Compra compra = new Compra(cpf);
-			cl.adicionarCompra(compra);
-			Compra c = CompraRep.save(compra);
-			ClienteRep.flush();
-			return "Registrado no id "+c.getId();
+			if(CompraRep.BuscarComprasAbertasPeloCPF(cpf).size()==0) {				
+				Compra compra = new Compra(cpf);
+				cl.adicionarCompra(compra);
+				Compra c = CompraRep.save(compra);
+				ClienteRep.flush();
+				return "Registrado no id "+c.getId();
+			}else {
+				return "O cliente já tem uma compra aberta";
+			}
 		}
 	}
 	

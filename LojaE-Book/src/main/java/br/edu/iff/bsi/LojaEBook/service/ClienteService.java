@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import br.edu.iff.bsi.LojaEBook.model.Carteira;
 import br.edu.iff.bsi.LojaEBook.model.Cliente;
+import br.edu.iff.bsi.LojaEBook.model.Compra;
 import br.edu.iff.bsi.LojaEBook.repository.CarteiraRepository;
 import br.edu.iff.bsi.LojaEBook.repository.ClienteRepository;
 import br.edu.iff.bsi.LojaEBook.repository.CompraRepository;
-import jakarta.validation.constraints.PositiveOrZero;
 
 @Service
 public class ClienteService {
@@ -60,12 +60,12 @@ public class ClienteService {
 	public String deletarCliente(String cpf) {
 		Cliente c = ClienteRep.buscarPeloCPF(cpf);
 		if(c!=null) {
-			if(CompraRep.BuscarComprasAbertasPeloCPF(cpf).isEmpty()) {
-				ClienteRep.delete(c);
-				return "Cliente deletado no id "+c.getId();
-			}else {
-				return "Cliente ainda tem compras não finalizadas";
+			List<Compra> compras = CompraRep.BuscarComprasAbertasPeloCPF(cpf);
+			for(int i=0;i<compras.size();i++) {
+				CompraRep.delete(compras.get(i));
 			}
+			ClienteRep.delete(c);
+			return "Cliente deletado no id "+c.getId();
 		}else {
 			return "Cliente não encontrado";
 		}

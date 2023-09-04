@@ -28,7 +28,7 @@ public class E_BookController {
 	
 	@GetMapping("")
 	public String page(Model model) throws Exception {
-		return "CRUD_E_Book";
+		return "redirect:/e-book/listarE_Books";
 	}
 	
 	@GetMapping("/addForm")
@@ -45,7 +45,7 @@ public class E_BookController {
 	public String addE_Book(@Valid @ModelAttribute E_Book e_book, BindingResult resultado, Model model) {
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "erro";
+			return "CRUD_Main";
 		}else {			
 			String resposta = EBookServ.addE_Book(e_book);
 			try {
@@ -53,7 +53,7 @@ public class E_BookController {
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return "erro";
+				return "CRUD_Main";
 			}
 		}
 	}
@@ -94,7 +94,7 @@ public class E_BookController {
 		int qtdPaginas = e_book.getQtdPaginas();
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "erro";
+			return "CRUD_Main";
 		}else {			
 			EBookServ.atualizarE_Book(titulo, preco, genero, autor, editora, qtdPaginas);
 			return "redirect:/e-book/listarE_Books"; 

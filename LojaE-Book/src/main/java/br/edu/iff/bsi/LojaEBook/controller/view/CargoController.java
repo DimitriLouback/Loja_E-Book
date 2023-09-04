@@ -27,9 +27,8 @@ public class CargoController {
 	public CargoService CargoServ;
 	
 	@GetMapping("")
-	public String page(Model model) throws Exception {
-		model.addAttribute("cargos", CargoServ.listarCargos());
-		return "CRUD_Cargo";
+	public String page() throws Exception {
+		return "redirect:/cargo/listarCargos";
 	}
 	
 	@GetMapping("/addForm")
@@ -46,7 +45,7 @@ public class CargoController {
 	public String addCargo(@Valid @ModelAttribute Cargo cargo, BindingResult resultado, Model model) {
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "erro";
+			return "CRUD_Main";
 		}else {
 			String resposta = CargoServ.addCargo(cargo);
 			try {
@@ -54,7 +53,7 @@ public class CargoController {
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return "erro";
+				return "CRUD_Main";
 			}		
 		}
 	}
@@ -93,11 +92,12 @@ public class CargoController {
 	public String atualizarCargo(@Valid @ModelAttribute Cargo cargo, BindingResult resultado, Model model) {
 		String funcao = cargo.getFuncao();
 		double salario = cargo.getSalario();
+		int nivelAcesso = cargo.getNivelAcesso();
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "erro";
+			return "CRUD_Main";
 		}else {			
-			CargoServ.atualizarCargo(funcao, salario);
+			CargoServ.atualizarCargo(funcao, salario, nivelAcesso);
 			return "redirect:/cargo/listarCargos";
 		}
 	}

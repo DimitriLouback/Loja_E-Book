@@ -26,19 +26,19 @@ public class CargoRestController {
 	@PostMapping("")
 	@ResponseBody
 	@Operation(summary = "Adicionar um cargo em expecifíco")
-	public String addCargo(String funcao, double salario) throws Exception {
-		return CargoServ.addCargo(new Cargo(funcao, salario));
+	public String addCargo(String funcao, double salario, int nivelAcesso) throws Exception {
+		return CargoServ.addCargo(new Cargo(funcao, salario, nivelAcesso));
 	}
 	
 	@PutMapping("/{id}")
 	@ResponseBody
 	@Operation(summary = "Atualizar um cargo em expecifíco")
-	public String atualizarCargo(@PathVariable("id") Long id, double salario) throws Exception {
+	public String atualizarCargo(@PathVariable("id") Long id, double salario, int nivelAcesso) throws Exception {
 		Cargo cBusca = CargoServ.getCargoById(id);
 		if(cBusca==null) {			
 			return "Cargo não achado";
 		}else {
-			return CargoServ.atualizarCargo(cBusca.getFuncao(), salario);
+			return CargoServ.atualizarCargo(cBusca.getFuncao(), salario, nivelAcesso);
 		}
 	}
 	
