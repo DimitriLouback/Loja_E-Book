@@ -26,13 +26,14 @@
     - _editora (E-Book)= Mínima: 1; Máxima: 20_
     - _serie (Coleção de E-Book)= Mínima: 1; Máxima: 60_
   - Aceita valores espaço em branco ou não?
-    - _Todos aceitam_ 
+    - _Todos aceitam com execeção das únicas_ 
 - Atributos numéricos:
   - Aceita valores negativos, positivos ou indiferente?
     - _Somente saldoDisponivel (Carteira) pode ser indiferente o resto é positivo_ 
   - Faixa de valores permitidos
     - _saldoDisponivel (Carteira)= 0 até 4000_
     - _salario (Cargo)= 900 até 5000_
+    - _nivelAcesso (Cargo)= 0 até 10_
     - _precoFinal (Compra)= 5 até 1500_
     - _preco (Produto)= 5 até 80_
     - _qtdPaginas (E-Book)= 10 até 3000_
