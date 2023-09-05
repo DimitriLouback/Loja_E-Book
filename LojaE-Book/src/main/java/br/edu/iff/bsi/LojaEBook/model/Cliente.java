@@ -44,6 +44,9 @@ public class Cliente extends Pessoa {
 	}
 	
 	public void adicionarSaldo(double saldo) {
+		if(saldo<=0) {
+			throw new RuntimeException("Valor tem que ser maior que 0");
+		}
 		this.carteira.setSaldoDisponivel(this.carteira.getSaldoDisponivel()+saldo);
 	}
 	

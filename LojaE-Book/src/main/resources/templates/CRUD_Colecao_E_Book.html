@@ -41,7 +41,7 @@ table, th, td {
 						</p>
 						<p>
 							<label for="Preco">Preço</label> <input type="number"
-								name="preco" id="preco" th:field="*{preco}" required />
+								name="preco" id="preco" th:field="*{preco}" min="1" required />
 						</p>
 						<p>
 							<button type="submit">Registrar</button>
@@ -106,7 +106,7 @@ table, th, td {
 						</p>
 						<p>
 							<label for="Preco">Preço</label> <input type="number"
-								name="preco" id="preco" th:value="*{preco}" />
+								name="preco" id="preco" th:value="*{preco}" min="1" />
 						</p>
 						<p>
 							<button type="submit">Atualizar</button>

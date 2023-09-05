@@ -55,11 +55,11 @@ table, th, td {
 						<p>
 							<label for="qtdPaginas">Quantidade de Páginas</label> <input
 								type="number" name="qtdPaginas" id="qtdPaginas"
-								th:field="*{qtdPaginas}" required />
+								th:field="*{qtdPaginas}" min="1" required />
 						</p>
 						<p>
 							<label for="Preco">Preço</label> <input type="number"
-								name="preco" id="preco" th:field="*{preco}" required />
+								name="preco" id="preco" th:field="*{preco}" min="1" required />
 						</p>
 						<p>
 							<button type="submit">Registrar</button>
@@ -142,11 +142,11 @@ table, th, td {
 						<p>
 							<label for="qtdPaginas">Nova quantidade de páginas</label> <input
 								type="number" name="qtdPaginas" id="qtdPaginas"
-								th:value="*{qtdPaginas}" />
+								th:value="*{qtdPaginas}" min="1" />
 						</p>
 						<p>
 							<label for="Preco">Novo preço</label> <input type="number"
-								name="preco" id="preco" th:value="*{preco}" />
+								name="preco" id="preco" th:value="*{preco}" min="1" />
 						</p>
 						<p>
 							<button type="submit">Atulizar</button>

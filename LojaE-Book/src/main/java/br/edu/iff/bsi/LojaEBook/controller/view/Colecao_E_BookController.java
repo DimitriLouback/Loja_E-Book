@@ -48,7 +48,7 @@ public class Colecao_E_BookController {
 	public String addColecao_E_Book(@Valid @ModelAttribute Colecao_E_Book colecao_e_book, BindingResult resultado, Model model) {
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "CRUD_Main";
+			return "error";
 		}else {			
 			String resposta = Colecao_E_BookServ.addColecao_E_Book(colecao_e_book);
 			try {
@@ -56,7 +56,7 @@ public class Colecao_E_BookController {
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return "CRUD_Main";
+				return "error";
 			}
 		}
 	}
@@ -94,7 +94,7 @@ public class Colecao_E_BookController {
 		double preco = colecao_e_book.getPreco();
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "CRUD_Main";
+			return "error";
 		}else {						
 			Colecao_E_BookServ.atualizarE_Book(serie, preco);
 			return "redirect:/colecao-e-book/editar?id="+Colecao_E_BookServ.buscarColecao_E_Books(serie).getId();

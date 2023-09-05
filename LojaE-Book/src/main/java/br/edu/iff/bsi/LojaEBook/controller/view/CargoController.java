@@ -45,7 +45,7 @@ public class CargoController {
 	public String addCargo(@Valid @ModelAttribute Cargo cargo, BindingResult resultado, Model model) {
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "CRUD_Main";
+			return "error";
 		}else {
 			String resposta = CargoServ.addCargo(cargo);
 			try {
@@ -53,7 +53,7 @@ public class CargoController {
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return "CRUD_Main";
+				return "error";
 			}		
 		}
 	}
@@ -95,7 +95,7 @@ public class CargoController {
 		int nivelAcesso = cargo.getNivelAcesso();
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "CRUD_Main";
+			return "error";
 		}else {			
 			CargoServ.atualizarCargo(funcao, salario, nivelAcesso);
 			return "redirect:/cargo/listarCargos";

@@ -27,8 +27,7 @@ table, th, td {
 			<div>
 				<h1>Administrar todos os dados do sistema:</h1>
 				<p>
-				É aqui onde todos os dados do sistema são administrado pelos funcionários, e também, 
-				onde os erros relacionados aos dados (caso tenha algum) são notificados.
+				É aqui onde todos os dados do sistema são administrado pelos funcionários.
 				</p>
 				<p>
 				Cada cargo possuí seu nível de acesso e ele determina o que o funcionário que está naquele 
@@ -43,10 +42,6 @@ table, th, td {
 				Também é possível acessar a documentação API, onde são feitos testes sobre a comunicação
 				com a API e acessar o bando de dados diretamente, porém é necessário uma senha.
 				</p>
-			</div>
-			<div th:if="${mensagemErro != null}">
-				<h3 style="color:red">Lista de Erros:</h3>
-				<h4 style="color:red" th:text="${mensagemErro}"></h4>
 			</div>
 		</main>
 	</div>

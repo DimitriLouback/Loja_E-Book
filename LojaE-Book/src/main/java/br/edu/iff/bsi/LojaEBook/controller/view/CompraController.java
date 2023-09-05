@@ -51,7 +51,7 @@ public class CompraController {
 		String clienteEscolhido = compra.getCpfCliente();
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "CRUD_Main";
+			return "error";
 		}else {			
 			String resposta = CompraServ.addCompra(clienteEscolhido);
 			try {
@@ -59,7 +59,7 @@ public class CompraController {
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return "CRUD_Main";
+				return "error";
 			}
 		}
 	}
@@ -103,7 +103,7 @@ public class CompraController {
 		String clienteEscolhido = compra.getCpfCliente();
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "CRUD_Main";
+			return "error";
 		}else {						
 			CompraServ.atualizarCompra(id, clienteEscolhido);
 			return "redirect:/compra/editar?id="+id;

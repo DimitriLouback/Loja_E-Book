@@ -36,11 +36,11 @@ table, th, td {
 						</p>
 						<p>
 							<label for="Salario">Salário</label> <input type="number"
-								name="salario" id="salario" th:field="*{salario}" required />
+								name="salario" id="salario" th:field="*{salario}" min="1" required />
 						</p>
 						<p>
 							<label for="nivelAcesso">Nível de Acesso</label> <input type="number"
-								name="nivelAcesso" id="nivelAcesso" th:field="*{nivelAcesso}" required />
+								name="nivelAcesso" id="nivelAcesso" th:field="*{nivelAcesso}" min="0" max="10" required />
 						</p>
 						<p>
 							<button type="submit">Registrar</button>
@@ -106,11 +106,11 @@ table, th, td {
 						</p>
 						<p>
 							<label for="Salario">Novo salário</label> <input type="number"
-								name="salario" id="salario" th:value="*{salario}" />
+								name="salario" id="salario" th:value="*{salario}" min="1" />
 						</p>
 						<p>
 							<label for="nivelAcesso">Nível de Acesso</label> <input type="number"
-								name="nivelAcesso" id="nivelAcesso" th:value="*{nivelAcesso}" />
+								name="nivelAcesso" id="nivelAcesso" th:value="*{nivelAcesso}"  min="0" max="10"  />
 						</p>
 						<p>
 							<button type="submit">Atualizar</button>

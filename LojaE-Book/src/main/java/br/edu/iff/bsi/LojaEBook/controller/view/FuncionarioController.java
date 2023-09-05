@@ -54,7 +54,7 @@ public class FuncionarioController {
 	public String addFuncionario(@Valid @ModelAttribute Funcionario funcionario, BindingResult resultado, Model model, @RequestParam String cargoEscolhido) {
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "CRUD_Main";
+			return "error";
 		}else {			
 			String resposta = FuncionarioServ.addFuncionario(funcionario, cargoEscolhido);
 			try {
@@ -62,7 +62,7 @@ public class FuncionarioController {
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return "CRUD_Main";
+				return "error";
 			}
 		}
 	}
@@ -105,7 +105,7 @@ public class FuncionarioController {
 		String senha = funcionario.getSenha();
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "CRUD_Main";
+			return "error";
 		}else {						
 			FuncionarioServ.atualizarFuncionario(cpf, nome, email, senha, cargoEscolhido);
 			return "redirect:/funcionario/editar?id="+FuncionarioServ.buscarFuncionarioCPF(cpf).getId();
@@ -132,7 +132,7 @@ public class FuncionarioController {
 		String telefone = funcionario.getTelefone().get(0);
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());
-			return "CRUD_Main";
+			return "error";
 		}else {				
 			FuncionarioServ.addTelefone(cpf, telefone);
 			return "redirect:/funcionario/editar?id="+FuncionarioServ.buscarFuncionarioCPF(cpf).getId();
