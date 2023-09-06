@@ -34,7 +34,7 @@ public class ClienteService {
 			Carteira carteira = CarteiraRep.save(new Carteira());
 			cliente.setCarteira(carteira);
 			Cliente c = ClienteRep.save(cliente);
-			return "Registrado no id "+c.getId();
+			return "Registrado com sucesso";
 		}
 	}
 	

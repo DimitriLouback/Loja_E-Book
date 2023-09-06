@@ -223,5 +223,9 @@ public class CompraService {
 	
 	public List<Compra> buscarPeloCPFCliente(String cpf) throws Exception {
 		return CompraRep.BuscarPeloCPF(cpf);
-	} 
+	}
+	
+	public List<Compra> buscarComprasAbertasPeloCPFCliente(String cpf) throws Exception {
+		return CompraRep.BuscarComprasAbertasPeloCPF(cpf);
+	}
 }

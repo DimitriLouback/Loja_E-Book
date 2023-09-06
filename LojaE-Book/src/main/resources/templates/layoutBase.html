@@ -217,7 +217,10 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#detalhesEBook" >Detalhes</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Adicionar ao Carrinho</button>
+                  <button th:if="${compra==null}" type="button" class="btn btn-sm btn-outline-secondary">
+                  <a style="text-decoration:none; color:gray" >Adicionar ao Carrinho</a></button>
+                  <button th:if="${compra!=null}" type="button" class="btn btn-sm btn-outline-secondary">
+                  <a style="text-decoration:none; color:gray" th:href="@{/removeE_BookCarrinho(id=${compra.id},titulo=${e_book.titulo})}">Remover do Carrinho</a></button>
                 </div>
                 <small class="text-body-secondary">R$ <span th:text="${e_book.preco}"></span></small>
               </div>
@@ -257,7 +260,10 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#detalhesColecaoEBook">Detalhes</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Adicionar ao Carrinho</button>
+                  <button th:if="${compra==null}" type="button" class="btn btn-sm btn-outline-secondary">
+                  <a style="text-decoration:none; color:gray" >Adicionar ao Carrinho</a></button>
+                  <button th:if="${compra!=null}" type="button" class="btn btn-sm btn-outline-secondary">
+                  <a style="text-decoration:none; color:gray" th:href="@{/removeColecaoE_BookCarrinho(id=${compra.id},serie=${colecao_e_book.serie})}">Remover do Carrinho</a></button>
                 </div>
                 <small class="text-body-secondary">R$ <span th:text="${colecao_e_book.preco}"></span></small>
               </div>
