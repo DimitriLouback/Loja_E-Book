@@ -25,6 +25,7 @@ import br.edu.iff.bsi.LojaEBook.service.ClienteService;
 import br.edu.iff.bsi.LojaEBook.service.Colecao_E_BookService;
 import br.edu.iff.bsi.LojaEBook.service.CompraService;
 import br.edu.iff.bsi.LojaEBook.service.E_BookService;
+import br.edu.iff.bsi.LojaEBook.service.FuncionarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
@@ -40,9 +41,13 @@ public class MainControllerView {
 	private CompraService CompraServ;
 	@Autowired
 	public ClienteService clienteServ;
+	@Autowired
+	public FuncionarioService FuncionarioServ;
+	
 	
 	@GetMapping("")
 	public String page(Model model, HttpServletRequest request) throws Exception{
+		FuncionarioServ.garantirFuncionarioADM();
 		String produto = request.getParameter("produto");
 		if(produto==null) {			
 			model.addAttribute("e_book_lista", EBookServ.listarE_Books());

@@ -125,4 +125,26 @@ public class FuncionarioService {
 		return FuncionarioRep.BuscarPeloId(id);
 	}
 	
+	public void garantirFuncionarioADM() {
+		if((FuncionarioRep.maiorNivelAcesso()==null)||(Integer.parseInt(FuncionarioRep.maiorNivelAcesso())<10)) {
+			Cargo cargo = CargoRep.buscarPelaFuncao("ADM");
+			if(cargo==null) {
+				CargoRep.save(new Cargo("ADM",100,10));
+				cargo = CargoRep.buscarPelaFuncao("ADM");
+			}else if(cargo.getNivelAcesso()<10) {
+				cargo.setNivelAcesso(10);
+			}
+			Funcionario func = FuncionarioRep.buscarPeloCPF("000.000.000-00");
+			if(func==null) {
+				func = new Funcionario("Administrador","Administrador@adm","000.000.000-00","root123","(00) 00000-0000");
+				func.setCargo(cargo);
+				FuncionarioRep.save(func);
+			}else if(func.getCargo().getNivelAcesso()<10){
+				func.setCargo(cargo);
+			}
+			CargoRep.flush();
+			FuncionarioRep.flush();
+		}
+	}
+	
 }
