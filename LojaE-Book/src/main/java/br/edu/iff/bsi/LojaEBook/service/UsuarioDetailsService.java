@@ -10,11 +10,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import br.edu.iff.bsi.LojaEBook.model.Permissao;
 import br.edu.iff.bsi.LojaEBook.model.Usuario;
 import br.edu.iff.bsi.LojaEBook.repository.UsuarioRepository;
 
+@Service
 public class UsuarioDetailsService implements UserDetailsService {
 
 	@Autowired

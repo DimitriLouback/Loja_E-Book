@@ -57,7 +57,7 @@ public class SecurityConfig {
 	@Autowired
 	private UsuarioDetailsService usuarioDetailsService;
 	
-	//												@Override
+	//		@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(usuarioDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 	}
