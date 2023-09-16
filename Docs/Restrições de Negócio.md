@@ -33,7 +33,7 @@
   - Faixa de valores permitidos
     - _saldoDisponivel (Carteira)= 0 até 4000_
     - _salario (Cargo)= 900 até 5000_
-    - _nivelAcesso (Cargo)= 0 até 10_
+    - _nivelAcesso (Cargo)= 1 até 5_
     - _precoFinal (Compra)= 5 até 1500_
     - _preco (Produto)= 5 até 80_
     - _qtdPaginas (E-Book)= 10 até 3000_
