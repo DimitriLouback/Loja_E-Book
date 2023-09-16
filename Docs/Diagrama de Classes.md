@@ -41,7 +41,7 @@
 ![diagrama_de_classes](./Imgs/Diagrama_de_classe_0,7.png)
 
 ##### *Versão 0.8*
-![diagrama_de_classes](./Imgs/Diagrama_de_classe_0,8.png)
+![diagrama_de_classes](./Imgs/Diagrama_de_classe_0,81.png)
 
 ## Referências
 
