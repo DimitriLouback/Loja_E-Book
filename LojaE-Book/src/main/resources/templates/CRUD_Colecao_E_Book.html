@@ -57,7 +57,7 @@ table, th, td {
 
 			<div th:if="${colecao_e_book_lista != null}">
 				<h2>Buscar E-Book.</h2>
-				<form action="/colecao-e-book/buscaSerie" method="post">
+				<form th:action="@{/colecao-e-book/buscaSerie}" method="post">
 					<p>
 						<label for="serie">Serie</label> <input type="text" name="serie"
 							id="serie" required />
@@ -145,7 +145,7 @@ table, th, td {
 				</table>
 
 				<h2>Adicionar E-Book.</h2>
-				<form action="/colecao-e-book/addE_Book" method="post">
+				<form th:action="@{/colecao-e-book/addE_Book}" method="post">
 					<p hidden>
 						<label for="serie">Serie</label> <input type="text" name="serie"
 							id="serie" th:value="*{colecao_e_book_edit.serie}" required />

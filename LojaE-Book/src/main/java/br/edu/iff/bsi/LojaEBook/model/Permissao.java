@@ -24,6 +24,8 @@ private static final long serialVersionUID = 1L;
 	public Permissao(String nome) {
 		this.nome = nome;
 	}
+	
+	public Permissao() {}
 
 	public String getNome() {
 		return nome;

@@ -26,7 +26,7 @@ table, th, td {
 		<div class="container">
 		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
 		<div class="col">
-				<form action="#" th:action="@{/atualizarValoresPerfil}"
+				<form action="#" th:action="@{/editarPerfil/atualizarValoresPerfil}"
 					th:object="${cliente_edit}" method="post">
 						<h2>Atualizar valores</h2>
 						<small>Mude os valores e aperte no botão para atualizar</small>
@@ -58,7 +58,7 @@ table, th, td {
 				</form>
 				<h2>Saldo Atual: R$ <span th:text="*{cliente_edit.verSaldo}"></span></h2>
 				<h4>Adicionar Saldo</h4>
-				<form action="/addSaldo" method="post">
+				<form th:action="@{/editarPerfil/addSaldo}" method="post">
 					<p hidden>
 						<label for="cpf">CPF</label> <input type="text" name="cpf"
 							id="cpf" th:value="*{cliente_edit.cpf}" required />
@@ -83,14 +83,14 @@ table, th, td {
 						<td style="border:none">
 							<button class="btn btn-danger px-3">
 								<a style="text-decoration:none; color:black"
-									th:href="@{/removeTelefone(cpf=${cliente_edit.cpf},telefone=${telefone})}">Excluir</a>
+									th:href="@{/editarPerfil/removeTelefone(cpf=${cliente_edit.cpf},telefone=${telefone})}">Excluir</a>
 							</button>
 						</td>
 					</tr>
 				</table>
 
 				<h2>Adicionar Telefone</h2>
-				<form action="/addTelefone" method="post">
+				<form th:action="@{/editarPerfil/addTelefone}" method="post">
 					<p hidden>
 						<input type="text" name="cpf" id="cpf"
 							th:value="*{cliente_edit.cpf}" required /> <input type="text"
@@ -109,6 +109,22 @@ table, th, td {
 						<button type="submit">Adicionar</button>
 					</p>
 				</form>
+				
+				<h2>Compras Finalizadas</h2>
+				<table style="right: -15%;top: 10%x;" class="list-group-item d-flex justify-content-between lh-sm">
+					<tr>
+						<th>Preço Final</th>
+						<th>Quantidade de Produtos</th>
+						<th>Data e hora da finalização</th>
+					</tr>
+					<tr th:each="compra : ${compraFechada_lista}"
+						th:if="${compra.cpfCliente != null}">
+						<td th:text="${compra.precoFinal}"></td>
+						<td th:text="${compra.qtdProdutos}"></td>
+						<td th:text="${compra.dataHora}"></td>
+					</tr>
+				</table>
+				
 </div>
 				
 		

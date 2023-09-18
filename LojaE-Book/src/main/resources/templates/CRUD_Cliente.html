@@ -73,7 +73,7 @@ table, th, td {
 
 			<div th:if="${cliente_lista != null}">
 				<h2>Buscar Cliente.</h2>
-				<form action="/cliente/buscaCPF" method="post">
+				<form th:action="@{/cliente/buscaCPF}" method="post">
 					<p>
 						<label for="cpf">CPF</label> <input type="text" name="cpf"
 							id="cpf" required />
@@ -156,7 +156,7 @@ table, th, td {
 					Adicionar Saldo (Saldo Atual: R$ <span
 						th:text="*{cliente_edit.verSaldo}"></span>)
 				</h2>
-				<form action="/cliente/addSaldo" method="post">
+				<form th:action="@{/cliente/addSaldo}" method="post">
 					<p hidden>
 						<label for="cpf">CPF</label> <input type="text" name="cpf"
 							id="cpf" th:value="*{cliente_edit.cpf}" required />
@@ -186,7 +186,7 @@ table, th, td {
 				</table>
 
 				<h2>Adicionar Telefone (Limite de 3).</h2>
-				<form action="/cliente/addTelefone" method="post">
+				<form th:action="@{/cliente/addTelefone}" method="post">
 					<p hidden>
 						<input type="text" name="cpf" id="cpf"
 							th:value="*{cliente_edit.cpf}" required /> <input type="text"

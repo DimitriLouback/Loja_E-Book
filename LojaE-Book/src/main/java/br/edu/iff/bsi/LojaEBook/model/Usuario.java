@@ -1,6 +1,7 @@
 package br.edu.iff.bsi.LojaEBook.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -20,11 +21,10 @@ public class Usuario implements Serializable {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@Pattern(regexp="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}", message="Deve seguir o padrão do CPF")
+	//@Pattern(regexp="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}", message="Deve seguir o padrão do CPF")
 	@Column(unique=true, length = 14)
 	private String login;
-	@Size(min=1,max=20,message="Tem que ter entre 1 e 20 caractéres")
-	@Column(length = 20)
+	@Column()
 	private String senha;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -34,6 +34,7 @@ public class Usuario implements Serializable {
 	public Usuario(String login, String senha) {
 		this.login = login;
 		this.senha = senha;
+		this.permissoes = new ArrayList<>();
 	}
 	
 	public Usuario() {}
@@ -60,6 +61,10 @@ public class Usuario implements Serializable {
 
 	public List<Permissao> getPermissoes() {
 		return permissoes;
+	}
+	
+	public void addPermissao(Permissao permissao) {
+		this.permissoes.add(permissao);
 	}
 	
 	

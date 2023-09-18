@@ -49,7 +49,7 @@ private static final long serialVersionUID = 1L;
 	public Compra(String cpfCliente) {
 		this.finalizado = false;
 		this.qtdProdutos = 0;
-		this.produto = new ArrayList();
+		this.produto = new ArrayList<>();
 		this.cpfCliente = cpfCliente;
 	}
 

@@ -40,7 +40,7 @@ table, th, td {
 						</p>
 						<p>
 							<label for="nivelAcesso">Nível de Acesso</label> <input type="number"
-								name="nivelAcesso" id="nivelAcesso" th:field="*{nivelAcesso}" min="0" max="10" required />
+								name="nivelAcesso" id="nivelAcesso" th:field="*{nivelAcesso}" min="1" max="5" required />
 						</p>
 						<p>
 							<button type="submit">Registrar</button>
@@ -56,7 +56,7 @@ table, th, td {
 
 			<div th:if="${cargo_lista != null}">
 				<h2>Buscar Cargo.</h2>
-				<form action="/cargo/buscaFuncao" method="post">
+				<form th:action="@{/cargo/buscaFuncao}" method="post">
 					<p>
 						<label for="funcao">Função</label> <input type="text"
 							name="funcao" id="funcao" required />
@@ -110,7 +110,7 @@ table, th, td {
 						</p>
 						<p>
 							<label for="nivelAcesso">Nível de Acesso</label> <input type="number"
-								name="nivelAcesso" id="nivelAcesso" th:value="*{nivelAcesso}"  min="0" max="10"  />
+								name="nivelAcesso" id="nivelAcesso" th:value="*{nivelAcesso}"  min="1" max="5"  />
 						</p>
 						<p>
 							<button type="submit">Atualizar</button>

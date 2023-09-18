@@ -1,12 +1,13 @@
 package br.edu.iff.bsi.LojaEBook.controller.view;
 
-import java.awt.print.Book;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import br.edu.iff.bsi.LojaEBook.model.Cliente;
 import br.edu.iff.bsi.LojaEBook.model.Colecao_E_Book;
@@ -46,9 +46,25 @@ public class MainControllerView {
 	
 	
 	@GetMapping("")
-	public String page(Model model, HttpServletRequest request) throws Exception{
-		FuncionarioServ.garantirFuncionarioADM();
+	public String page(Model model, HttpServletRequest request, @AuthenticationPrincipal User user) throws Exception{
+		
 		String produto = request.getParameter("produto");
+		if(user!=null) {
+			String nome;
+			if(user.getAuthorities().toString().compareTo("[ROLE_Cliente]")==0) {
+				model.addAttribute("cliente", clienteServ.buscarClienteCPF(user.getUsername()));
+				Compra compra = CompraServ.CompraAbertaPeloCPFCliente(user.getUsername());
+				model.addAttribute("compraForaArrinho", compra);
+				nome = clienteServ.buscarClienteCPF(user.getUsername()).getNome();
+			}else {
+				if(user.getUsername().compareTo("ADM")==0) {
+					nome = "ADM";
+				}else {
+					nome = FuncionarioServ.buscarFuncionarioCPF(user.getUsername()).getNome();
+				}
+			}
+			model.addAttribute("nome", nome);
+		}
 		if(produto==null) {			
 			model.addAttribute("e_book_lista", EBookServ.listarE_Books());
 			model.addAttribute("colecao_e_book_lista", Colecao_E_BookServ.listarColecao_E_Books());
@@ -74,14 +90,10 @@ public class MainControllerView {
 	
 	@GetMapping("/carrinho/{id}")
 	public String carrinho(@PathVariable("id") Long id, Model model, HttpServletRequest request) throws Exception{
-		List<Compra> compra = CompraServ.buscarComprasAbertasPeloCPFCliente(clienteServ.buscarPeloID(id).getCpf());
-		if(compra.size()==0) {
-			CompraServ.addCompra(clienteServ.buscarPeloID(id).getCpf());
-			compra = CompraServ.buscarComprasAbertasPeloCPFCliente(clienteServ.buscarPeloID(id).getCpf());
-		}
-		List<E_Book> e_books = CompraServ.ListarEBookPeloIdCompra(compra.get(0).getId());
-		List<Colecao_E_Book> colecoes_e_book = CompraServ.ListarColecaoEBookPeloIdCompra(compra.get(0).getId());
-		model.addAttribute("compra", compra.get(0));
+		Compra compra = CompraServ.CompraAbertaPeloCPFCliente(clienteServ.buscarPeloID(id).getCpf());
+		List<E_Book> e_books = CompraServ.ListarEBookPeloIdCompra(compra.getId());
+		List<Colecao_E_Book> colecoes_e_book = CompraServ.ListarColecaoEBookPeloIdCompra(compra.getId());
+		model.addAttribute("compra", compra);
 		model.addAttribute("saldo", clienteServ.buscarPeloID(id).verSaldo());
 		model.addAttribute("e_book_lista", e_books);
 		model.addAttribute("colecao_e_book_lista", colecoes_e_book);
@@ -92,20 +104,31 @@ public class MainControllerView {
 		return "carrinho";
 	}
 
+	@GetMapping("/carrinho/addE_BookCarrinho")
+	public String addE_Book(String id, String titulo) throws Exception {
+		CompraServ.addE_Book(id, titulo);
+		return "redirect:/";
+	}
 	
-	@GetMapping("/removeE_BookCarrinho")
+	@GetMapping("/carrinho/removeE_BookCarrinho")
 	public String removeE_Book(String id, String titulo) throws Exception {
 		CompraServ.removeE_Book(id, titulo);
 		return "redirect:/carrinho/"+clienteServ.buscarClienteCPF(CompraServ.getCompraById(Long.parseLong(id)).getCpfCliente()).getId();
 	}
 	
-	@GetMapping("/removeColecaoE_BookCarrinho")
+	@GetMapping("/carrinho/addColecaoE_BookCarrinho")
+	public String addColecaoE_Book(String id, String serie) throws Exception {
+		CompraServ.addColecaoE_Book(id, serie);
+		return "redirect:/";
+	}
+	
+	@GetMapping("/carrinho/removeColecaoE_BookCarrinho")
 	public String removeColecaoE_Book(String id, String serie) throws Exception {
 		CompraServ.removeColecaoE_Book(id, serie);
 		return "redirect:/carrinho/"+clienteServ.buscarClienteCPF(CompraServ.getCompraById(Long.parseLong(id)).getCpfCliente()).getId();
 	}
 	
-	@GetMapping("/fecharCarrinho")
+	@GetMapping("/carrinho/fecharCarrinho")
 	public String finalizarCompra(Long id) throws Exception {
 		String resposta = CompraServ.finalizarCompraPeloId(id);
 		System.out.println(resposta);
@@ -121,10 +144,11 @@ public class MainControllerView {
 		Cliente cliente = clienteServ.getClienteById(id);
 		model.addAttribute("cliente_edit", cliente);
 		model.addAttribute("telefone_lista", clienteServ.ListarTelefonePeloCPF(cliente.getCpf()));
+		model.addAttribute("compraFechada_lista", CompraServ.ListarFechadasPeloCPFCliente(cliente.getCpf()));
 		return "editarPerfil";
 	}
 	
-	@PostMapping("/atualizarValoresPerfil")
+	@PostMapping("/editarPerfil/atualizarValoresPerfil")
 	public String atualizarValoresPerfil(@Valid @ModelAttribute Cliente cliente ,BindingResult resultado, Model model) {
 		String cpf = cliente.getCpf();
 		String nome = cliente.getNome();
@@ -139,7 +163,7 @@ public class MainControllerView {
 		}
 	}
 	
-	@GetMapping("/removeTelefone")
+	@GetMapping("/editarPerfil/removeTelefone")
 	public String removeTelefone(String cpf, String telefone) throws Exception {
 		if(clienteServ.buscarClienteCPF(cpf).getQtdTelefones()>1) {			
 			clienteServ.removeTelefone(cpf, telefone);
@@ -147,7 +171,7 @@ public class MainControllerView {
 		return "redirect:/editarPerfil/"+clienteServ.buscarClienteCPF(cpf).getId();
 	}
 
-	@PostMapping("/addTelefone")
+	@PostMapping("/editarPerfil/addTelefone")
 	public String addTelefone(@Valid @ModelAttribute Cliente cliente ,BindingResult resultado, Model model) {
 		String cpf = cliente.getCpf();
 		String telefone = cliente.getTelefone().get(0);
@@ -160,7 +184,7 @@ public class MainControllerView {
 		}
 	}
 	
-	@PostMapping("/addSaldo")
+	@PostMapping("/editarPerfil/addSaldo")
 	public String adicionarSaldo(String cpf, double saldo) {
 		clienteServ.adcionarSaldo(cpf, saldo);
 		return "redirect:/editarPerfil/"+clienteServ.buscarClienteCPF(cpf).getId();
@@ -176,7 +200,7 @@ public class MainControllerView {
 		return "cadastro";
 	}
 	
-	@PostMapping("/add")
+	@PostMapping("/cadastro/add")
 	public String addCliente(@Valid @ModelAttribute Cliente cliente, BindingResult resultado, Model model) {
 		if(resultado.hasErrors()) {
 			model.addAttribute("mensagemErro", resultado.getAllErrors());

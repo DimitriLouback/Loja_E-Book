@@ -211,7 +211,7 @@
 </div>
 <div th:fragment="header">
 <header  class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" th:href="@{~/.}">Loja E-Book</a>
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-5  text-white" th:href="@{~/.}">Loja E-Book</a>
 
   <ul class="navbar-nav flex-row d-md-none">
     <li class="nav-item text-nowrap">
@@ -242,54 +242,7 @@
         <div th:fragment="sidebar" class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
          
           <ul class="nav flex-column">
-            <li class="nav-item">
-              <span class="nav-link d-flex align-items-center gap-1 active" aria-current="page">
-                <svg class="bi"><use xlink:href="#cliente"/></svg>
-                Cliente
-              </span>
-            </li>
-            <li>
-            <div class="btn-toolbar">
-          <div class="btn-group me-2">
-            	<button class="btn btn-sm btn-outline-secondary">
-            	<a th:href="@{~/./cliente/addForm}">Adicionar</a></button>
-				<button class="btn btn-sm btn-outline-secondary">
-				<a th:href="@{~/./cliente/listarClientes}">Listar</a></button>
-            </div></div>
-            </li>
-            <hr class="my-3">
-            <li class="nav-item">
-              <span class="nav-link d-flex align-items-center gap-2">
-                <svg class="bi"><use xlink:href="#funcionario"/></svg>
-                Funcionario
-              </span>
-            </li>
-            <li>
-            <div class="btn-toolbar">
-          <div class="btn-group me-2">
-            	<button class="btn btn-sm btn-outline-secondary">
-            	<a th:href="@{~/./funcionario/addForm}">Adicionar</a></button>
-				<button class="btn btn-sm btn-outline-secondary">
-				<a th:href="@{~/./funcionario/listarFuncionarios}">Listar</a></button>
-            </div></div>
-            </li>
-            <hr class="my-3">
-            <li class="nav-item">
-              <span class="nav-link d-flex align-items-center gap-2">
-                <svg class="bi"><use xlink:href="#cargo"/></svg>
-                Cargo
-              </span>
-            </li>
-            <li>
-            <div class="btn-toolbar">
-          <div class="btn-group me-2">
-            	<button class="btn btn-sm btn-outline-secondary">
-            	<a th:href="@{~/./cargo/addForm}">Adicionar</a></button>
-				<button class="btn btn-sm btn-outline-secondary">
-				<a th:href="@{~/./cargo/listarCargos}">Listar</a></button>
-            </div></div>
-            </li>
-            <hr class="my-3">
+          
             <li class="nav-item">
               <span class="nav-link d-flex align-items-center gap-2" href="@{~/./e-book}">
                 <svg class="bi"><use xlink:href="#e-book"/></svg>
@@ -328,7 +281,7 @@
                 Compra
               </span>
             </li>
-            <li>
+            <li sec:authorize="hasAnyRole('FuncionarioNv4','FuncionarioNv3','FuncionarioNv2','FuncionarioNv1')">
             <div class="btn-toolbar">
           <div class="btn-group me-2">
             	<button class="btn btn-sm btn-outline-secondary">
@@ -337,11 +290,60 @@
 				<a th:href="@{~/./compra/listarCompras}">Listar</a></button>
             </div></div>
             </li>
+            <hr class="my-3">
+            <li>
+              <span class="nav-link d-flex align-items-center gap-2" aria-current="page">
+                <svg class="bi"><use xlink:href="#cliente"/></svg>
+                Cliente
+              </span>
+            </li>
+            <li sec:authorize="hasAnyRole('FuncionarioNv3','FuncionarioNv2','FuncionarioNv1')">
+            <div class="btn-toolbar">
+          <div class="btn-group me-2">
+            	<button class="btn btn-sm btn-outline-secondary">
+            	<a th:href="@{~/./cliente/addForm}">Adicionar</a></button>
+				<button class="btn btn-sm btn-outline-secondary">
+				<a th:href="@{~/./cliente/listarClientes}">Listar</a></button>
+            </div></div>
+            </li>
+            <hr class="my-3">
+            <li class="nav-item">
+              <span class="nav-link d-flex align-items-center gap-2">
+                <svg class="bi"><use xlink:href="#funcionario"/></svg>
+                Funcionario
+              </span>
+            </li>
+            <li sec:authorize="hasAnyRole('FuncionarioNv2','FuncionarioNv1')">
+            <div class="btn-toolbar">
+          <div class="btn-group me-2">
+            	<button class="btn btn-sm btn-outline-secondary">
+            	<a th:href="@{~/./funcionario/addForm}">Adicionar</a></button>
+				<button class="btn btn-sm btn-outline-secondary">
+				<a th:href="@{~/./funcionario/listarFuncionarios}">Listar</a></button>
+            </div></div>
+            </li>
+            <hr class="my-3">
+            <li class="nav-item">
+              <span class="nav-link d-flex align-items-center gap-2">
+                <svg class="bi"><use xlink:href="#cargo"/></svg>
+                Cargo
+              </span>
+            </li>
+            <li sec:authorize="hasRole('FuncionarioNv1')">
+            <div class="btn-toolbar">
+          <div class="btn-group me-2">
+            	<button class="btn btn-sm btn-outline-secondary">
+            	<a th:href="@{~/./cargo/addForm}">Adicionar</a></button>
+				<button class="btn btn-sm btn-outline-secondary">
+				<a th:href="@{~/./cargo/listarCargos}">Listar</a></button>
+            </div></div>
+            </li>
+            
           </ul>
 
           <hr class="my-2">
 
-          <ul class="nav flex-column mb-auto">
+          <ul sec:authorize="hasRole('FuncionarioNv1')" class="nav flex-column mb-auto">
             <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" th:href="@{~/./h2-console}">
                 <svg class="bi"><use xlink:href="#banco-de-dados"/></svg>
@@ -354,7 +356,7 @@
                 Documentação API
               </a>
             </li>
-          </ul>
+          </ul>	
         
       </div>
       </div>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import br.edu.iff.bsi.LojaEBook.model.Carteira;
 import br.edu.iff.bsi.LojaEBook.model.Cliente;
 import br.edu.iff.bsi.LojaEBook.model.Compra;
+import br.edu.iff.bsi.LojaEBook.model.Usuario;
 import br.edu.iff.bsi.LojaEBook.repository.CarteiraRepository;
 import br.edu.iff.bsi.LojaEBook.repository.ClienteRepository;
 import br.edu.iff.bsi.LojaEBook.repository.CompraRepository;
@@ -22,6 +23,8 @@ public class ClienteService {
 	@Autowired
 	private CompraRepository CompraRep;
 	
+	@Autowired
+	private UsuarioDetailsService UsuarioServ;
 	
 	public Carteira salvarCarteira(Carteira carteira) {
 		return CarteiraRep.save(carteira);
@@ -33,7 +36,9 @@ public class ClienteService {
 		}else{
 			Carteira carteira = CarteiraRep.save(new Carteira());
 			cliente.setCarteira(carteira);
-			Cliente c = ClienteRep.save(cliente);
+			Usuario usuario = UsuarioServ.salvar(cliente.getCpf(), cliente.getSenha(), "Cliente");
+			cliente.setUsuario(usuario);
+			ClienteRep.save(cliente);
 			return "Registrado com sucesso";
 		}
 	}
@@ -51,6 +56,7 @@ public class ClienteService {
 			}
 			if(senha!=null) {				
 				c.setSenha(senha);
+				UsuarioServ.atualizarSenha(c.getUsuario(), senha);
 			}
 			ClienteRep.flush();
 			return "Atualizado no id "+c.getId();

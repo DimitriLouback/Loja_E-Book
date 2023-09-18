@@ -75,7 +75,7 @@ table, th, td {
 
 			<div th:if="${e_book_lista != null}">
 				<h2>Buscar E-Book.</h2>
-				<form action="/e-book/buscaTitulo" method="post">
+				<form th:action="@{/e-book/buscaTitulo}" method="post">
 					<p>
 						<label for="titulo">Titulo</label> <input type="text"
 							name="titulo" id="titulo" required />

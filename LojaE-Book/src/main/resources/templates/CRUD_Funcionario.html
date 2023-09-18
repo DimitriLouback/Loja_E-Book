@@ -83,7 +83,7 @@ table, th, td {
 
 			<div th:if="${funcionario_lista != null}">
 				<h2>Buscar Funcionário.</h2>
-				<form action="/funcionario/buscaCPF" method="post">
+				<form th:action="@{/funcionario/buscaCPF}" method="post">
 					<p>
 						<label for="cpf">CPF</label> <input type="text" name="cpf"
 							id="cpf" required />
@@ -190,7 +190,7 @@ table, th, td {
 				</table>
 
 				<h2>Adicionar Telefone (Limite de 3).</h2>
-				<form action="/funcionario/addTelefone" method="post">
+				<form th:action="@{/funcionario/addTelefone}" method="post">
 					<p hidden>
 						<input type="text" name="cpf" id="cpf"
 							th:value="*{funcionario_edit.cpf}" required /><input type="text"

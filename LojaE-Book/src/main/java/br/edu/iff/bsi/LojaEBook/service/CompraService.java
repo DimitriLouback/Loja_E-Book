@@ -25,7 +25,7 @@ public class CompraService {
 	private Colecao_E_BookRepository Colecao_E_BookRep;
 	@Autowired
 	private E_BookRepository E_BookRep;
-	
+
 	public String addCompra(String cpf) {
 		Cliente cl = ClienteRep.buscarPeloCPF(cpf);
 		if(cl==null) {
@@ -42,8 +42,8 @@ public class CompraService {
 			}
 		}
 	}
-	
-	
+
+
 	public String atualizarCompra(Long idCompra, String cpf) {
 		Compra c = CompraRep.BuscarPeloId(idCompra);
 		if(c==null) {
@@ -67,7 +67,7 @@ public class CompraService {
 			}
 		}
 	}
-	
+
 	public String deletarCompra(Long idCompra) {
 		Compra c = CompraRep.BuscarPeloId(idCompra);
 		if(c==null) {
@@ -86,11 +86,11 @@ public class CompraService {
 			return "Deletado no id "+c.getId();
 		}
 	}
-	
+
 	public List<Compra> listarCompras() throws Exception {
 		return CompraRep.findAll();
 	}
-	
+
 	public String addE_Book(String idCompra, String titulo) {
 		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));
 		if(c==null) {
@@ -114,7 +114,7 @@ public class CompraService {
 			}
 		}
 	}
-	
+
 	public String removeE_Book(String idCompra, String titulo) {
 		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));
 		if(c==null) {
@@ -134,7 +134,7 @@ public class CompraService {
 			}
 		}
 	}
-	
+
 	public String addColecaoE_Book(String idCompra, String serie) {
 		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));
 		if(c==null) {
@@ -158,7 +158,7 @@ public class CompraService {
 			}
 		}
 	}
-	
+
 	public String removeColecaoE_Book(String idCompra, String serie) {
 		Compra c = CompraRep.BuscarPeloId(Long.parseLong(idCompra));
 		if(c==null) {
@@ -178,7 +178,7 @@ public class CompraService {
 						CompraRep.flush();
 						return "Coleção de E-Book removida";
 					}
-			}
+				}
 			}
 		}
 	}
@@ -186,11 +186,11 @@ public class CompraService {
 	public List<E_Book> ListarEBookPeloIdCompra(Long id){
 		return E_BookRep.ListarEBookPeloIdCompra(id);
 	}
-	
+
 	public List<Colecao_E_Book> ListarColecaoEBookPeloIdCompra(Long id){
 		return Colecao_E_BookRep.ListarColecaoEBookPeloIdCompra(id);
 	}
-	
+
 	public String finalizarCompraPeloId(Long idCompra) {
 		Compra c = CompraRep.BuscarPeloId(idCompra);
 		if(c==null) {
@@ -216,16 +216,25 @@ public class CompraService {
 			}
 		}
 	}
-	
+
 	public Compra getCompraById(Long id) {
 		return CompraRep.BuscarPeloId(id);
 	}
-	
+
 	public List<Compra> buscarPeloCPFCliente(String cpf) throws Exception {
 		return CompraRep.BuscarPeloCPF(cpf);
 	}
+
+	public Compra CompraAbertaPeloCPFCliente(String cpf) throws Exception {
+		List<Compra> compra = CompraRep.BuscarComprasAbertasPeloCPF(cpf);
+		if(compra.size()==0) {
+			this.addCompra(cpf);
+			compra = CompraRep.BuscarComprasAbertasPeloCPF(cpf);
+		}
+		return compra.get(0);
+	}
 	
-	public List<Compra> buscarComprasAbertasPeloCPFCliente(String cpf) throws Exception {
-		return CompraRep.BuscarComprasAbertasPeloCPF(cpf);
+	public List<Compra> ListarFechadasPeloCPFCliente(String cpf) throws Exception {
+		return CompraRep.BuscarComprasFechadasPeloCPF(cpf);
 	}
 }

@@ -30,10 +30,6 @@ table, th, td {
 				É aqui onde todos os dados do sistema são administrado pelos funcionários.
 				</p>
 				<p>
-				Cada cargo possuí seu nível de acesso e ele determina o que o funcionário que está naquele 
-				cargo pode fazer em relação a manipulação de dados, variando de 0 (baixo) a 10 (alto).
-				</p>
-				<p>
 				Na barra ao lado é possível ver todas as opções de manipulação de dados, onde ao escolher
 				listar os dados de alguem tipo de objeto, é possível fazer uma pesquisa por um dado em
 				específico, editar dados ou excluí-los.
@@ -42,6 +38,23 @@ table, th, td {
 				Também é possível acessar a documentação API, onde são feitos testes sobre a comunicação
 				com a API e acessar o bando de dados diretamente, porém é necessário uma senha.
 				</p>
+				<p>
+				Cada cargo possuí seu nível de acesso e ele determina o que o funcionário que está naquele 
+				cargo pode fazer em relação a manipulação de dados, variando de 5 (baixo) a 1 (alto). As
+				capacidades de cada nível são herdadas pelo nível superior, ou seja, alguém do nível 2 pode
+				fazer tudo o que alguém do nível 3 pode fazer.
+				</p>
+				<p>
+				Abaixo estão o que cada nível pode fazes:
+				<ul>
+				<li>Nível 5: Manipular dados dos E-Books e das Coleções de E-Books.</li>
+				<li>Nível 4: Manipular dados das compras.</li>
+				<li>Nível 3: Manipular dados dos clientes.</li>
+				<li>Nível 2: Manipular dados dos funcionários.</li>
+				<li>Nível 1: Manipular dados dos cargos e tem acessos à documentação API e ao Banco de Dados.</li>
+				</ul>
+				</p>
+				
 			</div>
 		</main>
 	</div>

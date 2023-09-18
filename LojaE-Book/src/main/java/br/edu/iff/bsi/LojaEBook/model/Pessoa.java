@@ -10,6 +10,8 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -17,10 +19,12 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @MappedSuperclass
-public abstract class Pessoa extends Usuario {
+public abstract class Pessoa implements Serializable {
 
+	protected static final long serialVersionUID = 1L;
 	
-	
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	
 	
 	@Size(min=1,max=60,message="Tem que ter entre 1 e 60 caractéres")
@@ -33,7 +37,9 @@ public abstract class Pessoa extends Usuario {
 	@Pattern(regexp="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}", message="Deve seguir o padrão do CPF")
 	@Column(unique=true, length = 14)
 	private String cpf = " ";
-	
+	@Size(min=1,max=20,message="Tem que ter entre 1 e 20 caractéres")
+	@Column(length = 20)
+	private String senha;
 	
 	@Nullable
 	@ElementCollection
@@ -41,17 +47,23 @@ public abstract class Pessoa extends Usuario {
 	@Column(length = 16)
 	private List<@Pattern(regexp="\\([0-9]{2}\\) [0-9]{5}-[0-9]{4}", message="Deve seguir o padrão do Telefone")String> telefone = new ArrayList<String>();
 	
+	@ManyToOne()
+	@JoinColumn(name="fk_pessoa")
+	private Usuario usuario;
+	
 	public Pessoa(String nome, String email, String cpf, String senha, String telefone) {
-		super(cpf, senha);
 		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;
+		this.senha = senha;
 		this.telefone.add(telefone);
 	}
 
 	public Pessoa() {}
 	
-	
+	public Long getId() {
+		return id;
+	}
 
 	public String getNome() {
 		return nome;
@@ -65,7 +77,21 @@ public abstract class Pessoa extends Usuario {
 		return cpf;
 	}
 
+	public String getSenha() {
+		return senha;
+	}
 	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 	
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
