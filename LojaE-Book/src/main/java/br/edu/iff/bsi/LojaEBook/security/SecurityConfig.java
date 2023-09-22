@@ -25,18 +25,18 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((requests) -> requests.requestMatchers("/","/cadastro/**").permitAll()
+		http.authorizeHttpRequests((requests) -> requests.requestMatchers("/","/cliente/cadastro/**").permitAll()
 				.requestMatchers("/cargo/**", "/h2-console/**", "/swagger-ui/**")
 				.hasRole("FuncionarioNv1")
 				.requestMatchers("/funcionario/**")
 				.hasAnyRole("FuncionarioNv2","FuncionarioNv1")
-				.requestMatchers("/cliente/**")
+				.requestMatchers("/cliente/CRUD/**")
 				.hasAnyRole("FuncionarioNv3","FuncionarioNv2","FuncionarioNv1")
-				.requestMatchers("/compra/**")
+				.requestMatchers("/compra/CRUD/**")
 				.hasAnyRole("FuncionarioNv4","FuncionarioNv3","FuncionarioNv2","FuncionarioNv1")
 				.requestMatchers("/CRUDs", "/e-book/**", "/colecao-e-book/**")
 				.hasAnyRole("FuncionarioNv5","FuncionarioNv4","FuncionarioNv3","FuncionarioNv2","FuncionarioNv1")
-				.requestMatchers("/carrinho/**", "/editarPerfil/**").hasRole("Cliente")
+				.requestMatchers("/compra/carrinho/**", "/cliente/editarPerfil/**").hasRole("Cliente")
 				.requestMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll()
 				.anyRequest().authenticated())
 				.formLogin((form) -> form.permitAll())

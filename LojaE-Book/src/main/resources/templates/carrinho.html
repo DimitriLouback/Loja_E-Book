@@ -16,7 +16,7 @@
 <h1>Carrinho de Compras</h1>
     <div class="row py-lg-2">
 <h2 class="fw-light">Saldo Atual: R$ <span th:text="${saldo}"></span></h2>
-<div style="position: absolute;right: -20%;top: 5%x;"><a class="btn btn-primary my-2" th:href="@{/carrinho/fecharCarrinho(id=${compra.id})}">Finalizar Compra</a></div>
+<div style="position: absolute;right: -20%;top: 5%x;"><a class="btn btn-primary my-2" th:href="@{/compra/carrinho/fecharCarrinho(id=${compra.id})}">Finalizar Compra</a></div>
 <span style="color: red;" th:if="${respostaFinalizar!=null}" th:text="${respostaFinalizar}"></span>
 <div class="col-lg-6 col-md-8 mx-auto">
 <h3 class="fw-light"><p>

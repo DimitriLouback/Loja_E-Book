@@ -222,9 +222,9 @@
                 <div>
                   <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#detalhesEBook" >Detalhes</button>
                   <button sec:authorize="hasRole('Cliente')" th:if="${compra==null}" type="button" class="btn btn-sm btn-outline-secondary">
-                  <a style="text-decoration:none; color:gray" th:href="@{/carrinho/addE_BookCarrinho(id=${compraForaArrinho.id},titulo=${e_book.titulo})}">Adicionar ao Carrinho</a></button>
+                  <a style="text-decoration:none; color:gray" th:href="@{/compra/carrinho/addE_BookCarrinho(id=${compraForaArrinho.id},titulo=${e_book.titulo})}">Adicionar ao Carrinho</a></button>
                   <button sec:authorize="hasRole('Cliente')" th:if="${compra!=null}" type="button" class="btn btn-sm btn-outline-secondary">
-                  <a style="text-decoration:none; color:gray" th:href="@{/carrinho/removeE_BookCarrinho(id=${compra.id},titulo=${e_book.titulo})}">Remover do Carrinho</a></button>
+                  <a style="text-decoration:none; color:gray" th:href="@{/compra/carrinho/removeE_BookCarrinho(id=${compra.id},titulo=${e_book.titulo})}">Remover do Carrinho</a></button>
                 </div>
                 <small class="text-body-secondary">R$ <span th:text="${e_book.preco}"></span></small>
               </div>
@@ -270,9 +270,9 @@
                 <div>
                   <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#detalhesColecaoEBook">Detalhes</button>
                   <button sec:authorize="hasRole('Cliente')" th:if="${compra==null}" type="button" class="btn btn-sm btn-outline-secondary">
-                  <a style="text-decoration:none; color:gray" th:href="@{/carrinho/addColecaoE_BookCarrinho(id=${compraForaArrinho.id},serie=${colecao_e_book.serie})}">Adicionar ao Carrinho</a></button>
+                  <a style="text-decoration:none; color:gray" th:href="@{/compra/carrinho/addColecaoE_BookCarrinho(id=${compraForaArrinho.id},serie=${colecao_e_book.serie})}">Adicionar ao Carrinho</a></button>
                   <button sec:authorize="hasRole('Cliente')" th:if="${compra!=null}" type="button" class="btn btn-sm btn-outline-secondary">
-                  <a style="text-decoration:none; color:gray" th:href="@{/carrinho/removeColecaoE_BookCarrinho(id=${compra.id},serie=${colecao_e_book.serie})}">Remover do Carrinho</a></button>
+                  <a style="text-decoration:none; color:gray" th:href="@{/compra/carrinho/removeColecaoE_BookCarrinho(id=${compra.id},serie=${colecao_e_book.serie})}">Remover do Carrinho</a></button>
                 </div>
                 <small class="text-body-secondary">R$ <span th:text="${colecao_e_book.preco}"></span></small>
               </div>

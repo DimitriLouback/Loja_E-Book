@@ -47,7 +47,7 @@ public class UsuarioDetailsService implements UserDetailsService {
 	public Usuario salvar(String login, String senha, String permissao) {
 		Usuario usuario = new Usuario(login, senha);
 		usuario.setSenha(new BCryptPasswordEncoder().encode(senha));
-		Permissao perm = PermRep.getByNome("Cliente");
+		Permissao perm = PermRep.getByNome(permissao);
 		if(perm == null) {
 			perm = new Permissao(permissao);
 			PermRep.save(perm);
@@ -60,6 +60,29 @@ public class UsuarioDetailsService implements UserDetailsService {
 	public void atualizarSenha(Usuario usuario, String senha) {
 		usuario.setSenha(new BCryptPasswordEncoder().encode(senha));
 		repo.flush();
+	}
+	
+	public void atualizarPermissao(Usuario usuario, String permissao) {
+		Permissao perm = PermRep.getByNome(permissao);
+		if(perm == null) {
+			perm = new Permissao(permissao);
+			PermRep.save(perm);
+		}
+		usuario.getPermissoes().remove(0);
+		usuario.addPermissao(perm);
+		repo.save(usuario);
+	}
+	
+	public void deletarPorId(Long id) {
+		repo.delete(repo.buscarPorId(id));
+	}
+	
+	public Usuario buscarPorId(Long id) {
+		return repo.buscarPorId(id);
+	}
+	
+	public List<Usuario> listarTodos(){
+		return repo.listarTodos();
 	}
 	
 }
