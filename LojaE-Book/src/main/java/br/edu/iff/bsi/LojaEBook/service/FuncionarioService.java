@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.edu.iff.bsi.LojaEBook.model.Cargo;
 import br.edu.iff.bsi.LojaEBook.model.Funcionario;
+import br.edu.iff.bsi.LojaEBook.model.Usuario;
 import br.edu.iff.bsi.LojaEBook.repository.CargoRepository;
 import br.edu.iff.bsi.LojaEBook.repository.FuncionarioRepository;
 
@@ -17,6 +18,9 @@ public class FuncionarioService {
 	private FuncionarioRepository FuncionarioRep;
 	@Autowired
 	private CargoRepository CargoRep;
+
+	@Autowired
+	private UsuarioDetailsService UsuarioServ;
 	
 	public String addFuncionario(Funcionario funcionario, String funcao) {
 		if(FuncionarioRep.buscarPeloCPF(funcionario.getCpf())!=null) {
@@ -24,9 +28,17 @@ public class FuncionarioService {
 		}else{			
 			Cargo cargoBusca = CargoRep.buscarPelaFuncao(funcao);
 			if(cargoBusca == null) {
-				return "Cargo não existe";
+				return "Cargo não definido";
 			}else {
 				funcionario.setCargo(cargoBusca);
+				String permissao;
+				if(cargoBusca.getNivelAcesso()>=1&&cargoBusca.getNivelAcesso()<=5) {
+					permissao = "FuncionarioNv"+cargoBusca.getNivelAcesso();
+				}else {
+					throw new RuntimeException("Nível de acesso fora dos limites");
+				}
+				Usuario usuario = UsuarioServ.salvar(funcionario.getCpf(), funcionario.getSenha(), permissao);
+				funcionario.setUsuario(usuario);
 				Funcionario f = FuncionarioRep.save(funcionario);
 				return "Registrado no id "+f.getId();
 			}		
@@ -46,6 +58,7 @@ public class FuncionarioService {
 			}
 			if(senha!=null) {				
 				f.setSenha(senha);
+				UsuarioServ.atualizarSenha(f.getUsuario(), senha);
 			}
 			if(funcao!=null) {
 				Cargo cargoBusca = CargoRep.buscarPelaFuncao(funcao);
@@ -53,6 +66,7 @@ public class FuncionarioService {
 					return "Cargo não existe";
 				}else {
 					f.setCargo(cargoBusca);
+					f.getUsuario().getPermissoes().get(0).setNome("FuncionarioNv"+cargoBusca.getNivelAcesso());
 				}
 			}
 			FuncionarioRep.flush();
@@ -74,13 +88,8 @@ public class FuncionarioService {
 		return FuncionarioRep.findAll();
 	}
 	
-	public String buscarFuncionarioCPF(String cpf) {
-		Funcionario f = FuncionarioRep.buscarPeloCPF(cpf);
-		if(f!=null) {			
-			return "Id do funcionário: "+f.getId();
-		}else {
-			return "Funcionário não encontrado";
-		}
+	public Funcionario buscarFuncionarioCPF(String cpf) {
+		return FuncionarioRep.buscarPeloCPF(cpf);
 	}
 	
 	public String addTelefone(String cpf, String telefone) {
@@ -124,6 +133,34 @@ public class FuncionarioService {
 	
 	public String buscarTelefonePeloCPF(String cpf, String telefone) {
 		return FuncionarioRep.buscarTelefonePeloCPF(cpf, telefone);
+	}
+	
+	public Funcionario getFuncionarioById(Long id) {
+		return FuncionarioRep.BuscarPeloId(id);
+	}
+	
+	public void garantirFuncionarioADM() {
+		if((FuncionarioRep.maiorNivelAcesso()==null)||(Integer.parseInt(FuncionarioRep.maiorNivelAcesso())>1)) {
+			Cargo cargo = CargoRep.buscarPelaFuncao("ADM");
+			if(cargo==null) {
+				CargoRep.save(new Cargo("ADM",100,1));
+				cargo = CargoRep.buscarPelaFuncao("ADM");
+			}else if(cargo.getNivelAcesso()>1) {
+				cargo.setNivelAcesso(1);
+			}
+			Funcionario func = FuncionarioRep.buscarPeloCPF("000.000.000-00");
+			if(func==null) {
+				func = new Funcionario("ADM","Administrador@adm","000.000.000-00","123","(00) 00000-0000");
+				func.setCargo(cargo);
+				Usuario usuario = UsuarioServ.salvar(func.getNome(), func.getSenha(), "FuncionarioNv1");
+				func.setUsuario(usuario);
+				FuncionarioRep.save(func);
+			}else if(func.getCargo().getNivelAcesso()>1){
+				func.setCargo(cargo);
+			}
+			CargoRep.flush();
+			FuncionarioRep.flush();
+		}
 	}
 	
 }

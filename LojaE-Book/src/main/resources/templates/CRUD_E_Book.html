@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<div th:replace="~{layoutBase2 :: import}"></div>
+<title>CRUD E-Book.</title>
+</head>
+<style>
+table, th, td {
+	border: 1px solid black;
+	text-align: center;
+}
+</style>
+<body>
+
+
+	<div th:replace="~{layoutBase2 :: header}"></div>
+	<div class="row">
+		<div
+			class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+
+
+			<div th:replace="~{layoutBase2 :: sidebar}"></div>
+			<div th:replace="~{layoutBase2 :: icones}"></div>
+
+		</div>
+		<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<div th:if="${e_book_add != null}">
+				<script th:inline="javascript">
+					document.addEventListener('DOMContentLoaded', function() {
+						document.getElementById('tituloAdd').value = '';
+					});
+				</script>
+				<h1>Registrar E-Book.</h1>
+				<form action="#" th:action="@{/e-book/add}"
+					th:object="${e_book_add}" method="post">
+					<fieldset>
+						<legend>Insira os valores</legend>
+						<p>
+							<label for="Titulo">Título</label> <input type="text"
+								name="titulo" id="tituloAdd" th:field="*{titulo}" required />
+						</p>
+						<p>
+							<label for="Genero">Gênero</label> <input type="text"
+								name="genero" id="genero" th:field="*{genero}" required />
+						</p>
+						<p>
+							<label for="Autor">Autor</label> <input type="text" name="autor"
+								id="autor" required />
+						</p>
+						<p>
+							<label for="Editora">Editora</label> <input type="text"
+								name="editora" id="editora" th:field="*{editora}" required />
+						</p>
+						<p>
+							<label for="qtdPaginas">Quantidade de Páginas</label> <input
+								type="number" name="qtdPaginas" id="qtdPaginas"
+								th:field="*{qtdPaginas}" min="1" required />
+						</p>
+						<p>
+							<label for="Preco">Preço</label> <input type="number"
+								name="preco" id="preco" th:field="*{preco}" min="1" required />
+						</p>
+						<p>
+							<button type="submit">Registrar</button>
+						</p>
+
+					</fieldset>
+				</form>
+				<div th:if="${respostaAdd != null}">
+					<span th:text="${respostaAdd}"></span>
+				</div>
+
+			</div>
+
+			<div th:if="${e_book_lista != null}">
+				<h2>Buscar E-Book.</h2>
+				<form th:action="@{/e-book/buscaTitulo}" method="post">
+					<p>
+						<label for="titulo">Titulo</label> <input type="text"
+							name="titulo" id="titulo" required />
+
+						<button type="submit">Buscar</button>
+					</p>
+				</form>
+
+				<h1>Lista de E-Books.</h1>
+				<table>
+					<tr>
+						<th>Id</th>
+						<th>Título</th>
+						<th>Gênero</th>
+						<th>Autor</th>
+						<th>Editora</th>
+						<th>Quantidade de Páginas</th>
+						<th>Preço</th>
+					</tr>
+					<tr th:each="e_book : ${e_book_lista}"
+						th:if="${e_book.titulo != null}">
+						<td th:text="${e_book.id}"></td>
+						<td th:text="${e_book.titulo}"></td>
+						<td th:text="${e_book.genero}"></td>
+						<td th:text="${e_book.autor}"></td>
+						<td th:text="${e_book.editora}"></td>
+						<td th:text="${e_book.qtdPaginas}"></td>
+						<td th:text="${e_book.preco}"></td>
+						<td>
+							<button>
+								<a th:href="@{/e-book/editar(id=${e_book.id})}">Editar</a>
+							</button>
+							<button>
+								<a th:href="@{/e-book/deletaPorTitulo(titulo=${e_book.titulo})}">Excluir</a>
+							</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<div th:if="${e_book_edit != null}">
+
+				<h1>Atualizar E-Book.</h1>
+				<form action="#" th:action="@{/e-book/atualizar}"
+					th:object="${e_book_edit}" method="post">
+					<fieldset>
+						<legend>Insira os valores</legend>
+						<p hidden>
+							<label for="Titulo">Título</label> <input type="text"
+								name="titulo" id="titulo" th:value="*{titulo}" required />
+						</p>
+						<p>
+							<label for="Genero">Novo gênero</label> <input type="text"
+								name="genero" id="genero" th:value="*{genero}" />
+						</p>
+						<p>
+							<label for="Autor">Nova autor</label> <input type="text"
+								name="autor" id="autor" th:value="*{autor}" />
+						</p>
+						<p>
+							<label for="Editora">Nova editora</label> <input type="text"
+								name="editora" id="editora" th:value="*{editora}" />
+						</p>
+						<p>
+							<label for="qtdPaginas">Nova quantidade de páginas</label> <input
+								type="number" name="qtdPaginas" id="qtdPaginas"
+								th:value="*{qtdPaginas}" min="1" />
+						</p>
+						<p>
+							<label for="Preco">Novo preço</label> <input type="number"
+								name="preco" id="preco" th:value="*{preco}" min="1" />
+						</p>
+						<p>
+							<button type="submit">Atulizar</button>
+						</p>
+
+					</fieldset>
+				</form>
+
+			</div>
+		</main>
+	</div>
+	<div th:insert="~{layoutBase :: botaoTema}"></div>
+</body>
+</html>

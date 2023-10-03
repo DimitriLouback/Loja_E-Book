@@ -2,18 +2,27 @@ package br.edu.iff.bsi.LojaEBook.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class E_Book extends Produto {
 
+	@NotBlank(message="Não pode ser em branco ou nulo")
+	@Size(min=1,max=60,message="Tem que ter entre 1 e 60 caractéres")
 	@Column(unique=true, length = 60)
-	private String titulo;
+	private String titulo = " ";
+	@Size(min=1,max=20,message="Tem que ter entre 1 e 20 caractéres")
 	@Column(length = 20)
 	private String genero;
+	@Size(min=1,max=60,message="Tem que ter entre 1 e 60 caractéres")
 	@Column(length = 60)
 	private String autor;
+	@Size(min=1,max=20,message="Tem que ter entre 1 e 20 caractéres")
 	@Column(length = 20)
 	private String editora;
+	@Positive(message="Tem que ser maior que 0")
 	private int qtdPaginas;
 	
 	
@@ -25,8 +34,9 @@ public class E_Book extends Produto {
 		this.editora = editora;
 		this.qtdPaginas = qtdPaginas;
 	}
+	
 
-	private E_Book() {}
+	public E_Book() {}
 	
 	public String getTitulo() {
 		return titulo;
@@ -47,6 +57,11 @@ public class E_Book extends Produto {
 	public int getQtdPaginas() {
 		return qtdPaginas;
 	}
+	
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
 
 	public void setGenero(String genero) {
 		this.genero = genero;

@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 
 import br.edu.iff.bsi.LojaEBook.model.Carteira;
 import br.edu.iff.bsi.LojaEBook.model.Cliente;
+import br.edu.iff.bsi.LojaEBook.model.Compra;
+import br.edu.iff.bsi.LojaEBook.model.Usuario;
 import br.edu.iff.bsi.LojaEBook.repository.CarteiraRepository;
 import br.edu.iff.bsi.LojaEBook.repository.ClienteRepository;
+import br.edu.iff.bsi.LojaEBook.repository.CompraRepository;
 
 @Service
 public class ClienteService {
@@ -17,7 +20,11 @@ public class ClienteService {
 	private ClienteRepository ClienteRep;
 	@Autowired
 	private CarteiraRepository CarteiraRep;
+	@Autowired
+	private CompraRepository CompraRep;
 	
+	@Autowired
+	private UsuarioDetailsService UsuarioServ;
 	
 	public Carteira salvarCarteira(Carteira carteira) {
 		return CarteiraRep.save(carteira);
@@ -29,8 +36,10 @@ public class ClienteService {
 		}else{
 			Carteira carteira = CarteiraRep.save(new Carteira());
 			cliente.setCarteira(carteira);
-			Cliente c = ClienteRep.save(cliente);
-			return "Registrado no id "+c.getId();
+			Usuario usuario = UsuarioServ.salvar(cliente.getCpf(), cliente.getSenha(), "Cliente");
+			cliente.setUsuario(usuario);
+			ClienteRep.save(cliente);
+			return "Registrado com sucesso";
 		}
 	}
 	
@@ -47,6 +56,7 @@ public class ClienteService {
 			}
 			if(senha!=null) {				
 				c.setSenha(senha);
+				UsuarioServ.atualizarSenha(c.getUsuario(), senha);
 			}
 			ClienteRep.flush();
 			return "Atualizado no id "+c.getId();
@@ -55,7 +65,11 @@ public class ClienteService {
 	
 	public String deletarCliente(String cpf) {
 		Cliente c = ClienteRep.buscarPeloCPF(cpf);
-		if(c!=null) {	
+		if(c!=null) {
+			List<Compra> compras = CompraRep.BuscarComprasAbertasPeloCPF(cpf);
+			for(int i=0;i<compras.size();i++) {
+				CompraRep.delete(compras.get(i));
+			}
 			ClienteRep.delete(c);
 			return "Cliente deletado no id "+c.getId();
 		}else {
@@ -67,13 +81,8 @@ public class ClienteService {
 		return ClienteRep.findAll();
 	}
 	
-	public String buscarClienteCPF(String cpf) throws Exception {
-		Cliente c = ClienteRep.buscarPeloCPF(cpf);
-		if(c!=null) {			
-			return "Id do cliente: "+c.getId();
-		}else {
-			return "Cliente não encontrado";
-		}
+	public Cliente buscarClienteCPF(String cpf) {
+		return ClienteRep.buscarPeloCPF(cpf);
 	}
 	
 	public List<String> ListarTelefonePeloCPF(String cpf){
@@ -123,12 +132,12 @@ public class ClienteService {
 		return ClienteRep.BuscarPeloId(id);
 	}
 	
-	public String adcionarSaldo(String cpf, String saldo) {
+	public String adcionarSaldo(String cpf, double saldo) {
 		Cliente c = ClienteRep.buscarPeloCPF(cpf);
 		if(c==null) {
 			return "Cliente não encontrado";
 		}else {		
-			c.adicionarSaldo(Double.parseDouble(saldo));
+			c.adicionarSaldo(saldo);
 			ClienteRep.flush();
 			CarteiraRep.flush();
 			return "Saldo adicionado";
@@ -145,6 +154,23 @@ public class ClienteService {
 			CarteiraRep.flush();
 			return "Saldo adicionado";
 		}
+	}
+	
+	public double getSaldo(String cpf) {
+		Cliente c = ClienteRep.buscarPeloCPF(cpf);
+		if(c==null) {
+			return -1;
+		}else {		
+			return c.verSaldo();
+		}
+	}
+	
+	public Carteira getCarteraById(Long id) {
+		return CarteiraRep.BuscarPeloId(id);
+	}
+	
+	public Cliente getClienteById(Long id) {
+		return ClienteRep.BuscarPeloId(id);
 	}
 	
 }

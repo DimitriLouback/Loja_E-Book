@@ -27,13 +27,16 @@ public class CargoService {
 		}
 	}
 	
-	public String atualizarCargo(String funcao, String salario) {
+	public String atualizarCargo(String funcao, double salario, int nivelAcesso) {
 		Cargo c = CargoRep.buscarPelaFuncao(funcao);
 		if(c==null) {
 			return "Cargo não achado";
 		}else {
-			if(salario!=null&&Double.parseDouble(salario)>0) {
-				c.setSalario(Double.parseDouble(salario));
+			if(salario>0) {
+				c.setSalario(salario);
+			}
+			if(nivelAcesso>=0) {
+				c.setNivelAcesso(nivelAcesso);;
 			}
 			CargoRep.flush();
 			return "Atualizado no id "+c.getId();
@@ -43,8 +46,12 @@ public class CargoService {
 	public String deletarCargoFuncao(String funcao) throws Exception {
 		Cargo c = CargoRep.buscarPelaFuncao(funcao);
 		if(c!=null) {	
-			CargoRep.delete(c);
-			return "Cargo deletado no id "+c.getId();
+			if(CargoRep.BuscarFuncionariosPeloCargo(funcao)==0) {
+				CargoRep.delete(c);
+				return "Cargo deletado no id "+c.getId();				
+			}else {
+				return "O cargo ainda possui funcionários afiliados";
+			}
 		}else {
 			return "Cargo não encontrado";
 		}
@@ -52,5 +59,9 @@ public class CargoService {
 	
 	public List<Cargo> listarCargos() throws Exception {
 		return CargoRep.findAll();
+	}
+	
+	public Cargo getCargoById(Long id) {
+		return CargoRep.BuscarPeloId(id);
 	}
 }

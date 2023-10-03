@@ -7,6 +7,9 @@
 | 07/07/2023 | 0.3 | Substituição da classe telefone por uma lista | [José Augusto](https://github.com/JoseAugustoFS) |
 | 14/07/2023 | 0.4 | Adição do atributo senha à classe pessoa | [José Augusto](https://github.com/JoseAugustoFS) |
 | 26/07/2023 | 0.5 | Adição do atributo boolean finalizado à classe compra | [José Augusto](https://github.com/JoseAugustoFS) |
+| 08/08/2023 | 0.6 | Adição do atributo string cpfCliente à classe compra | [José Augusto](https://github.com/JoseAugustoFS) |
+| 04/09/2023 | 0.7 | Adição do atributo int nivelAcesso à classe cargo | [José Augusto](https://github.com/JoseAugustoFS) |
+| 12/09/2023 | 0.8 | Adição das classes usuario e permissao | [José Augusto](https://github.com/JoseAugustoFS) |
 
 
 ## Definição
@@ -30,6 +33,15 @@
 
 ##### *Versão 0.5*
 ![diagrama_de_classes](./Imgs/Diagrama_de_classe_0,5.png)
+
+##### *Versão 0.6*
+![diagrama_de_classes](./Imgs/Diagrama_de_classe_0,6.png)
+
+##### *Versão 0.7*
+![diagrama_de_classes](./Imgs/Diagrama_de_classe_0,7.png)
+
+##### *Versão 0.8*
+![diagrama_de_classes](./Imgs/Diagrama_de_classe_0,81.png)
 
 ## Referências
 

@@ -22,10 +22,10 @@ public class Cliente extends Pessoa {
 	
 	public Cliente(String nome, String email, String cpf, String senha, String telefone) {
 		super(nome, email, cpf, senha, telefone);
-		this.compra = new ArrayList();
+		this.compra = new ArrayList<>();
 	}
-
-	private Cliente() {}
+	
+	public Cliente() {}
 
 	public void setCarteira(Carteira carteira) {
 		this.carteira = carteira;
@@ -44,6 +44,9 @@ public class Cliente extends Pessoa {
 	}
 	
 	public void adicionarSaldo(double saldo) {
+		if(saldo<=0) {
+			throw new RuntimeException("Valor tem que ser maior que 0");
+		}
 		this.carteira.setSaldoDisponivel(this.carteira.getSaldoDisponivel()+saldo);
 	}
 	
